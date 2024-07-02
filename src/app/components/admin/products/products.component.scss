@@ -28,6 +28,79 @@ $color-primary: #696cff;
         border: none;
         background-color: transparent;
         font-size: 20px;
-        color: black;
+        & i {
+            color: #d9dee3;
+        }
     }
+}
+.btn-edit {
+    cursor: pointer;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    &:hover {
+        color: $color-primary;
+    }
+}
+.btn--zoom {
+    position: relative;
+    border: none;
+    background-color: transparent;
+    &::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        top: 0px;
+        left: 0px;
+    }
+    &:hover {
+        &::after {
+            background-color: #696cff65;
+        }
+    }
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 70rem;
+    }
+}
+
+.model {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: #697a8d8c;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .model--content {
+        width: 98%;
+        height: 95%;
+        background-color: white;
+        border-radius: 5px;
+        & .model--content--header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 30px 20px;
+            & .title {
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+.hidden {
+    display: none;
 }

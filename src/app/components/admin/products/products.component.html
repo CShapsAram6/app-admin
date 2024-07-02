@@ -14,15 +14,19 @@
                     Giá
                     <i class="fa-solid fa-angle-down"></i>
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0);">Another action</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0);">Something else here</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
+                <ul class="dropdown-menu" style="width: 19rem;">
+                    <li class="px-3 py-2">
+                        <input type="number" class="form-control" placeholder="Giá tối thiểu">
                     </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);">Thêm </a>
+                    <li class="px-3 py-2">
+                        <input type="number" class="form-control" placeholder="Giá tối đa">
+                    </li>
+                    <li class="px-3 py-2">
+                        <button class="btn btn-primary d-flex align-items-center justify-content-between"
+                            style="width: 100%;">
+                            Lọc
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -34,23 +38,118 @@
                     Loại sản phẩm
                     <i class="fa-solid fa-angle-down"></i>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" style="width: 19rem;">
                     <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
                     <li><a class="dropdown-item" href="javascript:void(0);">Another action</a></li>
                     <li><a class="dropdown-item" href="javascript:void(0);">Something else here</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);">Thêm </a>
+                    <li class="px-2 py-1">
+                        <button class="btn btn-primary d-flex align-items-center justify-content-between"
+                            style="width: 100%;">
+                            Thêm
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
                     </li>
                 </ul>
             </div>
         </div>
 
         <div>
-            <button class="btn btn-primary">Thêm sản phẩm mới</button>
+            <button class="btn btn-primary" (click)="isShow = true">Thêm sản phẩm mới</button>
         </div>
 
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th style="color: white;">STT</th>
+                    <th style="color: white;">Hình ảnh</th>
+                    <th style="color: white;">Tên</th>
+                    <th style="color: white;">Số lượng</th>
+                    <th style="color: white;">Đơn giá</th>
+                    <th style="color: white;">Giảm giá</th>
+                    <th style="color: white;">Trạng thái</th>
+                    <th style="color: white;"></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0 mt-4">
+                <tr>
+                    <td>1</td>
+                    <td>
+
+                        <button class="btn--zoom avatar" data-bs-toggle="modal" data-bs-target="#basicModal">
+                            <img
+                                src="https://images.pexels.com/photos/10547966/pexels-photo-10547966.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load">
+                        </button>
+                    </td>
+                    <td>
+                        <a class="btn-edit">
+                            Product 1
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn-edit">
+                            10
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn-edit">
+                            100.000 đ
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn-edit">
+                            100.000 đ
+                        </a>
+                    </td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="mt-3">
+    <!-- Modal -->
+    <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="height: 50rem;">
+                    <img style="height: 100%; width: 100%; object-fit: contain;"
+                        src="https://images.pexels.com/photos/10547966/pexels-photo-10547966.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
+                        alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="model" [class.hidden]="!isShow">
+    <div class="model--content">
+        <div class="model--content--header">
+            <h4 class="title m-0">Thêm sản phẩm</h4>
+            <button class="btn btn-sm btn-danger" (click)="isShow = false"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="model--content--body"></div>
     </div>
 </div>

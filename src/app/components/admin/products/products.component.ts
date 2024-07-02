@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss'
+  styleUrl: './products.component.scss',
 })
-export class ProductsComponent {
-
+export class ProductsComponent implements OnInit {
+  isShow: boolean = false;
+  ngOnInit(): void {}
 }

@@ -1,0 +1,33 @@
+$color-primary: #696cff;
+
+.btn--dropdown {
+    width: 13rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    align-items: center;
+    border: 1px solid #d9dee3;
+    background-color: transparent;
+    padding: 7px 20px;
+    &:hover {
+        border: 1px solid $color-primary;
+        color: $color-primary;
+    }
+    &:focus {
+        border: 1px solid $color-primary;
+        color: $color-primary;
+    }
+}
+.group--search {
+    position: relative;
+    & .btn--search {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        font-size: 20px;
+        color: black;
+    }
+}

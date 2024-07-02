@@ -1,1 +1,49 @@
-<p>sign-in works!</p>
+<div class="container-xxl" style="width: 29rem; margin-top: 9rem;">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+            <!-- Register -->
+            <div class="card">
+                <div class="card-body">
+                    <!-- Logo -->
+                    <h1>Admin</h1>
+                    <!-- /Logo -->
+                    <h4 class="mb-2">Welcome to app tree</h4>
+                    <p class="mb-4">Đăng nhập bằng tài khoản admin của bạn</p>
+
+                    <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email hoặc Tên đăng nhập</label>
+                            <input type="text" class="form-control" id="email" name="email-username"
+                                placeholder="Nhập email hoặc tên đăng đăng nhập" autofocus />
+                        </div>
+                        <div class="mb-3 form-password-toggle">
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label" for="password">Mật khẩu</label>
+                                <a href="auth-forgot-password-basic.html">
+                                    <small>Quên mật khẩu?</small>
+                                </a>
+                            </div>
+                            <div class="input-group input-group-merge">
+                                <input type="password" id="password" class="form-control" name="password"
+                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                    aria-describedby="password" />
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember-me" />
+                                <label class="form-check-label" for="remember-me"> Lưu đăng nhập </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary d-grid w-100" type="submit" (click)="Login()">Đăng
+                                nhập</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /Register -->
+        </div>
+    </div>
+</div>

@@ -4,6 +4,10 @@ import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './products/products.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { CreateProductComponent } from './create-product/create-product.component';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 const _routes: Routes = [
   {
@@ -20,7 +24,13 @@ const _routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [HomeComponent, ProductsComponent],
-  imports: [CommonModule, RouterModule.forChild(_routes)],
+  declarations: [HomeComponent, ProductsComponent, CreateProductComponent],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    RouterModule.forChild(_routes),
+    RouterModule,
+    FormsModule,
+  ],
 })
 export class AdminModule {}

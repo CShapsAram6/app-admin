@@ -10,6 +10,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminModule } from './components/admin/admin.module';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,13 @@ import { AdminModule } from './components/admin/admin.module';
     SignUpComponent,
     AdminComponent,
   ],
-  imports: [BrowserModule, AdminModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    AdminModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+  ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
 })

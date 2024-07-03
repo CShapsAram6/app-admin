@@ -3,6 +3,12 @@
     height: 20rem;
     overflow: hidden;
     overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+    }
     & img {
         width: 130px;
         height: 130px;
@@ -13,4 +19,10 @@
     height: 9rem;
     overflow: hidden;
     overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+    }
 }

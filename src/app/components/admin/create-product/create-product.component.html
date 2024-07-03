@@ -1,14 +1,10 @@
-<div class="row px-3 py-4">
+<div class="row p-4">
     <div class="cart col-8">
         <div class="row">
             <div class="col-6">
                 <div>
                     <label for="defaultFormControlInput" class="form-label">Hình ảnh</label>
-                    <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
-                        aria-describedby="defaultFormControlHelp">
-                    <div id="defaultFormControlHelp" class="form-text">
-                        We'll never share your details with anyone else.
-                    </div>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple="">
                 </div>
             </div>
             <div class="col-6">
@@ -26,9 +22,11 @@
         <div class="row mt-4">
             <div class="col-6">
                 <div class="image d-flex gap-3 flex-wrap">
-                    <div class="" *ngFor="let item of list">
+                    <div class="position-relative" *ngFor="let item of list">
                         <img src="https://images.pexels.com/photos/25584126/pexels-photo-25584126/free-photo-of-a-camera-and-sunglasses-on-a-table-next-to-a-cup-of-coffee.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-                            alt="">
+                            alt="" class="rounded-1">
+                        <button class="btn btn-sm btn-danger position-absolute" style="top: 0px; right: 0px; "><i
+                                class="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
             </div>
@@ -78,17 +76,49 @@
         </div>
         <div class="mt-4">
             <div>
-                <label for="defaultFormControlInput" class="form-label">
+                <label for=" defaultFormControlInput" class="form-label text-primary">
                     Mô tả sản phẩm do AI tạo
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
                 </label>
                 <div class="row">
                     <div class="col-10">
-                        <input type="text" class="form-control" placeholder="Nhập mô tả về sản phẩm..."
+                        <input type="text" class="form-control" placeholder="Nhập gợi ý mô tả sản phẩm....."
                             [(ngModel)]="prompt">
                     </div>
                     <div class="col-2">
-                        <button class="btn btn-primary w-100" (click)="CreateDes()">Tạo</button>
+                        <button class="btn btn-primary w-100" (click)="CreateDes()"
+                            [disabled]="!prompt.trim() || isLoading">
+                            <div *ngIf="!isLoading">
+                                Tạo
+                            </div>
+                            <div class="spinner-border" role="status" style="width: 20px; height: 20px;"
+                                *ngIf="isLoading">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </button>
                     </div>
+                </div>
+                <div class="mt-3" *ngIf="desption.trim()">
+                    <label for=" defaultFormControlInput" class="form-label fw-bold">
+                        Kết quả trả về
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </label>
+                    <p class="text-justify">
+                        {{desption}}
+                        <button class="btn btn-sm btn-primary mx-3" (click)="BntUsing(desption)">Sử dụng</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <div>
+                <label for="defaultFormControlInput" class="form-label">
+                    Mô tả sản phẩm
+                </label>
+                <div>
+                    <textarea class="form-control" style="height: 6rem;">
+                        {{describe}}
+                    </textarea>
                 </div>
             </div>
         </div>

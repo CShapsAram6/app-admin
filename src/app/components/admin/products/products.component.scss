@@ -99,6 +99,17 @@ $color-primary: #696cff;
                 text-transform: uppercase;
             }
         }
+        & .model--content--body {
+            height: 48rem;
+            overflow: hidden;
+            overflow-y: auto;
+            &::-webkit-scrollbar {
+                width: 2px;
+            }
+            &::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+            }
+        }
     }
 }
 .hidden {

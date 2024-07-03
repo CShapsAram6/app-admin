@@ -73,7 +73,7 @@
                     <th style="color: white;">Tên</th>
                     <th style="color: white;">Số lượng</th>
                     <th style="color: white;">Đơn giá</th>
-                    <th style="color: white;">Giảm giá</th>
+                    <th style="color: white;">Biến thể</th>
                     <th style="color: white;">Trạng thái</th>
                     <th style="color: white;"></th>
                 </tr>
@@ -104,9 +104,10 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn-edit">
-                            100.000 đ
-                        </a>
+                        <button class="btn btn-sm btn-outline-warning">Nhỏ</button> ,
+                        <button class="btn btn-sm btn-outline-warning">Lớn</button> ,
+                        <button class="btn btn-sm btn-outline-warning">Nhỏ</button> ,
+                        <button class="btn btn-sm btn-outline-warning">Lớn</button>
                     </td>
                     <td>
                         <div class="form-check form-switch">
@@ -144,12 +145,14 @@
 </div>
 
 
-<div class="model" [class.hidden]="!isShow">
+<div class="model" [class.hidden]="isShow">
     <div class="model--content">
         <div class="model--content--header">
             <h4 class="title m-0">Thêm sản phẩm</h4>
             <button class="btn btn-sm btn-danger" (click)="isShow = false"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div class="model--content--body"></div>
+        <div class="model--content--body">
+            <app-create-product></app-create-product>
+        </div>
     </div>
 </div>

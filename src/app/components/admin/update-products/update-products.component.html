@@ -1,0 +1,134 @@
+<div class="row p-4">
+    <div class="cart col-8">
+        <div class="row">
+            <div class="col-6">
+                <div>
+                    <label for="defaultFormControlInput" class="form-label">Hình ảnh</label>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple="">
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <label for="defaultFormControlInput" class="form-label">Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                        aria-describedby="defaultFormControlHelp">
+                    <div id="defaultFormControlHelp" class="form-text text-danger">
+                        We'll never share your details with anyone else.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-4">
+            <div class="col-6">
+                <div class="image d-flex gap-3 flex-wrap">
+                    <div class="position-relative" *ngFor="let item of list">
+                        <img src="https://images.pexels.com/photos/25584126/pexels-photo-25584126/free-photo-of-a-camera-and-sunglasses-on-a-table-next-to-a-cup-of-coffee.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
+                            alt="" class="rounded-1">
+                        <button class="btn btn-sm btn-danger position-absolute" style="top: 0px; right: 0px; "><i
+                                class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <label for="defaultFormControlInput" class="form-label">Loại sản phẩm</label>
+                    <select id="defaultSelect" class="form-select">
+                        <option>Default select</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <label for="defaultFormControlInput" class="form-label">Kích thước</label>
+                    <div class="row">
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="defaultFormControlInput"
+                                placeholder="Kích thước">
+                        </div>
+                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
+                                placeholder="Đơn giá"></div>
+                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
+                                placeholder="Số lượng"></div>
+                        <div class="col-3">
+                            <button class="btn btn-primary w-100">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="can--turn mt-4">
+                    <div class="row mt-4" *ngFor="let item of list">
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                                disabled>
+                        </div>
+                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
+                                placeholder="John Doe" disabled></div>
+                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
+                                placeholder="John Doe" disabled></div>
+                        <div class="col-3">
+                            <button class="btn btn-outline-danger w-100">Xóa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <div>
+                <label for=" defaultFormControlInput" class="form-label text-primary">
+                    Mô tả sản phẩm do AI tạo
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </label>
+                <div class="row">
+                    <div class="col-10">
+                        <input type="text" class="form-control" placeholder="Nhập gợi ý mô tả sản phẩm....."
+                            [(ngModel)]="prompt">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary w-100" (click)="CreateDes()"
+                            [disabled]="!prompt.trim() || isLoading">
+                            <div *ngIf="!isLoading">
+                                Tạo
+                            </div>
+                            <div class="spinner-border" role="status" style="width: 20px; height: 20px;"
+                                *ngIf="isLoading">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-3" *ngIf="desption.trim()">
+                    <label for=" defaultFormControlInput" class="form-label fw-bold">
+                        Kết quả trả về
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </label>
+                    <p class="text-justify">
+                        {{desption}}
+                        <button class="btn btn-sm btn-primary mx-3" (click)="BntUsing(desption)">Sử dụng</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <div>
+                <label for="defaultFormControlInput" class="form-label">
+                    Mô tả sản phẩm
+                </label>
+                <div>
+                    <textarea class="form-control" style="height: 6rem;">
+                        {{describe}}
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cart col-4">
+        <div class="row">
+            <div style="width: 100%; height: 40rem; border: 1px solid black;">
+
+            </div>
+            <button class="btn btn-primary w-100 mt-3">Thêm sản phẩm mới</button>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,7 @@ import { CreateProductComponent } from './create-product/create-product.componen
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { UpdateProductsComponent } from './update-products/update-products.component';
 
 const _routes: Routes = [
   {
@@ -24,7 +25,7 @@ const _routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [HomeComponent, ProductsComponent, CreateProductComponent],
+  declarations: [HomeComponent, ProductsComponent, CreateProductComponent, UpdateProductsComponent],
   imports: [
     BrowserModule,
     CommonModule,

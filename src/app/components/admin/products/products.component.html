@@ -115,7 +115,7 @@
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">
+                        <button class="btn btn-sm btn-outline-primary" (click)="create = false ; isShow = true">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </td>
@@ -145,14 +145,18 @@
 </div>
 
 
-<div class="model" [class.hidden]="isShow">
+<div class="model" [class.hidden]="!isShow">
     <div class="model--content">
         <div class="model--content--header">
-            <h4 class="title m-0">Thêm sản phẩm</h4>
-            <button class="btn btn-sm btn-danger" (click)="isShow = false"><i class="fa-solid fa-xmark"></i></button>
+            <h4 class="title m-0">
+                {{create ? 'Thêm sản phẩm' : 'Cập nhật sản phẩm' }}
+            </h4>
+            <button class="btn btn-sm btn-danger" (click)="isShow = false; create = true"><i
+                    class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="model--content--body">
-            <app-create-product></app-create-product>
+            <app-create-product *ngIf="create"></app-create-product>
+            <app-update-products *ngIf="!create"></app-update-products>
         </div>
     </div>
 </div>

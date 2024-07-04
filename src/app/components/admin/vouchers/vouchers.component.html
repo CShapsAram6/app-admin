@@ -1,0 +1,104 @@
+<section class="card p-4">
+    <div class="d-flex align-items-center gap-5 border-bottom pb-3">
+        <h5 class="m-0 fw-bold text-uppercase">Phân tích</h5>
+        <div class="btn-group">
+            <button type="button" class="btn--dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Tất cả khuyến mãi
+                <i class="fa-solid fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu" style="width: 19rem;">
+                <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0);">Another action</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0);">Something else here</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li class="px-2 py-1">
+                    <button class="btn btn-primary d-flex align-items-center justify-content-between"
+                        style="width: 100%;">
+                        Thêm
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="voucher mt-4 d-flex align-items-center" style="gap: 25rem;">
+        <div class="vouvher-item">
+            <h6 class="text-uppercase fw-bold">Tổng tiền</h6>
+            <p class="m-0 fw-bold">100.000 đ</p>
+        </div>
+        <div class="vouvher-item">
+            <h6 class="text-uppercase fw-bold">Đơn hàng</h6>
+            <p class="m-0 fw-bold">100.000 đ</p>
+        </div>
+        <div class="vouvher-item">
+            <h6 class="text-uppercase fw-bold">Khách hàng</h6>
+            <p class="m-0 fw-bold">100.000 đ</p>
+        </div>
+    </div>
+</section>
+<section class="card p-4 mt-4">
+    <div class="list-tab">
+        <div>
+            <button class="btn--tab btn--active">Tất cả</button>
+            <button class="btn--tab">Đang diễn ra</button>
+            <button class="btn--tab">Sắp tới</button>
+            <button class="btn--tab">Đã hủy kích hoạt</button>
+            <button class="btn--tab">Đã kết thúc</button>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-4">
+            <div class="group--search">
+                <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
+                    aria-describedby="defaultFormControlHelp">
+                <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-primary w-100">Tạo khuyễn mãi mới</button>
+        </div>
+    </div>
+
+    <div class="table-responsive text-nowrap mt-4">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th style="color: white;">STT</th>
+                    <th style="color: white;">Tên khuyến mãi</th>
+                    <th style="color: white;">Trạng thái</th>
+                    <th style="color: white;">Ngày bắt đầu</th>
+                    <th style="color: white;">Ngày kết thúc</th>
+                    <th style="color: white;">Điều kiện</th>
+                    <th style="color: white;"></th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0 mt-4">
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary">Lê Văn A</button>
+                    </td>
+                    <td>
+                        20/20/2002
+                    </td>
+                    <td>
+                        <span class="fw-bold text-primary">Đã thanh toán</span>
+                    </td>
+                    <td>
+                        100.000 đ
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary">Đang chờ xử lý</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

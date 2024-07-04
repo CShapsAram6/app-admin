@@ -54,10 +54,28 @@
                 </li>
 
                 <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Khuyến mãi</span>
+                </li>
+                <li class="menu-item" routerLinkActive="active">
+                    <a [routerLink]="['/admin/vouchers']" class="menu-link">
+                        <i class="fa-solid fa-ticket me-3"></i>
+                        <div data-i18n="Layouts">Quản lý khuyến mãi</div>
+                    </a>
+                </li>
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">KHách hàng</span>
+                </li>
+                <li class="menu-item" routerLinkActive="active">
+                    <a [routerLink]="['/admin/users']" class="menu-link">
+                        <i class="fa-solid fa-user me-3"></i>
+                        <div data-i18n="Layouts">Quản lý khách hàng</div>
+                    </a>
+                </li>
+                <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Bài viết</span>
                 </li>
                 <li class="menu-item" routerLinkActive="active">
-                    <a [routerLink]="['/admin/blog']" class="menu-link">
+                    <a [routerLink]="['/admin/blogs']" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-layout"></i>
                         <div data-i18n="Layouts">Bài viết</div>
                     </a>

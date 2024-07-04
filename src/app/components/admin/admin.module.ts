@@ -12,6 +12,9 @@ import { UpdateProductsComponent } from './update-products/update-products.compo
 import { OrdersComponent } from './orders/orders.component';
 import { CancelComponent } from './cancel/cancel.component';
 import { ReturnComponent } from './return/return.component';
+import { VouchersComponent } from './vouchers/vouchers.component';
+import { UsersComponent } from './users/users.component';
+import { BlogsComponent } from './blogs/blogs.component';
 
 const _routes: Routes = [
   {
@@ -35,6 +38,21 @@ const _routes: Routes = [
         component: ReturnComponent,
         title: 'Quản lý yêu cầu hủy',
       },
+      {
+        path: 'vouchers',
+        component: VouchersComponent,
+        title: 'Quản lý vouchers',
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        title: 'Quản lý người dùng',
+      },
+      {
+        path: 'blogs',
+        component: BlogsComponent,
+        title: 'Quản lý bài viết',
+      },
     ],
   },
 ];
@@ -47,6 +65,9 @@ const _routes: Routes = [
     OrdersComponent,
     CancelComponent,
     ReturnComponent,
+    VouchersComponent,
+    UsersComponent,
+    BlogsComponent,
   ],
   imports: [
     BrowserModule,

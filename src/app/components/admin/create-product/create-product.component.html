@@ -4,7 +4,8 @@
             <div class="col-6">
                 <div>
                     <label for="defaultFormControlInput" class="form-label">Hình ảnh</label>
-                    <input class="form-control" type="file" id="formFileMultiple" multiple="">
+                    <input class="form-control" type="file" id="formFileMultiple" multiple=""
+                        (change)="onFilesSelected($event)">
                 </div>
             </div>
             <div class="col-6">
@@ -22,10 +23,10 @@
         <div class="row mt-4">
             <div class="col-6">
                 <div class="image d-flex gap-3 flex-wrap">
-                    <div class="position-relative" *ngFor="let item of list">
-                        <img src="https://images.pexels.com/photos/25584126/pexels-photo-25584126/free-photo-of-a-camera-and-sunglasses-on-a-table-next-to-a-cup-of-coffee.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-                            alt="" class="rounded-1">
-                        <button class="btn btn-sm btn-danger position-absolute" style="top: 0px; right: 0px; "><i
+                    <div class="position-relative" *ngFor="let item of imageUrls">
+                        <img [src]="item.url" alt="" class="rounded-1">
+                        <button class="btn btn-sm btn-danger position-absolute btn-max-sm"
+                            (click)="RemoveItem(item.index)" style="top: 0px; right: 0px;"><i
                                 class="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>

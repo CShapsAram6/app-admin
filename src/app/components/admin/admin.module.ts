@@ -7,7 +7,7 @@ import { AdminComponent } from './admin.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateProductsComponent } from './update-products/update-products.component';
 import { OrdersComponent } from './orders/orders.component';
 import { CancelComponent } from './cancel/cancel.component';
@@ -75,6 +75,7 @@ const _routes: Routes = [
     RouterModule.forChild(_routes),
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class AdminModule {}

@@ -35,42 +35,67 @@
                 <div>
                     <label for="defaultFormControlInput" class="form-label">Loại sản phẩm</label>
                     <select id="defaultSelect" class="form-select">
-                        <option>Default select</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option [value]="item.id" *ngFor="let item of categorys">
+                            {{item.name}}
+                        </option>
                     </select>
                 </div>
                 <div class="mt-4">
                     <label for="defaultFormControlInput" class="form-label">Kích thước</label>
-                    <div class="row">
-                        <div class="col-3">
-                            <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="Kích thước">
+                    <form [formGroup]="formSize">
+                        <div class="row">
+                            <div class="col-3">
+                                <select name="" id="" class="form-control" formControlName="size">
+                                    <option [value]="item" *ngFor="let item of sizes">
+                                        {{item}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="defaultFormControlInput"
+                                    placeholder="Đơn giá" formControlName="price">
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="defaultFormControlInput"
+                                    placeholder="Số lượng" formControlName="quantity">
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-primary w-100" (click)="OnSumbit()"
+                                    [disabled]="formSize.invalid">
+                                    Thêm
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="Đơn giá"></div>
-                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="Số lượng"></div>
-                        <div class="col-3">
-                            <button class="btn btn-primary w-100">Thêm</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-
                 <div class="can--turn mt-4">
-                    <div class="row mt-4" *ngFor="let item of list">
-                        <div class="col-3">
-                            <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
-                                disabled>
-                        </div>
-                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="John Doe" disabled></div>
-                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="John Doe" disabled></div>
-                        <div class="col-3">
-                            <button class="btn btn-outline-danger w-100">Xóa</button>
-                        </div>
+                    <div class="row">
+                        <table class="table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="color: white;">Size</th>
+                                    <th style="color: white;">Đơn giá</th>
+                                    <th style="color: white;">Số lượng</th>
+                                    <th style="color: white;"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0 mt-4">
+                                <tr *ngFor="let item of listSize">
+                                    <td> {{item.size}} </td>
+                                    <td>
+                                        {{item.price | currency:' ':'symbol':'1.0-0'}}.000 đ
+                                    </td>
+                                    <td>
+                                        {{item.quantity}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger" (click)="RemoveSize(item )">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

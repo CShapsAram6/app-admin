@@ -16,6 +16,19 @@ interface productsDtos {
   category: number;
 }
 
+interface productsUpdateDtos {
+  id: number;
+  name: string;
+  images: imageDtos[];
+  variants: variantResponse[];
+  category: number;
+  description: string;
+}
+interface imageDtos {
+  id: number;
+  link: string;
+  isActive: boolean;
+}
 class productsModel {
   static formRequest(
     name: string,
@@ -33,4 +46,9 @@ class productsModel {
     return formData;
   }
 }
-export { productCreateRequest, productsModel, productsDtos };
+export {
+  productCreateRequest,
+  productsModel,
+  productsDtos,
+  productsUpdateDtos,
+};

@@ -16,7 +16,7 @@ import { VouchersComponent } from './vouchers/vouchers.component';
 import { UsersComponent } from './users/users.component';
 import { BlogsComponent } from './blogs/blogs.component';
 
-import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { EditorModule } from '@tinymce/tinymce-angular';
 const _routes: Routes = [
   {
     path: 'admin',
@@ -27,6 +27,13 @@ const _routes: Routes = [
         path: 'products',
         component: ProductsComponent,
         title: 'Quản lý sản phẩm',
+        children: [
+          {
+            path: ':id',
+            component: UpdateProductsComponent,
+            title: 'Cập nhật sản phẩm',
+          },
+        ],
       },
       { path: 'order', component: OrdersComponent, title: 'Quản lý đơn hàng' },
       {

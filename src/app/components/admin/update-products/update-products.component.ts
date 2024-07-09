@@ -9,6 +9,8 @@ import {
 } from '../../../model/products.model';
 import { CategorysService } from '../../../services/categorys.service';
 import { ProductsService } from '../../../services/products.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin, tap } from 'rxjs';
 
 @Component({
   selector: 'app-update-products',
@@ -20,9 +22,9 @@ export class UpdateProductsComponent implements OnInit {
     private ai: AiGenderService,
     private categorysServices: CategorysService,
     private form: FormBuilder,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private route: ActivatedRoute
   ) {}
-  list: number[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   prompt: string = 'Mô tả về cây thông trồng trong nhà ngắn gọn';
   aiResponse: string = '';
   // describe products
@@ -47,15 +49,31 @@ export class UpdateProductsComponent implements OnInit {
   // list category
   categorys: categoryDtos[] = [];
   ngOnInit(): void {
-    this.LoadCategory();
+    this.formSize.get('size')!.setValue(this.sizes[0]);
+    forkJoin([this.LoadCategory(), this.LoadProduct()]).subscribe({
+      next: (results) => {
+        console.log(results);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
   LoadCategory() {
-    this.formSize.get('size')!.setValue(this.sizes[0]);
-
-    this.categorysServices.getData().subscribe((res) => {
-      this.categorys = res;
-      this.category = this.categorys[0].id.toString();
-    });
+    return this.categorysServices.getData().pipe(
+      tap((res) => {
+        this.categorys = res;
+        this.category = this.categorys[0].id.toString();
+      })
+    );
+  }
+  LoadProduct() {
+    const idParameter: number = this.route.snapshot.params['id'];
+    return this.productsService.getOnlyProduct(idParameter).pipe(
+      tap((res) => {
+        console.log(res.data);
+      })
+    );
   }
   CreateDes() {
     this.isLoading = true;

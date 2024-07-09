@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from '../../../services/order.service';
+import { orderDto } from '../../../model/order.model';
 
 interface Order {
   id: number;
@@ -16,24 +18,23 @@ interface Order {
   styleUrl: './orders.component.scss'
 })
 export class OrdersComponent implements OnInit {
-  ngOnInit() {}
+  constructor (private order: OrderService) {}
+  ngOnInit(): void {
+    this.loadOrders();
+  }
 
+  countOrder: number = 0;
   activeTab = 'Tất cả';
-  orders: Order[] = [
-    { id: 1, ten: 'Nguyễn Thanh Huy', trangThaiThanhToan: 'Đã thanh toán', tongTien: 2000000, ngayDat: '20/20/2002', trangThaiDonHang: 'Hoàn tất' },
-    { id: 2, ten: 'Trần Văn An', trangThaiThanhToan: 'Chưa thanh toán', tongTien: 1500000, ngayDat: '19/12/2023', trangThaiDonHang: 'Chờ xử lý' },
-    { id: 3, ten: 'Lê Thị Hoa', trangThaiThanhToan: 'Đã thanh toán', tongTien: 3000000, ngayDat: '18/11/2023', trangThaiDonHang: 'Đang giao' },
-    { id: 4, ten: 'Phạm Minh Tuấn', trangThaiThanhToan: 'Đã thanh toán', tongTien: 1200000, ngayDat: '17/10/2023', trangThaiDonHang: 'Hoàn tất' },
-    { id: 5, ten: 'Vũ Thị Lan', trangThaiThanhToan: 'Chưa thanh toán', tongTien: 2500000, ngayDat: '16/09/2023', trangThaiDonHang: 'Đã hủy' },
-    { id: 6, ten: 'Hoàng Văn Nam', trangThaiThanhToan: 'Đã thanh toán', tongTien: 1800000, ngayDat: '15/08/2023', trangThaiDonHang: 'Chờ xử lý' },
-    { id: 7, ten: 'Đặng Thị Mai', trangThaiThanhToan: 'Chưa thanh toán', tongTien: 3200000, ngayDat: '14/07/2023', trangThaiDonHang: 'Đang giao' },
-    { id: 8, ten: 'Bùi Văn Công', trangThaiThanhToan: 'Đã thanh toán', tongTien: 2100000, ngayDat: '13/06/2023', trangThaiDonHang: 'Hoàn tất' },
-    { id: 9, ten: 'Ngô Thị Hà', trangThaiThanhToan: 'Đã thanh toán', tongTien: 1700000, ngayDat: '12/05/2023', trangThaiDonHang: 'Đã hủy' },
-    { id: 10, ten: 'Dương Văn Đức', trangThaiThanhToan: 'Chưa thanh toán', tongTien: 2800000, ngayDat: '11/04/2023', trangThaiDonHang: 'Chờ xử lý' }
-  ];
+  orders: orderDto[] = [];
+  filteredOrders: orderDto[] = [];
 
-  filteredOrders: any[] = this.orders;
-
+  loadOrders() {
+    this.order.getData().subscribe((data) => {
+      this.orders = data;
+      this.filteredOrders = data;
+      this.countOrder = this.orders.length;
+    });
+  }
 
   getTabs() {
     return ['Tất cả', 'Chờ xử lý', 'Đang giao', 'Hoàn tất', 'Đã hủy'];
@@ -41,17 +42,29 @@ export class OrdersComponent implements OnInit {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
-    console.log(this.activeTab);
     this.filterOrders();
-    console.log(this.filteredOrders);
   }
 
   filterOrders() {
     if (this.activeTab === 'Tất cả') {
-      this.filteredOrders = this.orders
+      this.filteredOrders = this.orders;
+      this.countOrder = this.orders.length;
     }
-    else{
-      this.filteredOrders = this.orders.filter(order => order.trangThaiDonHang === this.activeTab);
+    else if (this.activeTab === 'Chờ xử lý') {
+      this.filteredOrders = this.orders.filter(order => order.statusOrder === 1);
+      this.countOrder = this.orders.filter(order => order.statusOrder === 1).length;
+    }
+    else if (this.activeTab === 'Đang giao') {
+      this.filteredOrders = this.orders.filter(order => order.statusOrder === 2);
+      this.countOrder = this.orders.filter(order => order.statusOrder === 2).length;
+    }
+    else if (this.activeTab === 'Hoàn tất') {
+      this.filteredOrders = this.orders.filter(order => order.statusOrder === 3);
+      this.countOrder = this.orders.filter(order => order.statusOrder === 3).length;
+    }
+    else if (this.activeTab === 'Đã hủy') {
+      this.filteredOrders = this.orders.filter(order => order.statusOrder === 4);
+      this.countOrder = this.orders.filter(order => order.statusOrder === 4).length;
     }
   }
 }

@@ -18,7 +18,7 @@
   </div>
   <div class="header--bottom">
     <div class="text-uppercase fw-bold">
-      Có 19 đơn hàng
+      Có {{countOrder}} đơn hàng
     </div>
     <div class="header--bottom--button">
       <button class="btn btn-primary">Xuất dữ liệu
@@ -34,31 +34,36 @@
       <thead class="table-dark">
         <tr>
           <th style="color: white;">STT</th>
-          <th style="color: white;">Người mua</th>
-          <th style="color: white;">Ngày tháng</th>
+          <th style="color: white;">Tên khách hàng</th>
+          <th style="color: white;">Ngày đặt hàng</th>
           <th style="color: white;">Thanh toán</th>
           <th style="color: white;">Tổng tiền</th>
           <th style="color: white;">Trạng thái đơn hàng</th>
           <th style="color: white;"></th>
         </tr>
       </thead>
-      <tbody class="table-border-bottom-0 mt-4" *ngFor="let order of filteredOrders">
+      <tbody class="table-border-bottom-0 mt-4 fs-6" *ngFor="let order of filteredOrders; let i = index">
         <tr>
-          <td>1</td>
+          <td>{{i+1}}</td>
           <td>
-            <button class="btn btn-sm btn-outline-primary">{{order.ten}}</button>
+            <button class="btn btn-sm btn-outline-primary fs-6">Nguyễn Văn A</button>
           </td>
           <td>
-            {{order.ngayDat}}
+            {{order.timeCreate | date:'dd/MM/yyyy'}}
           </td>
           <td>
-            <span class="fw-bold text-primary">{{order.trangThaiThanhToan}}</span>
+            <span class="fw-bold text-primary" *ngIf="order.paymentMethod === 1">COD</span>
+            <span class="fw-bold text-primary" *ngIf="order.paymentMethod === 2">VNPAY</span>
+            <span class="fw-bold text-primary" *ngIf="order.paymentMethod === 3">ZaloPay</span>
           </td>
           <td>
-            {{order.tongTien}}đ
+            {{order.total.toLocaleString()}}₫
           </td>
           <td>
-            <button class="btn btn-sm btn-outline-primary">{{order.trangThaiDonHang}}</button>
+            <button class="btn btn-sm btn-warning fs-6" *ngIf="order.statusOrder === 1">Chờ xử lý</button>
+            <button class="btn btn-sm btn-info fs-6" *ngIf="order.statusOrder === 2">Đang giao</button>
+            <button class="btn btn-sm btn-success fs-6" *ngIf="order.statusOrder === 3">Hoàn thành</button>
+            <button class="btn btn-sm btn-danger fs-6" *ngIf="order.statusOrder === 4">Đã hủy</button>
           </td>
           <td>
             <button class="btn btn-sm btn-outline-primary">

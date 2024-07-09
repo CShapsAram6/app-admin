@@ -117,7 +117,8 @@
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" (click)="create = false ; isShow = true">
+                        <button class="btn btn-sm btn-outline-primary" [routerLink]="[item.id]"
+                            (click)="create = false ; isShow = true">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </td>
@@ -151,12 +152,15 @@
             <h4 class="title m-0">
                 {{create ? 'Thêm sản phẩm' : 'Cập nhật sản phẩm' }}
             </h4>
-            <button class="btn btn-sm btn-danger" (click)="isShow = false; create = true"><i
-                    class="fa-solid fa-xmark"></i></button>
+            <button class="btn btn-sm btn-danger" (click)="isShow = false; create = true"
+                [routerLink]="['/admin/products']">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
         <div class="model--content--body">
             <app-create-product *ngIf="create"></app-create-product>
-            <app-update-products *ngIf="!create"></app-update-products>
+            <!-- <app-update-products *ngIf="!create"></app-update-products> -->
+            <router-outlet *ngIf="!create"></router-outlet>
         </div>
     </div>
 </div>

@@ -23,7 +23,6 @@ export class CreateProductComponent implements OnInit {
     private form: FormBuilder,
     private productsService: ProductsService
   ) {}
-  list: number[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   prompt: string = 'Mô tả về cây thông trồng trong nhà ngắn gọn';
   aiResponse: string = '';
   // describe products

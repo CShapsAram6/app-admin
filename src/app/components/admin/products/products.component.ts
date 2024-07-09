@@ -16,7 +16,7 @@ export class ProductsComponent implements OnInit {
   // variable array products
   products: productsDtos[] = [];
   // quantity and price product by size item
-  
+
   ngOnInit(): void {
     this.LoadProducts();
   }
@@ -25,7 +25,6 @@ export class ProductsComponent implements OnInit {
     this.productsSercive
       .getData()
       .subscribe((resposen: ApiResponse<productsDtos[]>) => {
-        console.log(resposen.data);
         this.products = resposen.data;
       });
   }

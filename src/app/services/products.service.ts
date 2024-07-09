@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../model/ApiResponse.model';
-import { productCreateRequest } from '../model/products.model';
+import { productCreateRequest, productsDtos } from '../model/products.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,11 @@ export class ProductsService {
     return this.http.post<ApiResponse<productCreateRequest>>(
       `${environment.api}/Product/create-products`,
       form
+    );
+  }
+  getData(): Observable<ApiResponse<productsDtos[]>> {
+    return this.http.get<ApiResponse<productsDtos[]>>(
+      `${environment.api}/Product`
     );
   }
 }

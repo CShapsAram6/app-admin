@@ -16,6 +16,7 @@ import { VouchersComponent } from './vouchers/vouchers.component';
 import { UsersComponent } from './users/users.component';
 import { BlogsComponent } from './blogs/blogs.component';
 
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 const _routes: Routes = [
   {
     path: 'admin',
@@ -76,6 +77,7 @@ const _routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    EditorModule,
   ],
 })
 export class AdminModule {}

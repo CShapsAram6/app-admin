@@ -2,12 +2,18 @@ interface categoryDtos {
   id: number;
   name: string;
 }
-
 interface variant {
   id: string;
   size: string;
   price: string;
   quantity: string;
+}
+interface variantResponse {
+  id: number;
+  size: number;
+  price: number;
+  quantity: number;
+  status: boolean;
 }
 
 class shared {
@@ -24,4 +30,4 @@ class shared {
   }
 }
 
-export { categoryDtos, variant, shared };
+export { categoryDtos, variant, shared, variantResponse };

@@ -63,6 +63,7 @@
     </div>
 </div>
 
+<!-- content -->
 <div class="card mt-4">
     <div class="table-responsive text-nowrap">
         <table class="table">
@@ -79,23 +80,23 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0 mt-4">
-                <tr>
-                    <td>1</td>
+                <tr *ngFor="let item of products ; let i = index">
                     <td>
-
+                        {{i + 1}}
+                    </td>
+                    <td>
                         <button class="btn--zoom avatar" data-bs-toggle="modal" data-bs-target="#basicModal">
-                            <img
-                                src="https://images.pexels.com/photos/10547966/pexels-photo-10547966.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load">
+                            <img src="https://localhost:7133/api/Image/images-detal/{{item.image}}">
                         </button>
                     </td>
                     <td>
                         <a class="btn-edit">
-                            Product 1
+                            {{item.name}}
                         </a>
                     </td>
                     <td>
                         <a class="btn-edit">
-                            10
+                            {{item.variants[0].quantity}}
                         </a>
                     </td>
                     <td>
@@ -104,10 +105,11 @@
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-warning">Nhỏ</button> ,
-                        <button class="btn btn-sm btn-outline-warning">Lớn</button> ,
-                        <button class="btn btn-sm btn-outline-warning">Nhỏ</button> ,
-                        <button class="btn btn-sm btn-outline-warning">Lớn</button>
+                        <div class="d-flex gap-2">
+                            <button *ngFor="let variant of item.variants" class="btn btn-sm btn-outline-warning">
+                                Size {{variant.size}}
+                            </button>
+                        </div>
                     </td>
                     <td>
                         <div class="form-check form-switch">
@@ -124,7 +126,7 @@
         </table>
     </div>
 </div>
-
+<!-- content -->
 
 <div class="mt-3">
     <!-- Modal -->
@@ -143,9 +145,7 @@
         </div>
     </div>
 </div>
-
-
-<div class="model" [class.hidden]="isShow">
+<div class="model" [class.hidden]="!isShow">
     <div class="model--content">
         <div class="model--content--header">
             <h4 class="title m-0">

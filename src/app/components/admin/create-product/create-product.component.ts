@@ -119,10 +119,9 @@ export class CreateProductComponent implements OnInit {
     this.productsService
       .create(form)
       .subscribe((res: ApiResponse<productCreateRequest>) => {
-        if (res.success == false) {
-          return;
+        if (res.success) {
+          window.location.reload();
         }
-        console.log(res);
       });
   }
 }

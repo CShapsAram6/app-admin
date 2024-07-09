@@ -1,4 +1,4 @@
-import { variant } from './category.model';
+import { variant, variantResponse } from './category.model';
 
 interface productCreateRequest {
   name: string;
@@ -7,6 +7,15 @@ interface productCreateRequest {
   images: File[];
   variants: variant[];
 }
+
+interface productsDtos {
+  id: number;
+  name: string;
+  image: string;
+  variants: variantResponse[];
+  category: number;
+}
+
 class productsModel {
   static formRequest(
     name: string,
@@ -24,4 +33,4 @@ class productsModel {
     return formData;
   }
 }
-export { productCreateRequest, productsModel };
+export { productCreateRequest, productsModel, productsDtos };

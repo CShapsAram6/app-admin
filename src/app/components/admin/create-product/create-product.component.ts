@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AiGenderService } from '../../../services/ai-gender.service';
 import { CategorysService } from '../../../services/categorys.service';
+import { categoryDtos, shared, variant } from '../../../model/category.model';
+import { FormBuilder, Validators } from '@angular/forms';
+import { share } from 'rxjs';
 
 @Component({
   selector: 'app-create-product',
@@ -10,7 +13,8 @@ import { CategorysService } from '../../../services/categorys.service';
 export class CreateProductComponent implements OnInit {
   constructor(
     private ai: AiGenderService,
-    private categorysServices: CategorysService
+    private categorysServices: CategorysService,
+    private form: FormBuilder
   ) {}
   list: number[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   prompt: string = 'Mô tả về cây thông trồng trong nhà ngắn gọn';
@@ -18,12 +22,31 @@ export class CreateProductComponent implements OnInit {
   describe: string = '';
   isLoading: boolean = false;
   imageUrls: { url: string; index: number; file: File }[] = [];
+
+  // list object size
+  listSize: variant[] = [];
+  // form size
+  formSize = this.form.group({
+    size: ['', Validators.required],
+    price: [
+      '',
+      [Validators.required, Validators.maxLength(3), Validators.minLength(2)],
+    ],
+    quantity: ['', [Validators.required, Validators.maxLength(3)]],
+  });
+  // list size
+  sizes: string[] = ['Lớn', 'Vừa', 'Nhỏ'];
+  // list category
+  categorys: categoryDtos[] = [];
   ngOnInit(): void {
+    this.LoadCategory();
+  }
+  LoadCategory() {
+    this.formSize.get('size')!.setValue(this.sizes[0]);
     this.categorysServices.getData().subscribe((res) => {
-      console.log(res);
+      this.categorys = res;
     });
   }
-
   CreateDes() {
     this.isLoading = true;
     this.ai.callAI(this.prompt).subscribe((res) => {
@@ -58,5 +81,16 @@ export class CreateProductComponent implements OnInit {
   }
   RemoveItem(index: number) {
     this.imageUrls = this.imageUrls.filter((_, i) => i !== index);
+  }
+  RemoveSize(item: variant) {
+    const index = this.listSize.findIndex((a) => item.id === a.id);
+    this.listSize = this.listSize.filter((_, i) => i !== index);
+  }
+
+  // sumbit form
+  OnSumbit() {
+    let data: variant = this.formSize.value as variant;
+    data.id = shared.getRandomString(3);
+    this.listSize.push(data);
   }
 }

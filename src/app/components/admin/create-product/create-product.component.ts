@@ -3,8 +3,14 @@ import { AiGenderService } from '../../../services/ai-gender.service';
 import { CategorysService } from '../../../services/categorys.service';
 import { categoryDtos, shared, variant } from '../../../model/category.model';
 import { FormBuilder, Validators } from '@angular/forms';
-import { share } from 'rxjs';
-
+import { Observable, share } from 'rxjs';
+import {
+  productCreateRequest,
+  productsModel,
+} from '../../../model/products.model';
+import { ProductsService } from '../../../services/products.service';
+import { HttpResponse } from '@angular/common/http';
+import { ApiResponse } from '../../../model/ApiResponse.model';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -14,28 +20,31 @@ export class CreateProductComponent implements OnInit {
   constructor(
     private ai: AiGenderService,
     private categorysServices: CategorysService,
-    private form: FormBuilder
+    private form: FormBuilder,
+    private productsService: ProductsService
   ) {}
   list: number[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   prompt: string = 'Mô tả về cây thông trồng trong nhà ngắn gọn';
-  desption: string = '';
+  aiResponse: string = '';
+  // describe products
   describe: string = '';
   isLoading: boolean = false;
+  // array image
   imageUrls: { url: string; index: number; file: File }[] = [];
-
+  // model name product
+  name: string = '';
+  // model category
+  category: string = '';
   // list object size
   listSize: variant[] = [];
   // form size
   formSize = this.form.group({
     size: ['', Validators.required],
-    price: [
-      '',
-      [Validators.required, Validators.maxLength(3), Validators.minLength(2)],
-    ],
-    quantity: ['', [Validators.required, Validators.maxLength(3)]],
+    price: ['', [Validators.required]],
+    quantity: ['', [Validators.required]],
   });
   // list size
-  sizes: string[] = ['Lớn', 'Vừa', 'Nhỏ'];
+  sizes: string[] = ['1', '2', '3'];
   // list category
   categorys: categoryDtos[] = [];
   ngOnInit(): void {
@@ -43,8 +52,10 @@ export class CreateProductComponent implements OnInit {
   }
   LoadCategory() {
     this.formSize.get('size')!.setValue(this.sizes[0]);
+
     this.categorysServices.getData().subscribe((res) => {
       this.categorys = res;
+      this.category = this.categorys[0].id.toString();
     });
   }
   CreateDes() {
@@ -53,13 +64,13 @@ export class CreateProductComponent implements OnInit {
       if (res) {
         this.isLoading = false;
       }
-      this.desption = res['candidates'][0]['content']['parts'][0]['text'];
+      this.aiResponse = res['candidates'][0]['content']['parts'][0]['text'];
     });
   }
 
   BntUsing(item: string) {
     this.describe = item;
-    this.desption = '';
+    this.aiResponse = '';
   }
 
   // Lấy thông tin hình ảnh
@@ -92,5 +103,26 @@ export class CreateProductComponent implements OnInit {
     let data: variant = this.formSize.value as variant;
     data.id = shared.getRandomString(3);
     this.listSize.push(data);
+  }
+  // call api create product
+  Create() {
+    let form: FormData = productsModel.formRequest(
+      this.name,
+      this.describe,
+      this.listSize,
+      this.category
+    );
+    for (let item of this.imageUrls) {
+      form.append('model.Images', item.file);
+    }
+
+    this.productsService
+      .create(form)
+      .subscribe((res: ApiResponse<productCreateRequest>) => {
+        if (res.success == false) {
+          return;
+        }
+        console.log(res);
+      });
   }
 }

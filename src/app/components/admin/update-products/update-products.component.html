@@ -23,6 +23,14 @@
         <div class="row mt-4">
             <div class="col-6">
                 <div class="image d-flex gap-3 flex-wrap">
+                    <!--  image render form server -->
+                    <div class="position-relative border border-1 h-50 rounded rounded-1" *ngFor="let item of arrImage">
+                        <img src="https://localhost:7133/api/Image/images-detal/{{item.link}}" alt=""
+                            class="rounded-1 h-100">
+                        <button class="btn btn-sm btn-danger position-absolute btn-max-sm" *ngIf="!item.isActive"
+                            style="top: 0px; right: 0px;"><i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
                     <div class="position-relative border border-1 h-50 rounded rounded-1"
                         *ngFor="let item of imageUrls">
                         <img [src]="item.url" alt="" class="rounded-1 h-100">
@@ -77,12 +85,13 @@
                                     <th style="color: white;">Size</th>
                                     <th style="color: white;">Đơn giá</th>
                                     <th style="color: white;">Số lượng</th>
+                                    <th style="color: white;">Trạng thái</th>
                                     <th style="color: white;"></th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0 mt-4">
                                 <tr *ngFor="let item of listSize">
-                                    <td> {{item.size}} </td>
+                                    <td> SIZE {{item.size}} </td>
                                     <td>
                                         {{item.price | currency:' ':'symbol':'1.0-0'}}.000 đ
                                     </td>
@@ -92,6 +101,30 @@
                                     <td>
                                         <button class="btn btn-sm btn-outline-danger" (click)="RemoveSize(item )">
                                             <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- === variant render from database -->
+                                <tr *ngFor="let item of arrayVariant">
+                                    <td class="text-uppercase">
+                                        Size {{item.size}}
+                                    </td>
+                                    <td>
+                                        {{item.price | currency:' ':'symbol':'1.0-0'}}.000 đ
+                                    </td>
+                                    <td>
+                                        {{item.quantity}}
+                                    </td>
+                                    <td>
+                                        <button class="m-0 btn text-danger" [class.text-primary]="item.status">
+                                            {{ item.status ?
+                                            'Còn hàng' :
+                                            'Hết hàng'}}
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fa-regular fa-pen-to-square"></i>
                                         </button>
                                     </td>
                                 </tr>

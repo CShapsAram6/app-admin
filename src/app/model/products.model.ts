@@ -45,6 +45,16 @@ class productsModel {
     }
     return formData;
   }
+
+  static MapToVariant(model: variant): variantResponse {
+    return {
+      id: Number(model.id),
+      size: Number(model.size),
+      price: Number(model.price),
+      quantity: Number(model.quantity),
+      status: true,
+    };
+  }
 }
 export {
   productCreateRequest,

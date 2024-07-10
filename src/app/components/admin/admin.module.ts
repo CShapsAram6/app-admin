@@ -17,6 +17,7 @@ import { UsersComponent } from './users/users.component';
 import { BlogsComponent } from './blogs/blogs.component';
 
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { LoadingComponent } from './loading/loading.component';
 const _routes: Routes = [
   {
     path: 'admin',
@@ -76,6 +77,7 @@ const _routes: Routes = [
     VouchersComponent,
     UsersComponent,
     BlogsComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

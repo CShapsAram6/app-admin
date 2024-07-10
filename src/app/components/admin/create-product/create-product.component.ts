@@ -46,6 +46,7 @@ export class CreateProductComponent implements OnInit {
   sizes: string[] = ['1', '2', '3'];
   // list category
   categorys: categoryDtos[] = [];
+  isLoadingSumbit: boolean = false;
   ngOnInit(): void {
     this.LoadCategory();
   }
@@ -105,6 +106,7 @@ export class CreateProductComponent implements OnInit {
   }
   // call api create product
   Create() {
+    this.isLoadingSumbit = true;
     let form: FormData = productsModel.formRequest(
       this.name,
       this.describe,
@@ -119,7 +121,8 @@ export class CreateProductComponent implements OnInit {
       .create(form)
       .subscribe((res: ApiResponse<productCreateRequest>) => {
         if (res.success) {
-          window.location.reload();
+          this.isLoadingSumbit = false;
+          alert('Thêm thành công');
         }
       });
   }

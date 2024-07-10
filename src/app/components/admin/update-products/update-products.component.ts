@@ -54,11 +54,15 @@ export class UpdateProductsComponent implements OnInit {
     size: ['', Validators.required],
     price: ['', [Validators.required]],
     quantity: ['', [Validators.required]],
+    id: [''],
   });
   // list size
   sizes: string[] = ['1', '2', '3'];
   // list category
   categorys: categoryDtos[] = [];
+
+  isButtonUpdate: boolean = false;
+  isLoadingSumbit: boolean = false;
   ngOnInit(): void {
     this.formSize.get('size')!.setValue(this.sizes[0]);
     forkJoin([this.LoadCategory(), this.LoadProduct()]).subscribe({
@@ -138,7 +142,8 @@ export class UpdateProductsComponent implements OnInit {
     this.listSize.push(data);
   }
   // call api create product
-  Create() {
+  Update() {
+    this.isLoadingSumbit = true;
     let form: FormData = productsModel.formRequest(
       this.name,
       this.describe,
@@ -154,10 +159,50 @@ export class UpdateProductsComponent implements OnInit {
     this.productsService
       .update(form, idParameter)
       .subscribe((res: ApiResponse<productsUpdateDtos>) => {
-        if (res.success == false) {
-          return;
+        if (res.success) {
+          this.isLoadingSumbit = false;
+          this.ngOnInit();
+          this.imageUrls = [];
+          alert('Cập nhật thành công');
         }
-        console.log(res);
       });
+  }
+
+  // Mount the value form variant
+  IsMountFormVariant(item: variantResponse) {
+    this.isButtonUpdate = true;
+    this.formSize.setValue({
+      size: item.size.toString(),
+      price: item.price.toString(),
+      quantity: item.quantity.toString(),
+      id: item.id.toString(),
+    });
+  }
+  SaveChangeVatiant() {
+    let vartiant: variantResponse = productsModel.MapToVariant(
+      this.formSize.value as variant
+    );
+    this.productsService.updateVariant(vartiant).subscribe((response) => {
+      if (response.success) {
+        this.isButtonUpdate = false;
+        this.ngOnInit();
+        this.resetForm();
+        return;
+      }
+      console.log(response);
+    });
+  }
+
+  cancelForm() {
+    this.isButtonUpdate = false;
+    this.resetForm();
+  }
+  resetForm() {
+    this.formSize.setValue({
+      size: this.sizes[0].toString(),
+      price: '',
+      quantity: '',
+      id: '',
+    });
   }
 }

@@ -18,6 +18,7 @@ import { BlogsComponent } from './blogs/blogs.component';
 
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { LoadingComponent } from './loading/loading.component';
+import { VariantComponent } from './variant/variant.component';
 const _routes: Routes = [
   {
     path: 'admin',
@@ -33,6 +34,11 @@ const _routes: Routes = [
             path: ':id',
             component: UpdateProductsComponent,
             title: 'Cập nhật sản phẩm',
+          },
+          {
+            path: 'variant/:id',
+            component: VariantComponent,
+            title: 'Quản lý kích thước',
           },
         ],
       },
@@ -78,6 +84,7 @@ const _routes: Routes = [
     UsersComponent,
     BlogsComponent,
     LoadingComponent,
+    VariantComponent,
   ],
   imports: [
     BrowserModule,

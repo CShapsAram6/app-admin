@@ -57,7 +57,9 @@
         </div>
 
         <div>
-            <button class="btn btn-primary" (click)="isShow = true">Thêm sản phẩm mới</button>
+            <button class="btn btn-primary" (click)="isShow = true">
+                Thêm sản phẩm mới
+            </button>
         </div>
 
     </div>
@@ -85,9 +87,9 @@
                         {{i + 1}}
                     </td>
                     <td>
-                        <button class="btn--zoom avatar" data-bs-toggle="modal" data-bs-target="#basicModal">
+                        <div class="btn--zoom avatar">
                             <img src="https://localhost:7133/api/Image/images-detal/{{item.image}}">
-                        </button>
+                        </div>
                     </td>
                     <td>
                         <a class="btn-edit">
@@ -96,7 +98,6 @@
                     </td>
                     <td>
                         <a class="btn-edit">
-                            {{item.variants[0].quantity}}
                         </a>
                     </td>
                     <td>
@@ -106,8 +107,10 @@
                     </td>
                     <td>
                         <div class="d-flex gap-2">
-                            <button *ngFor="let variant of item.variants" class="btn btn-sm btn-outline-warning">
-                                Size {{variant.size}}
+                            <button class="btn btn-sm btn-outline-warning"
+                                (click)="isShow = true; create = false; isVariant = true"
+                                [routerLink]="['variant/'+ item.id]">
+                                <i class="fa-solid fa-eye"></i>
                             </button>
                         </div>
                     </td>
@@ -135,12 +138,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        [routerLink]="['/admin/products']"></button>
                 </div>
                 <div class="modal-body" style="height: 50rem;">
-                    <img style="height: 100%; width: 100%; object-fit: contain;"
-                        src="https://images.pexels.com/photos/10547966/pexels-photo-10547966.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-                        alt="">
+                    <!-- <router-outlet></router-outlet> -->
                 </div>
             </div>
         </div>
@@ -148,12 +150,15 @@
 </div>
 
 <div class="model" [class.hidden]="!isShow">
-    <div class="model--content">
+    <div class="model--content" [class.model--variant]="isVariant">
         <div class="model--content--header">
-            <h4 class="title m-0">
+            <h4 class="title m-0" *ngIf="!isVariant">
                 {{create ? 'Thêm sản phẩm' : 'Cập nhật sản phẩm' }}
             </h4>
-            <button class="btn btn-sm btn-danger" (click)="isShow = false; create = true"
+            <h4 class="title m-0" *ngIf="isVariant">
+                Quản lý kích thước
+            </h4>
+            <button class="btn btn-sm btn-danger" (click)="isShow = false; create = true; isVariant = false"
                 [routerLink]="['/admin/products']">
                 <i class="fa-solid fa-xmark"></i>
             </button>

@@ -24,9 +24,9 @@ export class ProductsService {
       form
     );
   }
-  getData(): Observable<ApiResponse<productsDtos[]>> {
+  getData(page: number): Observable<ApiResponse<productsDtos[]>> {
     return this.http.get<ApiResponse<productsDtos[]>>(
-      `${environment.api}/Product`
+      `${environment.api}/Product/page-${page}`
     );
   }
   getOnlyProduct(id: number): Observable<ApiResponse<productsUpdateDtos>> {
@@ -82,6 +82,12 @@ export class ProductsService {
   DeleteVariant(id: number): Observable<ApiResponse<variantResponse>> {
     return this.http.delete<ApiResponse<variantResponse>>(
       `${environment.api}/Product/delete-variant-${id}`
+    );
+  }
+
+  countLength(): Observable<ApiResponse<number>> {
+    return this.http.get<ApiResponse<number>>(
+      `${environment.api}/Product/get-count`
     );
   }
 }

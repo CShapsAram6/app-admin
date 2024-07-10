@@ -26,7 +26,7 @@ const _routes: Routes = [
     children: [
       { path: '', component: HomeComponent, title: 'Trang chủ' },
       {
-        path: 'products',
+        path: 'products/:page',
         component: ProductsComponent,
         title: 'Quản lý sản phẩm',
         children: [

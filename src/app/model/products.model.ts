@@ -12,7 +12,6 @@ interface productsDtos {
   id: number;
   name: string;
   image: string;
-  variants: variantResponse[];
   category: number;
 }
 

@@ -2,10 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { AiGenderService } from '../../../services/ai-gender.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiResponse } from '../../../model/ApiResponse.model';
-import { variant, categoryDtos, shared } from '../../../model/category.model';
+import {
+  variant,
+  categoryDtos,
+  shared,
+  variantResponse,
+} from '../../../model/category.model';
 import {
   productsModel,
   productCreateRequest,
+  imageDtos,
+  productsUpdateDtos,
 } from '../../../model/products.model';
 import { CategorysService } from '../../../services/categorys.service';
 import { ProductsService } from '../../../services/products.service';
@@ -38,6 +45,10 @@ export class UpdateProductsComponent implements OnInit {
   category: string = '';
   // list object size
   listSize: variant[] = [];
+  // varian reponse
+  arrayVariant: variantResponse[] = [];
+  // array images response
+  arrImage: imageDtos[] = [];
   // form size
   formSize = this.form.group({
     size: ['', Validators.required],
@@ -67,11 +78,16 @@ export class UpdateProductsComponent implements OnInit {
       })
     );
   }
+  // render product form serve to form input
   LoadProduct() {
     const idParameter: number = this.route.snapshot.params['id'];
     return this.productsService.getOnlyProduct(idParameter).pipe(
       tap((res) => {
-        console.log(res.data);
+        this.name = res.data.name;
+        this.category = res.data.category.toString();
+        this.arrayVariant = res.data.variant;
+        this.describe = res.data.description;
+        this.arrImage = res.data.images;
       })
     );
   }
@@ -133,9 +149,11 @@ export class UpdateProductsComponent implements OnInit {
       form.append('model.Images', item.file);
     }
 
+    this.productsService;
+    const idParameter: number = this.route.snapshot.params['id'];
     this.productsService
-      .create(form)
-      .subscribe((res: ApiResponse<productCreateRequest>) => {
+      .update(form, idParameter)
+      .subscribe((res: ApiResponse<productsUpdateDtos>) => {
         if (res.success == false) {
           return;
         }

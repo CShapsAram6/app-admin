@@ -20,7 +20,7 @@ interface productsUpdateDtos {
   id: number;
   name: string;
   images: imageDtos[];
-  variants: variantResponse[];
+  variant: variantResponse[];
   category: number;
   description: string;
 }
@@ -51,4 +51,6 @@ export {
   productsModel,
   productsDtos,
   productsUpdateDtos,
+  variantResponse,
+  imageDtos,
 };

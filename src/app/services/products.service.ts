@@ -32,4 +32,14 @@ export class ProductsService {
       `${environment.api}/Product/single-product-${id}`
     );
   }
+
+  update(
+    form: FormData,
+    id: number
+  ): Observable<ApiResponse<productsUpdateDtos>> {
+    return this.http.put<ApiResponse<productsUpdateDtos>>(
+      `${environment.api}/Product/update-product-${id}`,
+      form
+    );
+  }
 }

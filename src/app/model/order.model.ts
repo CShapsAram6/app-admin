@@ -5,6 +5,7 @@ interface orderDto {
   statusOrder: number,
   statusDelivery: number,
   paymentMethod: number,
-  couponId: number
+  accountId: number,
+  customerName: string,
 }
 export { orderDto }

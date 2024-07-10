@@ -1,0 +1,148 @@
+<div class="grid--item" [ngStyle]="{'transform': transFormCreate}">
+    <!-- form update -->
+    <div class="p-3">
+        <h4>Cập nhật kích thước</h4>
+        <form [formGroup]="formVariant">
+            <div class="mb-3">
+                <label for="basic-url" class="form-label">Kích thước</label>
+                <div class="input-group">
+                    <select name="" id="" class="form-control" formControlName="size">
+                        <option [value]="item.size" *ngFor="let item of arrSize">
+                            SIZE {{item.size}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="basic-url" class="form-label">
+                        Số lượng
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="quantity">
+                    </div>
+                    <div class="form-text text-danger" id="basic-addon4">
+                        Example help text goes outside the input group.
+                    </div>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="basic-url" class="form-label">
+                        Đơn giá
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="price">
+                    </div>
+                    <div class="form-text text-danger" id="basic-addon4">
+                        Example help text goes outside the input group.
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 d-flex justify-content-end gap-3">
+                <button (click)="transFormCreate = 'translateX(-100%)'" class="btn" (click)="ResetForm()">
+                    Hủy
+                </button>
+                <button class="btn btn-primary" [disabled]="formVariant.invalid" (click)="onSubmit('update')">Cập nhật
+                    kích thước
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- === content -->
+    <div class="p-3 scroll--list">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th style="color: white;">STT</th>
+                    <th style="color: white;">Kích thước</th>
+                    <th style="color: white;">Số lượng</th>
+                    <th style="color: white;">Đơn giá</th>
+                    <th style="color: white;">Trạng thái</th>
+                    <th style="color: white;">
+                        <button class="btn btn-sm btn-primary" (click)="ChangeTransForm('create')">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0 mt-4">
+                <tr *ngFor="let item of arrVariant; let i = index">
+                    <td> {{i + 1}} </td>
+                    <td> SIZE {{item.size}} </td>
+                    <td> {{item.quantity}} </td>
+                    <td> {{item.price | currency:' ':'symbol':'1.0-0'}}.000 đ</td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input cursor-pointer" type="checkbox" id="flexSwitchCheckChecked"
+                                [checked]="item.status" (click)="UpdateStatusVariant(item.id 
+                            )">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm" (click)="DeleteVariant(item.id)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary"
+                                (click)="ChangeTransForm('update'); LoadFormUpdate(item)">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="" *ngIf="arrVariant.length == 0">
+            <h3>Không có kích thước</h3>
+        </div>
+    </div>
+    <!-- === content -->
+
+    <!-- ===== form create -->
+    <div class="p-3">
+        <h4>Thêm kích thước</h4>
+        <form [formGroup]="formVariant">
+            <div class="mb-3">
+                <label for="basic-url" class="form-label">Kích thước</label>
+                <div class="input-group">
+                    <select name="" id="" class="form-control" formControlName="size">
+                        <option [value]="item.size" *ngFor="let item of arrSize">
+                            SIZE {{item.size}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="basic-url" class="form-label">
+                        Số lượng
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="quantity">
+                    </div>
+                    <div class="form-text text-danger" id="basic-addon4">
+                        Example help text goes outside the input group.
+                    </div>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="basic-url" class="form-label">
+                        Đơn giá
+                    </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" formControlName="price">
+                    </div>
+                    <div class="form-text text-danger" id="basic-addon4">
+                        Example help text goes outside the input group.
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 d-flex justify-content-end gap-3">
+                <button (click)="transFormCreate = 'translateX(-100%)'" class="btn" (click)="ResetForm()">
+                    Hủy
+                </button>
+                <button class="btn btn-primary" [disabled]="formVariant.invalid" (click)="onSubmit('create')">Thêm kích
+                    thước</button>
+            </div>
+        </form>
+    </div>
+</div>

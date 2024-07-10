@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
-import { productsDtos } from '../../../model/products.model';
+import { productsDtos, variantResponse } from '../../../model/products.model';
 import { ApiResponse } from '../../../model/ApiResponse.model';
 
 @Component({
@@ -12,6 +12,7 @@ export class ProductsComponent implements OnInit {
   constructor(private productsSercive: ProductsService) {}
   isShow: boolean = false;
   create: boolean = true;
+  isVariant : boolean = false;
 
   // variable array products
   products: productsDtos[] = [];
@@ -27,5 +28,9 @@ export class ProductsComponent implements OnInit {
       .subscribe((resposen: ApiResponse<productsDtos[]>) => {
         this.products = resposen.data;
       });
+  }
+
+  ChangeVariantItem(item: variantResponse) {
+    console.log(item);
   }
 }

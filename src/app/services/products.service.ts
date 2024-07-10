@@ -7,6 +7,7 @@ import {
   productCreateRequest,
   productsDtos,
   productsUpdateDtos,
+  variantResponse,
 } from '../model/products.model';
 
 @Injectable({
@@ -40,6 +41,15 @@ export class ProductsService {
     return this.http.put<ApiResponse<productsUpdateDtos>>(
       `${environment.api}/Product/update-product-${id}`,
       form
+    );
+  }
+
+  updateVariant(
+    request: variantResponse
+  ): Observable<ApiResponse<productsUpdateDtos>> {
+    return this.http.put<ApiResponse<productsUpdateDtos>>(
+      `${environment.api}/Product/update-variant`,
+      request
     );
   }
 }

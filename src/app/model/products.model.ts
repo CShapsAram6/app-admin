@@ -28,6 +28,10 @@ interface imageDtos {
   link: string;
   isActive: boolean;
 }
+interface pagesDtos {
+  page: number;
+  name: string;
+}
 class productsModel {
   static formRequest(
     name: string,
@@ -54,6 +58,11 @@ class productsModel {
       status: true,
     };
   }
+  static MapperToFormData(name: string | undefined): FormData {
+    let form = new FormData();
+    form.append('name', name || '');
+    return form;
+  }
 }
 export {
   productCreateRequest,
@@ -62,4 +71,5 @@ export {
   productsUpdateDtos,
   variantResponse,
   imageDtos,
+  pagesDtos,
 };

@@ -4,6 +4,7 @@ import { environment } from '../environment/environment';
 import { map, Observable } from 'rxjs';
 import { ApiResponse } from '../model/ApiResponse.model';
 import {
+  pagesDtos,
   productCreateRequest,
   productsDtos,
   productsUpdateDtos,
@@ -85,9 +86,20 @@ export class ProductsService {
     );
   }
 
-  countLength(): Observable<ApiResponse<number>> {
-    return this.http.get<ApiResponse<number>>(
-      `${environment.api}/Product/get-count`
+  countLength(name: FormData): Observable<ApiResponse<number>> {
+    return this.http.post<ApiResponse<number>>(
+      `${environment.api}/Product/get-number`,
+      name
+    );
+  }
+
+  // search product by name
+  SearchProductsByName(
+    request: pagesDtos
+  ): Observable<ApiResponse<productsDtos[]>> {
+    return this.http.post<ApiResponse<productsDtos[]>>(
+      `${environment.api}/Product/search-product`,
+      request
     );
   }
 }

@@ -3,7 +3,7 @@
         <div class="col-6">
             <div class="group--search">
                 <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
-                    aria-describedby="defaultFormControlHelp">
+                    aria-describedby="defaultFormControlHelp" [formControl]="inputControl">
                 <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
@@ -69,6 +69,7 @@
     </div>
 </div>
 
+@if(products.length > 0){
 <!-- content -->
 <div class="card mt-4">
     <div class="table-responsive text-nowrap">
@@ -146,6 +147,14 @@
     </div>
 </div>
 <!-- content -->
+}
+
+<div class="d-flex justify-content-center mt-5" *ngIf="products.length == 0">
+    <h2>
+        <i class="fa-solid fa-filter-circle-xmark"></i>
+        Không tìm thấy sản phẩm
+    </h2>
+</div>
 
 <div class="mt-3">
     <!-- Modal -->
@@ -185,3 +194,4 @@
         </div>
     </div>
 </div>
+<app-loading *ngIf="isLoading"></app-loading>

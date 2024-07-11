@@ -25,8 +25,7 @@
                 <div class="image d-flex gap-3 flex-wrap">
                     <!--  image render form server -->
                     <div class="position-relative border border-1 h-50 rounded rounded-1" *ngFor="let item of arrImage">
-                        <img src="https://localhost:7133/api/Image/images-detal/{{item.link}}" alt=""
-                            class="rounded-1 h-100">
+                        <img src="{{item.link + '=s120'}}" alt="" class="rounded-1 h-100">
                         <button class="btn btn-sm btn-danger position-absolute btn-max-sm" *ngIf="!item.isActive"
                             style="top: 0px; right: 0px;"><i class="fa-solid fa-xmark"></i>
                         </button>

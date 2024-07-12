@@ -7,7 +7,7 @@ import { AdminComponent } from './admin.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateProductsComponent } from './update-products/update-products.component';
 import { OrdersComponent } from './orders/orders.component';
 import { CancelComponent } from './cancel/cancel.component';
@@ -16,6 +16,9 @@ import { VouchersComponent } from './vouchers/vouchers.component';
 import { UsersComponent } from './users/users.component';
 import { BlogsComponent } from './blogs/blogs.component';
 
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { LoadingComponent } from './loading/loading.component';
+import { VariantComponent } from './variant/variant.component';
 const _routes: Routes = [
   {
     path: 'admin',
@@ -23,9 +26,21 @@ const _routes: Routes = [
     children: [
       { path: '', component: HomeComponent, title: 'Trang chủ' },
       {
-        path: 'products',
+        path: 'products/:page',
         component: ProductsComponent,
         title: 'Quản lý sản phẩm',
+        children: [
+          {
+            path: ':id',
+            component: UpdateProductsComponent,
+            title: 'Cập nhật sản phẩm',
+          },
+          {
+            path: 'variant/:id',
+            component: VariantComponent,
+            title: 'Quản lý kích thước',
+          },
+        ],
       },
       { path: 'order', component: OrdersComponent, title: 'Quản lý đơn hàng' },
       {
@@ -68,6 +83,8 @@ const _routes: Routes = [
     VouchersComponent,
     UsersComponent,
     BlogsComponent,
+    LoadingComponent,
+    VariantComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +92,8 @@ const _routes: Routes = [
     RouterModule.forChild(_routes),
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
+    EditorModule,
   ],
 })
 export class AdminModule {}

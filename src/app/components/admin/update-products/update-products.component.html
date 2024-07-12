@@ -1,17 +1,18 @@
 <div class="row p-4">
-    <div class="cart col-8">
+    <div class="cart col-12">
         <div class="row">
             <div class="col-6">
                 <div>
                     <label for="defaultFormControlInput" class="form-label">Hình ảnh</label>
-                    <input class="form-control" type="file" id="formFileMultiple" multiple="">
+                    <input class="form-control" type="file" id="formFileMultiple" multiple=""
+                        (change)="onFilesSelected($event)">
                 </div>
             </div>
             <div class="col-6">
                 <div>
                     <label for="defaultFormControlInput" class="form-label">Tên sản phẩm</label>
                     <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
-                        aria-describedby="defaultFormControlHelp">
+                        aria-describedby="defaultFormControlHelp" [(ngModel)]="name">
                     <div id="defaultFormControlHelp" class="form-text text-danger">
                         We'll never share your details with anyone else.
                     </div>
@@ -22,10 +23,18 @@
         <div class="row mt-4">
             <div class="col-6">
                 <div class="image d-flex gap-3 flex-wrap">
-                    <div class="position-relative" *ngFor="let item of list">
-                        <img src="https://images.pexels.com/photos/25584126/pexels-photo-25584126/free-photo-of-a-camera-and-sunglasses-on-a-table-next-to-a-cup-of-coffee.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-                            alt="" class="rounded-1">
-                        <button class="btn btn-sm btn-danger position-absolute" style="top: 0px; right: 0px; "><i
+                    <!--  image render form server -->
+                    <div class="position-relative border border-1 h-50 rounded rounded-1" *ngFor="let item of arrImage">
+                        <img src="{{item.link + '=s120'}}" alt="" class="rounded-1 h-100">
+                        <button class="btn btn-sm btn-danger position-absolute btn-max-sm" *ngIf="!item.isActive"
+                            style="top: 0px; right: 0px;"><i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="position-relative border border-1 h-50 rounded rounded-1"
+                        *ngFor="let item of imageUrls">
+                        <img [src]="item.url" alt="" class="rounded-1 h-100">
+                        <button class="btn btn-sm btn-danger position-absolute btn-max-sm"
+                            (click)="RemoveItem(item.index)" style="top: 0px; right: 0px;"><i
                                 class="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
@@ -33,43 +42,103 @@
             <div class="col-6">
                 <div>
                     <label for="defaultFormControlInput" class="form-label">Loại sản phẩm</label>
-                    <select id="defaultSelect" class="form-select">
-                        <option>Default select</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select id="defaultSelect" class="form-select" [(ngModel)]="category">
+                        <option [value]="item.id" *ngFor="let item of categorys">
+                            {{item.name}}
+                        </option>
                     </select>
                 </div>
                 <div class="mt-4">
                     <label for="defaultFormControlInput" class="form-label">Kích thước</label>
-                    <div class="row">
-                        <div class="col-3">
-                            <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="Kích thước">
+                    <form [formGroup]="formSize">
+                        <div class="row">
+                            <div class="col-3">
+                                <select name="" id="" class="form-control" formControlName="size">
+                                    <option [value]="item" *ngFor="let item of sizes">
+                                        {{item}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="defaultFormControlInput"
+                                    placeholder="Đơn giá" formControlName="price">
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="defaultFormControlInput"
+                                    placeholder="Số lượng" formControlName="quantity">
+                            </div>
+                            <div class="col-3" *ngIf="!isButtonUpdate">
+                                <button class="btn btn-primary w-100" (click)="OnSumbit()"
+                                    [disabled]="formSize.invalid">
+                                    Thêm
+                                </button>
+                            </div>
+                            <div class="col-3" *ngIf="isButtonUpdate">
+                                <button class="btn col-6" (click)="cancelForm()">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <button class="btn btn-primary col-6" (click)="SaveChangeVatiant()"
+                                    [disabled]="formSize.invalid">
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="Đơn giá"></div>
-                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="Số lượng"></div>
-                        <div class="col-3">
-                            <button class="btn btn-primary w-100">Thêm</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-
                 <div class="can--turn mt-4">
-                    <div class="row mt-4" *ngFor="let item of list">
-                        <div class="col-3">
-                            <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
-                                disabled>
-                        </div>
-                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="John Doe" disabled></div>
-                        <div class="col-3"> <input type="text" class="form-control" id="defaultFormControlInput"
-                                placeholder="John Doe" disabled></div>
-                        <div class="col-3">
-                            <button class="btn btn-outline-danger w-100">Xóa</button>
-                        </div>
+                    <div class="row">
+                        <table class="table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="color: white;">Size</th>
+                                    <th style="color: white;">Đơn giá</th>
+                                    <th style="color: white;">Số lượng</th>
+                                    <th style="color: white;">Trạng thái</th>
+                                    <th style="color: white;"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0 mt-4">
+                                <tr *ngFor="let item of listSize">
+                                    <td> SIZE {{item.size}} </td>
+                                    <td>
+                                        {{item.price | currency:' ':'symbol':'1.0-0'}}.000 đ
+                                    </td>
+                                    <td>
+                                        {{item.quantity}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger" (click)="RemoveSize(item )">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- === variant render from database -->
+                                <tr *ngFor="let item of arrayVariant">
+                                    <td class="text-uppercase">
+                                        Size {{item.size}}
+                                    </td>
+                                    <td>
+                                        {{item.price | currency:' ':'symbol':'1.0-0'}}.000 đ
+                                    </td>
+                                    <td>
+                                        {{item.quantity}}
+                                    </td>
+                                    <td>
+                                        <button class="m-0 btn text-danger" [class.text-primary]="item.status">
+                                            {{ item.status ?
+                                            'Còn hàng' :
+                                            'Hết hàng'}}
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary"
+                                            (click)="IsMountFormVariant(item)">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -98,14 +167,14 @@
                         </button>
                     </div>
                 </div>
-                <div class="mt-3" *ngIf="desption.trim()">
+                <div class="mt-3" *ngIf="aiResponse.trim()">
                     <label for=" defaultFormControlInput" class="form-label fw-bold">
                         Kết quả trả về
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </label>
                     <p class="text-justify">
-                        {{desption}}
-                        <button class="btn btn-sm btn-primary mx-3" (click)="BntUsing(desption)">Sử dụng</button>
+                        {{aiResponse}}
+                        <button class="btn btn-sm btn-primary mx-3" (click)="BntUsing(aiResponse)">Sử dụng</button>
                     </p>
                 </div>
             </div>
@@ -115,20 +184,18 @@
                 <label for="defaultFormControlInput" class="form-label">
                     Mô tả sản phẩm
                 </label>
-                <div>
-                    <textarea class="form-control" style="height: 6rem;">
-                        {{describe}}
-                    </textarea>
-                </div>
+                <editor [(ngModel)]="describe" apiKey="0n6ijdg7hl4ie1ub4pkwl682mmhr0gr53tosh1u9609wu5ed" [init]="{
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                }"></editor>
             </div>
         </div>
-    </div>
-    <div class="cart col-4">
-        <div class="row">
-            <div style="width: 100%; height: 40rem; border: 1px solid black;">
-
-            </div>
-            <button class="btn btn-primary w-100 mt-3">Thêm sản phẩm mới</button>
+        <div class="d-flex justify-content-end w-100">
+            <button class="btn btn-primary mt-3" (click)="Update()">
+                Cập nhật sản phẩm
+            </button>
         </div>
     </div>
 </div>
+
+<app-loading *ngIf="isLoadingSumbit"></app-loading>

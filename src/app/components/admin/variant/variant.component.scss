@@ -1,0 +1,9 @@
+.scroll--list {
+    overflow-y: auto;
+    height: 23rem;
+}
+.grid--item {
+    display: grid;
+    grid-template-columns: 100% 100% 100%;
+    transition: all 0.25s linear;
+}

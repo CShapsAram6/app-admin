@@ -3,7 +3,7 @@
         <div class="col-6">
             <div class="group--search">
                 <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
-                    aria-describedby="defaultFormControlHelp">
+                    aria-describedby="defaultFormControlHelp" [formControl]="inputControl">
                 <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
@@ -39,9 +39,13 @@
                     <i class="fa-solid fa-angle-down"></i>
                 </button>
                 <ul class="dropdown-menu" style="width: 19rem;">
-                    <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0);">Another action</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0);">Something else here</a></li>
+                    @for (item of arrCategory; track $index) {
+                    <li>
+                        <a class="dropdown-item" href="javascript:void(0);">
+                            {{item.name}}
+                        </a>
+                    </li>
+                    }
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -57,12 +61,16 @@
         </div>
 
         <div>
-            <button class="btn btn-primary" (click)="isShow = true">Thêm sản phẩm mới</button>
+            <button class="btn btn-primary" (click)="isShow = true">
+                Thêm sản phẩm mới
+            </button>
         </div>
 
     </div>
 </div>
 
+@if(products.length > 0){
+<!-- content -->
 <div class="card mt-4">
     <div class="table-responsive text-nowrap">
         <table class="table">
@@ -79,23 +87,22 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0 mt-4">
-                <tr>
-                    <td>1</td>
+                <tr *ngFor="let item of products ; let i = index">
                     <td>
-
-                        <button class="btn--zoom avatar" data-bs-toggle="modal" data-bs-target="#basicModal">
-                            <img
-                                src="https://images.pexels.com/photos/10547966/pexels-photo-10547966.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load">
-                        </button>
+                        {{i + 1}}
+                    </td>
+                    <td>
+                        <div class="btn--zoom avatar">
+                            <img src="{{item.image + '=s100'}}">
+                        </div>
                     </td>
                     <td>
                         <a class="btn-edit">
-                            Product 1
+                            {{item.name}}
                         </a>
                     </td>
                     <td>
                         <a class="btn-edit">
-                            10
                         </a>
                     </td>
                     <td>
@@ -104,10 +111,13 @@
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-warning">Nhỏ</button> ,
-                        <button class="btn btn-sm btn-outline-warning">Lớn</button> ,
-                        <button class="btn btn-sm btn-outline-warning">Nhỏ</button> ,
-                        <button class="btn btn-sm btn-outline-warning">Lớn</button>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-warning"
+                                (click)="isShow = true; create = false; isVariant = true"
+                                [routerLink]="['variant/'+ item.id]">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
                     </td>
                     <td>
                         <div class="form-check form-switch">
@@ -115,7 +125,8 @@
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" (click)="create = false ; isShow = true">
+                        <button class="btn btn-sm btn-outline-primary" [routerLink]="[item.id]"
+                            (click)="create = false ; isShow = true">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </td>
@@ -124,7 +135,26 @@
         </table>
     </div>
 </div>
+<div class="card mt-4 pt-3">
+    <div class="d-flex justify-content-center align-items-center">
+        <ul class="pagination">
+            <li class="page-item" *ngFor="let item of numberPages" routerLinkActive="active">
+                <a class="page-link" [routerLink]="['/admin/products/' + item]">
+                    {{item}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- content -->
+}
 
+<div class="d-flex justify-content-center mt-5" *ngIf="products.length == 0">
+    <h2>
+        <i class="fa-solid fa-filter-circle-xmark"></i>
+        Không tìm thấy sản phẩm
+    </h2>
+</div>
 
 <div class="mt-3">
     <!-- Modal -->
@@ -132,31 +162,36 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        [routerLink]="['/admin/products']"></button>
                 </div>
                 <div class="modal-body" style="height: 50rem;">
-                    <img style="height: 100%; width: 100%; object-fit: contain;"
-                        src="https://images.pexels.com/photos/10547966/pexels-photo-10547966.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-                        alt="">
+                    <!-- <router-outlet></router-outlet> -->
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="model" [class.hidden]="isShow">
-    <div class="model--content">
+<div class="model" [class.hidden]="!isShow">
+    <div class="model--content" [class.model--variant]="isVariant">
         <div class="model--content--header">
-            <h4 class="title m-0">
+            <h4 class="title m-0" *ngIf="!isVariant">
                 {{create ? 'Thêm sản phẩm' : 'Cập nhật sản phẩm' }}
             </h4>
-            <button class="btn btn-sm btn-danger" (click)="isShow = false; create = true"><i
-                    class="fa-solid fa-xmark"></i></button>
+            <h4 class="title m-0" *ngIf="isVariant">
+                Quản lý kích thước
+            </h4>
+            <button class="btn btn-sm btn-danger" (click)="isShow = false; create = true; isVariant = false"
+                routerLink="/admin/products/{{isActive}}">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
         <div class="model--content--body">
             <app-create-product *ngIf="create"></app-create-product>
-            <app-update-products *ngIf="!create"></app-update-products>
+            <!-- <app-update-products *ngIf="!create"></app-update-products> -->
+            <router-outlet *ngIf="!create"></router-outlet>
         </div>
     </div>
 </div>
+<app-loading *ngIf="isLoading"></app-loading>

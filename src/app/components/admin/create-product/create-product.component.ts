@@ -116,14 +116,17 @@ export class CreateProductComponent implements OnInit {
     for (let item of this.imageUrls) {
       form.append('model.Images', item.file);
     }
-
     this.productsService
       .create(form)
       .subscribe((res: ApiResponse<productCreateRequest>) => {
         if (res.success) {
           this.isLoadingSumbit = false;
           alert('Thêm thành công');
+          return;
         }
+        this.isLoadingSumbit = false;
+        alert('Có lỗi');
+        console.log(res);
       });
   }
 }

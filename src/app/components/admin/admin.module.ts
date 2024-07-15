@@ -19,6 +19,7 @@ import { BlogsComponent } from './blogs/blogs.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { LoadingComponent } from './loading/loading.component';
 import { VariantComponent } from './variant/variant.component';
+import { PaymentComponent } from './payment/payment.component';
 const _routes: Routes = [
   {
     path: 'admin',
@@ -54,6 +55,11 @@ const _routes: Routes = [
         title: 'Quản lý yêu cầu hủy',
       },
       {
+        path: 'payment',
+        component: PaymentComponent,
+        title: 'Phương thúc thanh toán',
+      },
+      {
         path: 'vouchers',
         component: VouchersComponent,
         title: 'Quản lý vouchers',
@@ -85,6 +91,7 @@ const _routes: Routes = [
     BlogsComponent,
     LoadingComponent,
     VariantComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,

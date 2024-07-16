@@ -4,8 +4,8 @@ interface orderDto {
   timeCreate: string,
   statusOrder: number,
   statusDelivery: number,
-  paymentMethod: number,
-  accountId: number,
+  namePaymentMethod: number,
+  couponId: number,
   customerName: string,
 }
 export { orderDto }

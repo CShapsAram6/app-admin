@@ -21,12 +21,17 @@ export class OrdersComponent implements OnInit {
   constructor (private order: OrderService) {}
   ngOnInit(): void {
     this.loadOrders();
+
   }
 
   countOrder: number = 0;
   activeTab = 'Tất cả';
   orders: orderDto[] = [];
   filteredOrders: orderDto[] = [];
+
+  clickOrder(id: number) {
+    console.log(id);
+  }
 
   loadOrders() {
     this.order.getData().subscribe((data) => {

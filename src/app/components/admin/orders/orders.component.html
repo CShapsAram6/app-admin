@@ -52,9 +52,7 @@
             {{order.timeCreate | date:'dd/MM/yyyy'}}
           </td>
           <td>
-            <span class="fw-bold text-primary" *ngIf="order.paymentMethod === 1">COD</span>
-            <span class="fw-bold text-primary" *ngIf="order.paymentMethod === 2">VNPAY</span>
-            <span class="fw-bold text-primary" *ngIf="order.paymentMethod === 3">ZaloPay</span>
+            <span class="fw-bold text-primary">{{order.namePaymentMethod}}</span>
           </td>
           <td>
             {{order.total.toLocaleString()}}₫
@@ -66,12 +64,241 @@
             <button class="btn btn-sm btn-danger fs-6" *ngIf="order.statusOrder === 4">Đã hủy</button>
           </td>
           <td>
-            <button class="btn btn-sm btn-outline-primary">
+            <button class="btn btn-sm btn-outline-primary" (click)="clickOrder(order.id)" type="button" data-bs-toggle="modal"
+              data-bs-target="#myModal">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Mã đơn hàng: #0001 | <button class="btn btn-sm btn-warning fs-6 mb-1">Chờ xử lý</button>
+        </h4>
+        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="bg-card pb-2">
+              <p class="fw-bold text-uppercase fs-5 pt-3 ps-3 mb-0">Thông tin đơn hàng</p>
+              <!-- Title Order-->
+              <div class="row ms-2 pt-2 fw-bold">
+                <div class="col-lg-5">
+                  Sản phẩm
+                </div>
+                <div class="col-lg-2">
+                  Giá bán
+                </div>
+                <div class="col-lg-2">
+                  Số lượng
+                </div>
+                <div class="col-lg-3 ps-2">
+                  Thành tiền
+                </div>
+              </div>
+              <!-- Content Order-->
+              <div class="scroll-item">
+                <div class="card-item mb-2">
+                  <div class="row ms-2 pt-3 pb-3 align-items-center">
+                    <div class="col-lg-5">
+                      <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                          <img src="../../../../assets/img/elements/11.jpg" class="rounded" [height]="70">
+                        </div>
+                        <div class="flex-grow-1 ms-3 mt-2">
+                          <p class="fw-bold name-order-product"> Cây phát tài – cây kim tiền</p>
+                          <p>Size: Nhỏ</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      200.000₫
+                    </div>
+                    <div class="col-lg-2">
+                      x2
+                    </div>
+                    <div class="col-lg-3">
+                      400.000₫
+                    </div>
+                  </div>
+                </div>
+                <div class="card-item mb-2">
+                  <div class="row ms-2 pt-3 pb-3 align-items-center">
+                    <div class="col-lg-5">
+                      <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                          <img src="../../../../assets/img/elements/11.jpg" class="rounded" [height]="70">
+                        </div>
+                        <div class="flex-grow-1 ms-3 mt-2">
+                          <p class="fw-bold name-order-product"> Cây phát tài – cây kim tiền</p>
+                          <p>Size: Nhỏ</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      200.000₫
+                    </div>
+                    <div class="col-lg-2">
+                      x2
+                    </div>
+                    <div class="col-lg-3">
+                      400.000₫
+                    </div>
+                  </div>
+                </div>
+                <div class="card-item mb-2">
+                  <div class="row ms-2 pt-3 pb-3 align-items-center">
+                    <div class="col-lg-5">
+                      <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                          <img src="../../../../assets/img/elements/11.jpg" class="rounded" [height]="70">
+                        </div>
+                        <div class="flex-grow-1 ms-3 mt-2">
+                          <p class="fw-bold name-order-product"> Cây phát tài – cây kim tiền</p>
+                          <p>Size: Nhỏ</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      200.000₫
+                    </div>
+                    <div class="col-lg-2">
+                      x2
+                    </div>
+                    <div class="col-lg-3">
+                      400.000₫
+                    </div>
+                  </div>
+                </div>
+                <div class="card-item mb-2">
+                  <div class="row ms-2 pt-3 pb-3 align-items-center">
+                    <div class="col-lg-5">
+                      <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                          <img src="../../../../assets/img/elements/11.jpg" class="rounded" [height]="70">
+                        </div>
+                        <div class="flex-grow-1 ms-3 mt-2">
+                          <p class="fw-bold name-order-product"> Cây phát tài – cây kim tiền</p>
+                          <p>Size: Nhỏ</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      200.000₫
+                    </div>
+                    <div class="col-lg-2">
+                      x2
+                    </div>
+                    <div class="col-lg-3">
+                      400.000₫
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info Customer -->
+          <div class="col-lg-4 bg-card">
+            <p class="fw-bold text-uppercase fs-5 mt-2">Khách hàng</p>
+            <div class="d-flex flex-row mb-3">
+              <img src="../../../../assets/img/avatars/1.png" class="rounded-circle" [height]="50">
+              <p class="ms-3 mt-3 fw-bold">Nguyễn Văn A</p>
+            </div>
+            <hr class="line-infocustomer">
+            <div class="d-flex flex-row">
+              <i class="fa-regular fa-calendar fs-4"></i>
+              <p class="ms-3">Ngày đặt: 01-01-2024</p>
+            </div>
+            <hr class="line-infocustomer">
+            <p class="fw-bold fs-5">Thông tin liên hệ</p>
+            <div class="d-flex flex-row">
+              <i class="fa-regular fa-envelope fs-4"></i>
+              <p class="ms-3">lephinhvn.com</p>
+            </div>
+            <div class="d-flex flex-row">
+              <i class="fa-solid fa-phone fs-4"></i>
+              <p class="ms-3">0339 924 208</p>
+            </div>
+            <hr class="line-infocustomer">
+            <p class="fw-bold fs-5">Thông tin nhận hàng</p>
+            <div class="d-flex flex-row">
+              <i class="fa-solid fa-location-dot fs-4"></i>
+              <p class="ms-3">29 Nguyễn Khoa Đăng, Phường Khánh Xuân, Thành Phố Buôn Ma Thuột, Đắk Lắk</p>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-8">
+            <div class="bg-card pb-1 pt-1">
+              <div class="d-flex card-item info-order">
+                <div class="p-2 flex-grow-1 info-order-left mt-3">
+                  <ul>
+                    <li>Tổng tiền hàng: </li>
+                    <li>Phí vận chuyển: </li>
+                    <li>Voucher: </li>
+                    <li>Thành tiền: </li>
+                    <li>Phương thức thanh toán: </li>
+                  </ul>
+                </div>
+                <div class="p-2 info-order-right mt-3">
+                  <ul>
+                    <li>400.000₫</li>
+                    <li>20.000₫</li>
+                    <li>10.000₫</li>
+                    <li>430.000₫</li>
+                    <li>Thanh toán khi nhận hàng (COD)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Order -->
+          <div class="col-lg-4">
+            <!-- Confirm Order -->
+            <div class="confirm-order d-flex justify-content-center">
+              <button class="btn btn-primary mb-3" style="display: none;">Xác nhận đơn hàng</button>
+            </div>
+
+            <!-- Cancel Order -->
+            <div class="cancel-order d-flex justify-content-center" style="display: none;">
+              <div class="btn-group mt-1">
+                <button type="button" class="btn--dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  Lý do hủy đơn
+                  <i class="fa-solid fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu" style="width: 19rem;">
+                  <li><a class="dropdown-item">Hết hàng</a></li>
+                  <li><a class="dropdown-item">Lỗi kỹ thuật</a></li>
+                  <li><a class="dropdown-item">Lỗi đóng gói</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li class="px-2 py-1">
+                    <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Lý do khác...."
+                      aria-describedby="defaultFormControlHelp">
+                  </li>
+                </ul>
+              </div>
+              <button class="btn btn-danger mt-1 ">Hủy đơn</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

@@ -1,13 +1,16 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ApiResponse } from '../model/ApiResponse.model';
 import {
+  pagesDtos,
   productCreateRequest,
   productsDtos,
   productsUpdateDtos,
+  variantResponse,
 } from '../model/products.model';
+import { variant } from '../model/category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +25,9 @@ export class ProductsService {
       form
     );
   }
-  getData(): Observable<ApiResponse<productsDtos[]>> {
+  getData(page: number): Observable<ApiResponse<productsDtos[]>> {
     return this.http.get<ApiResponse<productsDtos[]>>(
-      `${environment.api}/Product`
+      `${environment.api}/Product/page-${page}`
     );
   }
   getOnlyProduct(id: number): Observable<ApiResponse<productsUpdateDtos>> {
@@ -40,6 +43,63 @@ export class ProductsService {
     return this.http.put<ApiResponse<productsUpdateDtos>>(
       `${environment.api}/Product/update-product-${id}`,
       form
+    );
+  }
+
+  updateVariant(
+    request: variantResponse
+  ): Observable<ApiResponse<productsUpdateDtos>> {
+    return this.http.put<ApiResponse<productsUpdateDtos>>(
+      `${environment.api}/Product/update-variant`,
+      request
+    );
+  }
+
+  getVariantByIdProduct(
+    id: number
+  ): Observable<ApiResponse<variantResponse[]>> {
+    return this.http.get<ApiResponse<variantResponse[]>>(
+      `${environment.api}/Product/get-variant-${id}`
+    );
+  }
+
+  // create variant by id prodcut
+  createVariant(request: variant): Observable<ApiResponse<variantResponse>> {
+    return this.http.post<ApiResponse<variantResponse>>(
+      `${environment.api}/Product/create-variant`,
+      request
+    );
+  }
+
+  // update status variant by id
+  updateStatusVariant(id: number): Observable<ApiResponse<variantResponse>> {
+    return this.http.put<ApiResponse<variantResponse>>(
+      `${environment.api}/Product/update-status-${id}`,
+      id
+    );
+  }
+
+  // Delete variant by id
+  DeleteVariant(id: number): Observable<ApiResponse<variantResponse>> {
+    return this.http.delete<ApiResponse<variantResponse>>(
+      `${environment.api}/Product/delete-variant-${id}`
+    );
+  }
+
+  countLength(name: FormData): Observable<ApiResponse<number>> {
+    return this.http.post<ApiResponse<number>>(
+      `${environment.api}/Product/get-number`,
+      name
+    );
+  }
+
+  // search product by name
+  SearchProductsByName(
+    request: pagesDtos
+  ): Observable<ApiResponse<productsDtos[]>> {
+    return this.http.post<ApiResponse<productsDtos[]>>(
+      `${environment.api}/Product/search-product`,
+      request
     );
   }
 }

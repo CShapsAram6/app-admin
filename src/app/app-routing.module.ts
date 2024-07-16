@@ -7,7 +7,11 @@ import { AdminComponent } from './components/admin/admin.component';
 const routes: Routes = [
   { path: '', component: SignInComponent, title: 'Đăng nhập' },
   { path: 'sign-up', component: SignUpComponent, title: 'Đăng kí' },
-  { path: 'admin', component: AdminComponent, title: 'Admin' },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./components/admin/admin.module').then((m) => m.AdminModule),
+  },
 ];
 
 @NgModule({

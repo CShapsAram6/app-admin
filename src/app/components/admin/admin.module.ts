@@ -17,6 +17,10 @@ import { UsersComponent } from './users/users.component';
 import { BlogsComponent } from './blogs/blogs.component';
 
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { LoadingComponent } from './loading/loading.component';
+import { VariantComponent } from './variant/variant.component';
+import { PaymentComponent } from './payment/payment.component';
+import { CreatecateComponent } from './category/createcate/createcate.component';
 const _routes: Routes = [
   {
     path: 'admin',
@@ -24,7 +28,7 @@ const _routes: Routes = [
     children: [
       { path: '', component: HomeComponent, title: 'Trang chủ' },
       {
-        path: 'products',
+        path: 'products/:page',
         component: ProductsComponent,
         title: 'Quản lý sản phẩm',
         children: [
@@ -32,6 +36,11 @@ const _routes: Routes = [
             path: ':id',
             component: UpdateProductsComponent,
             title: 'Cập nhật sản phẩm',
+          },
+          {
+            path: 'variant/:id',
+            component: VariantComponent,
+            title: 'Quản lý kích thước',
           },
         ],
       },
@@ -45,6 +54,11 @@ const _routes: Routes = [
         path: 'return',
         component: ReturnComponent,
         title: 'Quản lý yêu cầu hủy',
+      },
+      {
+        path: 'payment',
+        component: PaymentComponent,
+        title: 'Phương thúc thanh toán',
       },
       {
         path: 'vouchers',
@@ -76,6 +90,10 @@ const _routes: Routes = [
     VouchersComponent,
     UsersComponent,
     BlogsComponent,
+    LoadingComponent,
+    VariantComponent,
+    PaymentComponent,
+    CreatecateComponent,
   ],
   imports: [
     BrowserModule,

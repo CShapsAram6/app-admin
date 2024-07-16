@@ -25,8 +25,7 @@
                 <div class="image d-flex gap-3 flex-wrap">
                     <!--  image render form server -->
                     <div class="position-relative border border-1 h-50 rounded rounded-1" *ngFor="let item of arrImage">
-                        <img src="https://localhost:7133/api/Image/images-detal/{{item.link}}" alt=""
-                            class="rounded-1 h-100">
+                        <img src="{{item.link + '=s120'}}" alt="" class="rounded-1 h-100">
                         <button class="btn btn-sm btn-danger position-absolute btn-max-sm" *ngIf="!item.isActive"
                             style="top: 0px; right: 0px;"><i class="fa-solid fa-xmark"></i>
                         </button>
@@ -68,10 +67,20 @@
                                 <input type="text" class="form-control" id="defaultFormControlInput"
                                     placeholder="Số lượng" formControlName="quantity">
                             </div>
-                            <div class="col-3">
+                            <div class="col-3" *ngIf="!isButtonUpdate">
                                 <button class="btn btn-primary w-100" (click)="OnSumbit()"
                                     [disabled]="formSize.invalid">
                                     Thêm
+                                </button>
+                            </div>
+                            <div class="col-3" *ngIf="isButtonUpdate">
+                                <button class="btn col-6" 
+                                (click)="cancelForm()">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <button class="btn btn-primary col-6" (click)="SaveChangeVatiant()"
+                                    [disabled]="formSize.invalid">
+                                    <i class="fa-solid fa-check"></i>
                                 </button>
                             </div>
                         </div>
@@ -123,7 +132,8 @@
                                         </button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary">
+                                        <button class="btn btn-sm btn-outline-primary"
+                                            (click)="IsMountFormVariant(item)">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </button>
                                     </td>
@@ -182,9 +192,11 @@
             </div>
         </div>
         <div class="d-flex justify-content-end w-100">
-            <button class="btn btn-primary mt-3" (click)="Create()">
+            <button class="btn btn-primary mt-3" (click)="Update()">
                 Cập nhật sản phẩm
             </button>
         </div>
     </div>
 </div>
+
+<app-loading *ngIf="isLoadingSumbit"></app-loading>

@@ -17,7 +17,7 @@
             <ul class="menu-inner py-1">
                 <!-- Layouts -->
                 <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    <a [routerLink]="['/admin/products']" class="menu-link">
+                    <a [routerLink]="['/admin/products/1']" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-layout"></i>
                         <div data-i18n="Layouts">Sản phẩm</div>
                     </a>
@@ -47,6 +47,13 @@
                             <a [routerLink]="['/admin/return']" class="menu-link">
                                 <div data-i18n="Container">
                                     Đơn hàng hoàn trả
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu-item" routerLinkActive="active">
+                            <a [routerLink]="['/admin/payment']" class="menu-link">
+                                <div data-i18n="Container">
+                                    Phương thức thanh toán
                                 </div>
                             </a>
                         </li>

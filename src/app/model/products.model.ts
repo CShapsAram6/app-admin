@@ -12,7 +12,6 @@ interface productsDtos {
   id: number;
   name: string;
   image: string;
-  variants: variantResponse[];
   category: number;
 }
 
@@ -28,6 +27,10 @@ interface imageDtos {
   id: number;
   link: string;
   isActive: boolean;
+}
+interface pagesDtos {
+  page: number;
+  name: string;
 }
 class productsModel {
   static formRequest(
@@ -45,6 +48,21 @@ class productsModel {
     }
     return formData;
   }
+
+  static MapToVariant(model: variant): variantResponse {
+    return {
+      id: Number(model.id),
+      size: Number(model.size),
+      price: Number(model.price),
+      quantity: Number(model.quantity),
+      status: true,
+    };
+  }
+  static MapperToFormData(name: string | undefined): FormData {
+    let form = new FormData();
+    form.append('name', name || '');
+    return form;
+  }
 }
 export {
   productCreateRequest,
@@ -53,4 +71,5 @@ export {
   productsUpdateDtos,
   variantResponse,
   imageDtos,
+  pagesDtos,
 };

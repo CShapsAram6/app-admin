@@ -20,6 +20,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { LoadingComponent } from './loading/loading.component';
 import { VariantComponent } from './variant/variant.component';
 import { PaymentComponent } from './payment/payment.component';
+import { CreatecateComponent } from './category/createcate/createcate.component';
 const _routes: Routes = [
   {
     path: 'admin',
@@ -92,6 +93,7 @@ const _routes: Routes = [
     LoadingComponent,
     VariantComponent,
     PaymentComponent,
+    CreatecateComponent,
   ],
   imports: [
     BrowserModule,

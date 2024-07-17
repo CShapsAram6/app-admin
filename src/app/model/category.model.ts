@@ -2,6 +2,9 @@ interface categoryDtos {
   id: number;
   name: string;
 }
+interface createcategoryDtos {
+  name: string;
+}
 interface variant {
   id: string;
   size: string;
@@ -30,4 +33,4 @@ class shared {
   }
 }
 
-export { categoryDtos, variant, shared, variantResponse };
+export { categoryDtos, variant, shared, variantResponse,createcategoryDtos };

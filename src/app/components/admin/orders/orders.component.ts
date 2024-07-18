@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from '../../../services/order.service';
-import { orderDto } from '../../../model/order.model';
-
-interface Order {
-  id: number;
-  ten: string;
-  trangThaiThanhToan: string;
-  tongTien: number;
-  ngayDat: string;
-  trangThaiDonHang: string;
-}
+import { orderDetailDto, orderDto } from '../../../model/order.model';
+import { tap } from 'rxjs';
+declare var $: any; // Khai báo jQuery
 
 
 @Component({
@@ -21,16 +14,25 @@ export class OrdersComponent implements OnInit {
   constructor (private order: OrderService) {}
   ngOnInit(): void {
     this.loadOrders();
-
   }
 
+  idOrder: number = 0;
   countOrder: number = 0;
   activeTab = 'Tất cả';
+  //get all order
   orders: orderDto[] = [];
+  //get order detail
+  ordersDetail!: orderDetailDto ;
+  //filter order
   filteredOrders: orderDto[] = [];
 
-  clickOrder(id: number) {
+  loadOrderDetail(id: number) {
     console.log(id);
+    this.idOrder = id;
+    this.order.getOrderDetail(id).subscribe((data) => {
+      this.ordersDetail = data;
+      console.log(this.ordersDetail);
+    })
   }
 
   loadOrders() {
@@ -39,6 +41,97 @@ export class OrdersComponent implements OnInit {
       this.filteredOrders = data;
       this.countOrder = this.orders.length;
     });
+  }
+
+  closeModal(){
+    $('#myModal').modal('hide');
+  }
+  confirmOrder() {
+    if (!this.idOrder) {
+      console.error('ID đơn hàng không hợp lệ.');
+      return;
+    }
+    this.order.confirmOrder(this.idOrder)
+      .pipe(
+        tap(
+          () => {
+            alert('Xác nhận đơn hàng thành công!');
+            this.closeModal()
+            this.loadOrders()
+          },
+          (error) => {
+            alert('Xác nhận đơn hàng thất bại!');
+            console.error('Lỗi khi xác nhận đơn hàng:', error);
+          }
+        )
+      )
+      .subscribe();
+  }
+
+  cancelOrder(){
+    if (!this.idOrder) {
+      console.error('ID đơn hàng không hợp lệ.');
+      return;
+    }
+    this.order.cancelOrder(this.idOrder)
+      .pipe(
+        tap(
+          () => {
+            alert('Hủy đơn hàng thành công!');
+            this.closeModal()
+            this.loadOrders()
+          },
+          (error) => {
+            alert('Hủy đơn hàng thất bại!');
+            console.error('Lỗi khi hủy đơn hàng:', error);
+          }
+        )
+      )
+      .subscribe();
+  }
+
+  confirmDelivery(){
+    if (!this.idOrder) {
+      console.error('ID đơn hàng không hợp lệ.');
+      return;
+    }
+    this.order.confirmDelivery(this.idOrder)
+      .pipe(
+        tap(
+          () => {
+            alert('Xác nhận giao hàng thành công!');
+            this.closeModal()
+            this.loadOrders()
+          },
+          (error) => {
+            alert('Xác nhận giao hàng thát bại!');
+            console.error('Lỗi khi xác nhận giao hàng:', error);
+          }
+        )
+      )
+      .subscribe();
+  }
+
+  cancelDelivery(){
+    if (!this.idOrder) {
+      console.error('ID đơn hàng không hợp lệ.');
+      return;
+    }
+    this.order.cancelDelivery(this.idOrder)
+      .pipe(
+        tap(
+          () => {
+            alert('Hủy giao hàng thành công!');
+            this.closeModal()
+            this.loadOrders()
+          },
+          (error) => {
+            alert('Hủy giao hàng thất bại!');
+            console.error('Lỗi khi hủy giao hàng:', error);
+          }
+        )
+      )
+      .subscribe();
   }
 
   getTabs() {
@@ -56,20 +149,20 @@ export class OrdersComponent implements OnInit {
       this.countOrder = this.orders.length;
     }
     else if (this.activeTab === 'Chờ xử lý') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 1);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 1).length;
+      this.filteredOrders = this.orders.filter(order => order.statusOrder === 0);
+      this.countOrder = this.orders.filter(order => order.statusOrder === 0).length;
     }
     else if (this.activeTab === 'Đang giao') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 2);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 2).length;
+      this.filteredOrders = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 1);
+      this.countOrder = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 1).length;
     }
     else if (this.activeTab === 'Hoàn tất') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 3);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 3).length;
+      this.filteredOrders = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2);
+      this.countOrder = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2).length;
     }
     else if (this.activeTab === 'Đã hủy') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 4);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 4).length;
+      this.filteredOrders = this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3);
+      this.countOrder = this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3).length;
     }
   }
 }

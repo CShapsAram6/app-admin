@@ -15,12 +15,14 @@ import { ReturnComponent } from './return/return.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { UsersComponent } from './users/users.component';
 import { BlogsComponent } from './blogs/blogs.component';
-
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { LoadingComponent } from './loading/loading.component';
 import { VariantComponent } from './variant/variant.component';
 import { PaymentComponent } from './payment/payment.component';
-import { CreatecateComponent } from './category/createcate/createcate.component';
+import { CategoryComponent } from './category/category.component';
+import { CreatecateComponent } from './createcate/createcate.component';
+import { UpdateCategoryComponent } from './update-category/update-category.component';
+
 const _routes: Routes = [
   {
     path: 'admin',
@@ -75,6 +77,21 @@ const _routes: Routes = [
         component: BlogsComponent,
         title: 'Quản lý bài viết',
       },
+      {
+        path:'postcate',
+        component:CreatecateComponent,
+        title:'Tạo danh mục'
+      },
+      {
+        path:'getcate',
+        component:CategoryComponent,
+        title:' danh mục'
+      },
+      {
+        path:'putcate/:id',
+        component:UpdateCategoryComponent,
+        title:'Sửa danh mục',
+      }
     ],
   },
 ];
@@ -94,6 +111,8 @@ const _routes: Routes = [
     VariantComponent,
     PaymentComponent,
     CreatecateComponent,
+    CategoryComponent,
+    UpdateCategoryComponent,    
   ],
   imports: [
     BrowserModule,

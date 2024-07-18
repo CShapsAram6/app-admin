@@ -17,11 +17,18 @@
             <ul class="menu-inner py-1">
                 <!-- Layouts -->
                 <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a [routerLink]="['/admin/getcate']" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-category"></i>
+                        <div data-i18n="Layouts">Danh mục</div>
+                    </a>
+                </li>
+                <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                     <a [routerLink]="['/admin/products/1']" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-layout"></i>
                         <div data-i18n="Layouts">Sản phẩm</div>
                     </a>
                 </li>
+                
 
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Đơn hàng</span>

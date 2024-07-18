@@ -1,0 +1,71 @@
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="row card-header pb-0">
+                    <div class="col-lg-6">
+                        <div class="">
+                            <a class="btn bgr-them w-50 text-white" routerLink="/admin/postcate">Thêm danh mục</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="input-group">
+                                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                                        <input type="text" id="TKonkeyup" class="form-control" name="searchString" placeholder="Tìm kiếm ...">
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2 mt-3">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên danh mục</th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                    <tr *ngFor="let i of ListCategory">
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{i.id}}</p>
+                                        </td>
+                                        
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{i.name}}</p>
+                                        </td>                                      
+                                        <td class="align-middle">
+                                            <div class="ms-auto">
+                                                <a class="btn btn-link text-dark px-3 mb-0" asp-area="Admin" [routerLink]="['/admin/putcate', i.id]" ><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"> </i> Edit </a>
+
+                                                <a class="btn btn-link text-danger text-gradient px-3 mb-0 delete-btn" (click)="showPopup(i.id)">
+                                                    <i class="far fa-trash-alt me-2"></i>Delete
+                                                  </a>
+                                                  <div *ngIf="popupVisible[i.id]" class="popup">
+                                                    <div>
+                                                        <p>Bạn có muốn xóa danh mục "{{i.name}}" không?</p>
+                                                        <div>
+                                                            <button (click)="deleteND(i.id)">Có</button>
+                                                            <button (click)="closePopup(i.id)">Không</button>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="deleteError[i.id]" class="text-danger">
+                                                        <p>
+                                                            {{deleteError[i.id]}}
+                                                        </p>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

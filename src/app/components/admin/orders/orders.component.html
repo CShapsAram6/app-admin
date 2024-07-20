@@ -29,7 +29,7 @@
 </div>
 
 <div class="card mt-4">
-  <div class="table-responsive text-nowrap">
+  <div class="table-responsive text-nowrap ">
     <table class="table">
       <thead class="table-dark">
         <tr>
@@ -39,36 +39,48 @@
           <th style="color: white;">Thanh toán</th>
           <th style="color: white;">Tổng tiền</th>
           <th style="color: white;">Trạng thái đơn hàng</th>
-          <th style="color: white;"></th>
         </tr>
       </thead>
       <tbody class="table-border-bottom-0 mt-4 fs-6" *ngFor="let order of filteredOrders; let i = index">
         <tr>
           <td>{{i+1}}</td>
           <td>
-            <button class="btn btn-sm btn-outline-primary fs-6">{{order.customerName}}</button>
+            <button class="btn btn-sm btn-outline-primary fs-6 w-75">{{order.customerName}}</button>
           </td>
           <td>
-            {{order.timeCreate | date:'dd/MM/yyyy'}}
+            {{order.timeCreate | date:'hh:mm - dd/MM/yyyy'}}
           </td>
           <td>
             <span class="fw-bold text-primary">{{order.namePaymentMethod}}</span>
           </td>
           <td>
-            {{order.total.toLocaleString()}}₫
+            {{(order.total*1000).toLocaleString()}}₫
           </td>
           <td>
-            <button class="btn btn-sm btn-warning fs-6" *ngIf="order.statusOrder === 1">Chờ xử lý</button>
-            <button class="btn btn-sm btn-info fs-6" *ngIf="order.statusOrder === 2">Đang giao</button>
-            <button class="btn btn-sm btn-success fs-6" *ngIf="order.statusOrder === 3">Hoàn thành</button>
-            <button class="btn btn-sm btn-danger fs-6" *ngIf="order.statusOrder === 4">Đã hủy</button>
+            <button class="btn btn-sm btn-warning fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal" *ngIf="order.statusOrder === 0">Chờ xử lý</button>
+
+            <button class="btn btn-sm btn-info fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal"
+              *ngIf="order.statusDelivery === 1 && order.statusOrder === 1">Đang giao</button>
+
+            <button class="btn btn-sm btn-success fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal"
+              *ngIf="order.statusOrder === 1 && order.statusDelivery === 2">Giao hàng thành công</button>
+
+            <button class="btn btn-sm btn-danger fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal"
+              *ngIf="order.statusOrder === 1 && order.statusDelivery === 3">Giao hàng thất bại</button>
+
+            <button class="btn btn-sm btn-danger fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal" *ngIf="order.statusOrder === 3">Đã hủy</button>
           </td>
-          <td>
-            <button class="btn btn-sm btn-outline-primary" (click)="clickOrder(order.id)" type="button" data-bs-toggle="modal"
-              data-bs-target="#myModal">
+          <!-- <td>
+            <button class="btn btn-sm btn-outline-primary" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -82,7 +94,16 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Mã đơn hàng: #0001 | <button class="btn btn-sm btn-warning fs-6 mb-1">Chờ xử lý</button>
+        <h4 class="modal-title">Mã đơn hàng: #{{(ordersDetail?.id || 0).toString().padStart(4, '0') }} |
+          <button class="btn btn-sm btn-warning fs-6 mb-1 w-100" *ngIf="ordersDetail?.statusOrder === 0">Chờ xử
+            lý</button>
+          <button class="btn btn-sm btn-info fs-6 mb-1"
+            *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 1">Đang giao</button>
+          <button class="btn btn-sm btn-success fs-6 mb-1"
+            *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 2">Giao hàng thành công</button>
+          <button class="btn btn-sm btn-danger fs-6 mb-1"
+            *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 3">Giao hàng thất bại</button>
+          <button class="btn btn-danger fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 3">Đã hủy</button>
         </h4>
         <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
       </div>
@@ -110,99 +131,27 @@
               </div>
               <!-- Content Order-->
               <div class="scroll-item">
-                <div class="card-item mb-2">
+                <div class="card-item mb-2" *ngFor="let item of ordersDetail?.itemOrder">
                   <div class="row ms-2 pt-3 pb-3 align-items-center">
                     <div class="col-lg-5">
                       <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                          <img src="../../../../assets/img/elements/11.jpg" class="rounded" [height]="70">
+                          <img src="{{item.productDetail?.imageUrl}}" class="rounded" [height]="70" [width]="70">
                         </div>
                         <div class="flex-grow-1 ms-3 mt-2">
-                          <p class="fw-bold name-order-product"> Cây phát tài – cây kim tiền</p>
-                          <p>Size: Nhỏ</p>
+                          <p class="fw-bold name-order-product">{{item.productDetail?.nameProduct}}</p>
+                          <p>Size: {{item.productDetail?.size}}</p>
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-2">
-                      200.000₫
+                      {{((item.productDetail?.price || 0) * 1000).toLocaleString()}}₫
                     </div>
                     <div class="col-lg-2">
-                      x2
+                      x{{item.quantity}}
                     </div>
                     <div class="col-lg-3">
-                      400.000₫
-                    </div>
-                  </div>
-                </div>
-                <div class="card-item mb-2">
-                  <div class="row ms-2 pt-3 pb-3 align-items-center">
-                    <div class="col-lg-5">
-                      <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                          <img src="../../../../assets/img/elements/11.jpg" class="rounded" [height]="70">
-                        </div>
-                        <div class="flex-grow-1 ms-3 mt-2">
-                          <p class="fw-bold name-order-product"> Cây phát tài – cây kim tiền</p>
-                          <p>Size: Nhỏ</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-2">
-                      200.000₫
-                    </div>
-                    <div class="col-lg-2">
-                      x2
-                    </div>
-                    <div class="col-lg-3">
-                      400.000₫
-                    </div>
-                  </div>
-                </div>
-                <div class="card-item mb-2">
-                  <div class="row ms-2 pt-3 pb-3 align-items-center">
-                    <div class="col-lg-5">
-                      <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                          <img src="../../../../assets/img/elements/11.jpg" class="rounded" [height]="70">
-                        </div>
-                        <div class="flex-grow-1 ms-3 mt-2">
-                          <p class="fw-bold name-order-product"> Cây phát tài – cây kim tiền</p>
-                          <p>Size: Nhỏ</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-2">
-                      200.000₫
-                    </div>
-                    <div class="col-lg-2">
-                      x2
-                    </div>
-                    <div class="col-lg-3">
-                      400.000₫
-                    </div>
-                  </div>
-                </div>
-                <div class="card-item mb-2">
-                  <div class="row ms-2 pt-3 pb-3 align-items-center">
-                    <div class="col-lg-5">
-                      <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                          <img src="../../../../assets/img/elements/11.jpg" class="rounded" [height]="70">
-                        </div>
-                        <div class="flex-grow-1 ms-3 mt-2">
-                          <p class="fw-bold name-order-product"> Cây phát tài – cây kim tiền</p>
-                          <p>Size: Nhỏ</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-2">
-                      200.000₫
-                    </div>
-                    <div class="col-lg-2">
-                      x2
-                    </div>
-                    <div class="col-lg-3">
-                      400.000₫
+                      {{(((item.productDetail?.price || 0) * item.quantity || 0) * 1000).toLocaleString()}}₫
                     </div>
                   </div>
                 </div>
@@ -215,28 +164,28 @@
             <p class="fw-bold text-uppercase fs-5 mt-2">Khách hàng</p>
             <div class="d-flex flex-row mb-3">
               <img src="../../../../assets/img/avatars/1.png" class="rounded-circle" [height]="50">
-              <p class="ms-3 mt-3 fw-bold">Nguyễn Văn A</p>
+              <p class="ms-3 mt-3 fw-bold">{{ordersDetail?.customerName}}</p>
             </div>
             <hr class="line-infocustomer">
             <div class="d-flex flex-row">
               <i class="fa-regular fa-calendar fs-4"></i>
-              <p class="ms-3">Ngày đặt: 01-01-2024</p>
+              <p class="ms-3">{{ordersDetail?.timeCreate | date:' hh:mm dd/MM/yyyy'}}</p>
             </div>
             <hr class="line-infocustomer">
             <p class="fw-bold fs-5">Thông tin liên hệ</p>
             <div class="d-flex flex-row">
               <i class="fa-regular fa-envelope fs-4"></i>
-              <p class="ms-3">lephinhvn.com</p>
+              <p class="ms-3">{{ordersDetail?.customerEmail}}</p>
             </div>
             <div class="d-flex flex-row">
               <i class="fa-solid fa-phone fs-4"></i>
-              <p class="ms-3">0339 924 208</p>
+              <p class="ms-3">{{ordersDetail?.customerPhone}}</p>
             </div>
             <hr class="line-infocustomer">
             <p class="fw-bold fs-5">Thông tin nhận hàng</p>
             <div class="d-flex flex-row">
               <i class="fa-solid fa-location-dot fs-4"></i>
-              <p class="ms-3">29 Nguyễn Khoa Đăng, Phường Khánh Xuân, Thành Phố Buôn Ma Thuột, Đắk Lắk</p>
+              <p class="ms-3">{{ordersDetail?.customerAddress}}</p>
             </div>
           </div>
         </div>
@@ -255,11 +204,11 @@
                 </div>
                 <div class="p-2 info-order-right mt-3">
                   <ul>
-                    <li>400.000₫</li>
+                    <li>{{((ordersDetail?.total||0) * 1000).toLocaleString()}}₫</li>
                     <li>20.000₫</li>
-                    <li>10.000₫</li>
-                    <li>430.000₫</li>
-                    <li>Thanh toán khi nhận hàng (COD)</li>
+                    <li>0₫</li>
+                    <li>{{((ordersDetail?.total||0) * 1000).toLocaleString()}}₫</li>
+                    <li>{{ordersDetail?.namePaymentMethod}}</li>
                   </ul>
                 </div>
               </div>
@@ -267,33 +216,58 @@
           </div>
 
           <!-- Action Order -->
-          <div class="col-lg-4">
-            <!-- Confirm Order -->
-            <div class="confirm-order d-flex justify-content-center">
-              <button class="btn btn-primary mb-3" style="display: none;">Xác nhận đơn hàng</button>
+          <div class="col-lg-4" *ngIf="ordersDetail?.statusOrder === 0">
+            <div class="btn-group mt-1 mb-3">
+              <button type="button" class="btn--dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Lý do hủy đơn
+                <i class="fa-solid fa-angle-down"></i>
+              </button>
+              <ul class="dropdown-menu" style="width: 100%;">
+                <li><a class="dropdown-item">Hết hàng</a></li>
+                <li><a class="dropdown-item">Lỗi kỹ thuật</a></li>
+                <li><a class="dropdown-item">Lỗi đóng gói</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <input type="text" class="form-control" id="resion" placeholder="Lý do khác....">
+              </ul>
             </div>
-
-            <!-- Cancel Order -->
-            <div class="cancel-order d-flex justify-content-center" style="display: none;">
-              <div class="btn-group mt-1">
-                <button type="button" class="btn--dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  Lý do hủy đơn
-                  <i class="fa-solid fa-angle-down"></i>
-                </button>
-                <ul class="dropdown-menu" style="width: 19rem;">
-                  <li><a class="dropdown-item">Hết hàng</a></li>
-                  <li><a class="dropdown-item">Lỗi kỹ thuật</a></li>
-                  <li><a class="dropdown-item">Lỗi đóng gói</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li class="px-2 py-1">
-                    <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Lý do khác...."
-                      aria-describedby="defaultFormControlHelp">
-                  </li>
-                </ul>
+            <div class="row">
+              <div class="col-lg-6">
+                <button class="btn btn-outline-danger w-100" (click)="cancelOrder()">Hủy đơn</button>
               </div>
-              <button class="btn btn-danger mt-1 ">Hủy đơn</button>
+              <div class="col-lg-6">
+                <button class="btn btn-primary w-100" (click)="confirmOrder()">Xác nhận đơn</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Delivery -->
+          <div class="col-lg-4" *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 1">
+            <div class="btn-group mt-1 mb-3">
+              <button type="button" class="btn--dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Lý do giao hàng thất bại
+                <i class="fa-solid fa-angle-down"></i>
+              </button>
+              <ul class="dropdown-menu" style="width: 100%;">
+                <li><a class="dropdown-item">Khách boom hàng</a></li>
+                <li><a class="dropdown-item">Lỗi kỹ thuật</a></li>
+                <li><a class="dropdown-item">Lỗi đóng gói</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <input type="text" class="form-control" id="resion" placeholder="Lý do khác....">
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <button class="btn btn-outline-danger w-100" style="padding: 10px 5px;" (click)="cancelDelivery()">Hủy
+                  giao hàng</button>
+              </div>
+              <div class="col-lg-6">
+                <button class="btn btn-primary w-100" style="padding: 10px 5px;" (click)="confirmDelivery()">Xác nhận
+                  giao hàng</button>
+              </div>
             </div>
           </div>
         </div>

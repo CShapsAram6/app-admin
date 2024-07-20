@@ -76,8 +76,8 @@ export class UpdateProductsComponent implements OnInit {
   }
   LoadCategory() {
     return this.categorysServices.getData().pipe(
-      tap((res) => {
-        this.categorys = res;
+      tap((res: ApiResponse<categoryDtos[]>) => {
+        this.categorys = res.data;
         this.category = this.categorys[0].id.toString();
       })
     );

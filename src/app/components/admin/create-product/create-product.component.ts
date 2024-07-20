@@ -53,10 +53,12 @@ export class CreateProductComponent implements OnInit {
   LoadCategory() {
     this.formSize.get('size')!.setValue(this.sizes[0]);
 
-    this.categorysServices.getData().subscribe((res) => {
-      this.categorys = res;
-      this.category = this.categorys[0].id.toString();
-    });
+    this.categorysServices
+      .getData()
+      .subscribe((res: ApiResponse<categoryDtos[]>) => {
+        this.categorys = res.data;
+        this.category = this.categorys[0].id.toString();
+      });
   }
   CreateDes() {
     this.isLoading = true;

@@ -130,8 +130,8 @@ export class ProductsComponent implements OnInit {
   }
   LoadCategory() {
     return this.categoryService.getData().pipe(
-      tap((resposen: categoryDtos[]) => {
-        this.arrCategory = resposen;
+      tap((resposen: ApiResponse<categoryDtos[]>) => {
+        this.arrCategory = resposen.data;
       })
     );
   }

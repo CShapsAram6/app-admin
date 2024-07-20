@@ -1,0 +1,79 @@
+<div class="card mb-4">
+    <div class="card-body d-flex justify-content-between align-items-center">
+        <div class="">
+            <h5 class="card-title">Quản lý phương thức thanh toán</h5>
+            <div class="card-subtitle text-muted mb-3">
+                Thêm, Cập nhật các phương thức
+            </div>
+            <p class="card-text">
+                Một số văn bản ví dụ nhanh để xây dựng dựa trên tiêu đề thẻ và chiếm phần lớn nội dung của thẻ.
+            </p>
+        </div>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter" (click)="isTitle = true">
+            Thêm phương thức <i class="fa-solid fa-plus ms-4"></i>
+        </button>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3 , 1fr); gap: 20px">
+    @for (item of payment; track $index) {
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">
+                {{item.name}}
+            </h5>
+            <div class="card-subtitle text-muted mb-3">
+                12 đơn hàng
+            </div>
+            <button class="btn fw-bold" [class.text-primary]="item.status" (click)="UpdateStatus(item.id)">
+                {{ item.status ? 'Đang hoạt động' : 'Ngưng hoạt động' }}
+            </button>
+            <button class="btn btn-primary ms-4" (click)="OpenPopup(item); isTitle = false" data-bs-toggle="modal"
+                data-bs-target="#modalCenter">
+                Cập nhật
+            </button>
+        </div>
+    </div>
+    }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenterTitle">
+                    {{ isTitle ? 'Thêm phương thức' : 'Cập nhật phương thức' }}
+                </h5>
+                <button type="button" (click)="isTitle = false ; name = ''" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="nameWithTitle" class="form-label">
+                            Tên phương thức
+                        </label>
+                        <input type="text" id="nameWithTitle" class="form-control" placeholder="Nhập tên phương thức"
+                            [(ngModel)]="name">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Hủy
+                </button>
+                @if(isTitle){
+                <button type="button" class="btn btn-primary" (click)="Sumbit()">
+                    Thêm
+                </button>
+                }
+                @else {
+                <button type="button" class="btn btn-primary" (click)="Update(item)">
+                    Cập nhật
+                </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

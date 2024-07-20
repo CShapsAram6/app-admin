@@ -15,7 +15,7 @@
     </div>
     <div class="header--bottom">
         <div class="text-uppercase fw-bold">
-            Có 19 đơn hàng
+            Có {{countOrder}}
         </div>
         <div class="header--bottom--button">
             <button class="btn btn-primary">Xuất dữ liệu
@@ -40,9 +40,9 @@
                     <th style="color: white;"></th>
                 </tr>
             </thead>
-            <tbody class="table-border-bottom-0 mt-4">
+            <tbody class="table-border-bottom-0 mt-4" *ngFor="let order of orderCanel; let i = index">
                 <tr>
-                    <td>1</td>
+                    <td>{{i + 1}}</td>
                     <td>
                         <p class="m-0 overflow-hidden" style="width: 75px; text-overflow: ellipsis;">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, minus. Laborum aspernatur
@@ -50,13 +50,13 @@
                         </p>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">Lê Văn A</button>
+                        <button class="btn btn-sm btn-outline-primary">{{order.customerName}}</button>
                     </td>
                     <td>
-                        20/20/2002
+                        {{order.timeCreate | date:'dd/MM/yyyy'}}
                     </td>
                     <td>
-                        <span class="fw-bold text-primary">Đã thanh toán</span>
+                        <span class="fw-bold text-primary">{{"Chưa thanh toán"}}</span>
                     </td>
                     <td>
                         100.000 đ

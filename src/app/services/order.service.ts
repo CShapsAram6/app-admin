@@ -33,8 +33,4 @@ export class OrderService {
   cancelDelivery(id: number) {
     return this.http.put(`${environment.api}/Order/cancel-delivery-${id}`, {})
   }
-
-  getOrderCanel(): Observable<orderDto[]> {
-    return this.http.get<orderDto[]>(`${environment.api}/Order/order-canel`);
-  }
 }

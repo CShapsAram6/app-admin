@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from '../../../services/order.service';
 import { orderDetailDto, orderDto } from '../../../model/order.model';
 import { tap } from 'rxjs';
+import { ApiResponse } from '../../../model/ApiResponse.model';
 declare var $: any; // Khai báo jQuery
 
 
@@ -11,7 +12,7 @@ declare var $: any; // Khai báo jQuery
   styleUrl: './orders.component.scss'
 })
 export class OrdersComponent implements OnInit {
-  constructor (private order: OrderService) {}
+  constructor (private orderService: OrderService) {}
   ngOnInit(): void {
     this.loadOrders();
   }
@@ -29,17 +30,18 @@ export class OrdersComponent implements OnInit {
   loadOrderDetail(id: number) {
     console.log(id);
     this.idOrder = id;
-    this.order.getOrderDetail(id).subscribe((data) => {
+    this.orderService.getOrderDetail(id).subscribe((data) => {
       this.ordersDetail = data;
       console.log(this.ordersDetail);
     })
   }
 
   loadOrders() {
-    this.order.getData().subscribe((data) => {
-      this.orders = data;
-      this.filteredOrders = data;
+    this.orderService.getData().subscribe((response) => {
+      this.orders = response.data;
+      this.filteredOrders = response.data;
       this.countOrder = this.orders.length;
+      console.log(response);
     });
   }
 
@@ -51,7 +53,7 @@ export class OrdersComponent implements OnInit {
       console.error('ID đơn hàng không hợp lệ.');
       return;
     }
-    this.order.confirmOrder(this.idOrder)
+    this.orderService.confirmOrder(this.idOrder)
       .pipe(
         tap(
           () => {
@@ -73,7 +75,7 @@ export class OrdersComponent implements OnInit {
       console.error('ID đơn hàng không hợp lệ.');
       return;
     }
-    this.order.cancelOrder(this.idOrder)
+    this.orderService.cancelOrder(this.idOrder)
       .pipe(
         tap(
           () => {
@@ -95,7 +97,7 @@ export class OrdersComponent implements OnInit {
       console.error('ID đơn hàng không hợp lệ.');
       return;
     }
-    this.order.confirmDelivery(this.idOrder)
+    this.orderService.confirmDelivery(this.idOrder)
       .pipe(
         tap(
           () => {
@@ -117,7 +119,7 @@ export class OrdersComponent implements OnInit {
       console.error('ID đơn hàng không hợp lệ.');
       return;
     }
-    this.order.cancelDelivery(this.idOrder)
+    this.orderService.cancelDelivery(this.idOrder)
       .pipe(
         tap(
           () => {

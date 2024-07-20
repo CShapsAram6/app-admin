@@ -29,7 +29,7 @@
 </div>
 
 <div class="card mt-4">
-  <div class="table-responsive text-nowrap">
+  <div class="table-responsive text-nowrap ">
     <table class="table">
       <thead class="table-dark">
         <tr>
@@ -39,14 +39,13 @@
           <th style="color: white;">Thanh toán</th>
           <th style="color: white;">Tổng tiền</th>
           <th style="color: white;">Trạng thái đơn hàng</th>
-          <th style="color: white;"></th>
         </tr>
       </thead>
       <tbody class="table-border-bottom-0 mt-4 fs-6" *ngFor="let order of filteredOrders; let i = index">
         <tr>
           <td>{{i+1}}</td>
           <td>
-            <button class="btn btn-sm btn-outline-primary fs-6">{{order.customerName}}</button>
+            <button class="btn btn-sm btn-outline-primary fs-6 w-75">{{order.customerName}}</button>
           </td>
           <td>
             {{order.timeCreate | date:'hh:mm - dd/MM/yyyy'}}
@@ -58,18 +57,30 @@
             {{(order.total*1000).toLocaleString()}}₫
           </td>
           <td>
-            <button class="btn btn-sm btn-warning fs-6" *ngIf="order.statusOrder === 0">Chờ xử lý</button>
-            <button class="btn btn-sm btn-info fs-6" *ngIf="order.statusDelivery === 1 && order.statusOrder === 1">Đang giao</button>
-            <button class="btn btn-sm btn-success fs-6" *ngIf="order.statusOrder === 1 && order.statusDelivery === 2">Giao hàng thành công</button>
-            <button class="btn btn-sm btn-danger fs-6" *ngIf="order.statusOrder === 1 && order.statusDelivery === 3">Giao hàng thất bại</button>
-            <button class="btn btn-sm btn-danger fs-6" *ngIf="order.statusOrder === 3">Đã hủy</button>
+            <button class="btn btn-sm btn-warning fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal" *ngIf="order.statusOrder === 0">Chờ xử lý</button>
+
+            <button class="btn btn-sm btn-info fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal"
+              *ngIf="order.statusDelivery === 1 && order.statusOrder === 1">Đang giao</button>
+
+            <button class="btn btn-sm btn-success fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal"
+              *ngIf="order.statusOrder === 1 && order.statusDelivery === 2">Giao hàng thành công</button>
+
+            <button class="btn btn-sm btn-danger fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal"
+              *ngIf="order.statusOrder === 1 && order.statusDelivery === 3">Giao hàng thất bại</button>
+
+            <button class="btn btn-sm btn-danger fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal" *ngIf="order.statusOrder === 3">Đã hủy</button>
           </td>
-          <td>
+          <!-- <td>
             <button class="btn btn-sm btn-outline-primary" (click)="loadOrderDetail(order.id)" type="button"
               data-bs-toggle="modal" data-bs-target="#myModal">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -83,12 +94,16 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Mã đơn hàng: #{{ordersDetail?.id}} |
-          <button class="btn btn-sm btn-warning fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 0">Chờ xử lý</button>
-          <button class="btn btn-sm btn-info fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 1">Đang giao</button>
-          <button class="btn btn-sm btn-success fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 2">Giao hàng thành công</button>
-          <button class="btn btn-sm btn-danger fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 3">Giao hàng thất bại</button>
-          <button class="btn btn-sm btn-danger fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 3">Đã hủy</button>
+        <h4 class="modal-title">Mã đơn hàng: #{{(ordersDetail?.id || 0).toString().padStart(4, '0') }} |
+          <button class="btn btn-sm btn-warning fs-6 mb-1 w-100" *ngIf="ordersDetail?.statusOrder === 0">Chờ xử
+            lý</button>
+          <button class="btn btn-sm btn-info fs-6 mb-1"
+            *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 1">Đang giao</button>
+          <button class="btn btn-sm btn-success fs-6 mb-1"
+            *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 2">Giao hàng thành công</button>
+          <button class="btn btn-sm btn-danger fs-6 mb-1"
+            *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 3">Giao hàng thất bại</button>
+          <button class="btn btn-danger fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 3">Đã hủy</button>
         </h4>
         <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
       </div>
@@ -115,8 +130,8 @@
                 </div>
               </div>
               <!-- Content Order-->
-              <div class="scroll-item" *ngFor="let item of ordersDetail?.itemOrder">
-                <div class="card-item mb-2">
+              <div class="scroll-item">
+                <div class="card-item mb-2" *ngFor="let item of ordersDetail?.itemOrder">
                   <div class="row ms-2 pt-3 pb-3 align-items-center">
                     <div class="col-lg-5">
                       <div class="d-flex align-items-center">
@@ -246,10 +261,12 @@
             </div>
             <div class="row">
               <div class="col-lg-6">
-                <button class="btn btn-outline-danger w-100" style="padding: 10px 5px;" (click)="cancelDelivery()">Hủy giao hàng</button>
+                <button class="btn btn-outline-danger w-100" style="padding: 10px 5px;" (click)="cancelDelivery()">Hủy
+                  giao hàng</button>
               </div>
               <div class="col-lg-6">
-                <button class="btn btn-primary w-100" style="padding: 10px 5px;" (click)="confirmDelivery()">Xác nhận giao hàng</button>
+                <button class="btn btn-primary w-100" style="padding: 10px 5px;" (click)="confirmDelivery()">Xác nhận
+                  giao hàng</button>
               </div>
             </div>
           </div>

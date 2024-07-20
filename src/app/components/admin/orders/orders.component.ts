@@ -3,6 +3,8 @@ import { OrderService } from '../../../services/order.service';
 import { orderDetailDto, orderDto } from '../../../model/order.model';
 import { tap } from 'rxjs';
 import { ApiResponse } from '../../../model/ApiResponse.model';
+import { FormControl } from '@angular/forms';
+import { log } from 'console';
 declare var $: any; // Khai báo jQuery
 
 
@@ -70,12 +72,11 @@ export class OrdersComponent implements OnInit {
       .subscribe();
   }
 
+  reasonControl = new FormControl('');
   cancelOrder(){
-    if (!this.idOrder) {
-      console.error('ID đơn hàng không hợp lệ.');
-      return;
-    }
-    this.orderService.cancelOrder(this.idOrder)
+    const selectedReason = this.reasonControl.value;
+    if(selectedReason){
+      this.orderService.cancelOrder(this.idOrder, selectedReason)
       .pipe(
         tap(
           () => {
@@ -90,6 +91,7 @@ export class OrdersComponent implements OnInit {
         )
       )
       .subscribe();
+    }
   }
 
   confirmDelivery(){
@@ -115,25 +117,24 @@ export class OrdersComponent implements OnInit {
   }
 
   cancelDelivery(){
-    if (!this.idOrder) {
-      console.error('ID đơn hàng không hợp lệ.');
-      return;
-    }
-    this.orderService.cancelDelivery(this.idOrder)
-      .pipe(
-        tap(
-          () => {
-            alert('Hủy giao hàng thành công!');
-            this.closeModal()
-            this.loadOrders()
-          },
-          (error) => {
-            alert('Hủy giao hàng thất bại!');
-            console.error('Lỗi khi hủy giao hàng:', error);
-          }
+    const selectedReasonDelivery = this.reasonControl.value;
+    if(selectedReasonDelivery){
+      this.orderService.cancelDelivery(this.idOrder, selectedReasonDelivery)
+        .pipe(
+          tap(
+            () => {
+              alert('Hủy giao hàng thành công!');
+              this.closeModal()
+              this.loadOrders()
+            },
+            (error) => {
+              alert('Hủy giao hàng thất bại!');
+              console.error('Lỗi khi hủy giao hàng:', error);
+            }
+          )
         )
-      )
-      .subscribe();
+        .subscribe();
+    }
   }
 
   getTabs() {

@@ -35,4 +35,8 @@ interface orderDetailDto {
   ]
 }
 
-export { orderDto, orderDetailDto }
+interface reasonDto {
+  reasonCancel: string
+}
+
+export { orderDto, orderDetailDto, reasonDto };

@@ -13,4 +13,8 @@ export class OrderService {
   getData(): Observable<orderDto[]> {
     return this.http.get<orderDto[]>(`${environment.api}/Order`);
   }
+
+  getOrderCanel(): Observable<orderDto[]> {
+    return this.http.get<orderDto[]>(`${environment.api}/Order/order-canel`);
+  }
 }

@@ -22,6 +22,9 @@ export class OrdersComponent implements OnInit {
   idOrder: number = 0;
   countOrder: number = 0;
   activeTab = 'Tất cả';
+  currentPage = 1;
+  limit = 10;
+  tabsData: { [tab: string]: { currentPage: number, filteredOrders: orderDto[], count: number } } = {};
   //get all order
   orders: orderDto[] = [];
   //get order detail
@@ -43,7 +46,17 @@ export class OrdersComponent implements OnInit {
       this.orders = response.data;
       this.filteredOrders = response.data;
       this.countOrder = this.orders.length;
-      console.log(response);
+
+      // Phân trang cho từng tab
+      this.getTabs().forEach(tab => {
+        this.tabsData[tab] = {
+          currentPage: 1,
+          filteredOrders: this.filterOrdersForTab(tab),
+          count: this.filterOrdersForTab(tab).length
+        };
+      });
+
+      this.updatePagination();
     });
   }
 
@@ -143,29 +156,45 @@ export class OrdersComponent implements OnInit {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
-    this.filterOrders();
+    this.currentPage = this.tabsData[tab].currentPage;
+    this.filteredOrders = this.tabsData[tab].filteredOrders;
+    this.countOrder = this.tabsData[tab].count;
+    this.updatePagination();
   }
 
-  filterOrders() {
-    if (this.activeTab === 'Tất cả') {
-      this.filteredOrders = this.orders;
-      this.countOrder = this.orders.length;
+  filterOrdersForTab(tab: string): orderDto[] {
+    if (tab === 'Tất cả') {
+      return this.orders;
+    } else if (tab === 'Chờ xử lý') {
+      return this.orders.filter(order => order.statusOrder === 0);
+    } else if (tab === 'Đang giao') {
+      return this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 1);
+    } else if (tab === 'Hoàn tất') {
+      return this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2);
+    } else if (tab === 'Đã hủy') {
+      return this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3);
+    } else {
+      return [];
     }
-    else if (this.activeTab === 'Chờ xử lý') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 0);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 0).length;
-    }
-    else if (this.activeTab === 'Đang giao') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 1);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 1).length;
-    }
-    else if (this.activeTab === 'Hoàn tất') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2).length;
-    }
-    else if (this.activeTab === 'Đã hủy') {
-      this.filteredOrders = this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3);
-      this.countOrder = this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3).length;
-    }
+  }
+
+  updatePagination() {
+    const pageStart = (this.currentPage - 1) * this.limit;
+    const pageEnd = pageStart + this.limit;
+    this.filteredOrders = this.tabsData[this.activeTab].filteredOrders.slice(pageStart, pageEnd);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.tabsData[this.activeTab].count / this.limit);
+  }
+
+  generatePageNumbers(): number[] {
+    return Array.from({length: this.totalPages}, (_, i) => i + 1);
+  }
+
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.tabsData[this.activeTab].currentPage = pageNumber;
+    this.updatePagination();
   }
 }

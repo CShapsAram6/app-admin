@@ -5,8 +5,10 @@
             <form [formGroup]="formcate">
                 <div class="p-5 form-group">
                     <label for="name" class="block mb-2 font-bold text-gray-600">Tên danh mục</label>
-                    <input type="text" class="border border-gray-300 form-control required input" id="name" formControlName="name" placeholder="Tên danh mục" >
-                    <div class="text-danger" *ngIf="formcate.controls['name'].invalid && (formcate.controls['name'].dirty || formcate.controls['name'].touched)">
+                    <input type="text" class="border border-gray-300 form-control required input" id="name"
+                        formControlName="name" placeholder="Tên danh mục">
+                    <div class="text-danger"
+                        *ngIf="formcate.controls['name'].invalid && (formcate.controls['name'].dirty || formcate.controls['name'].touched)">
                         <span *ngIf="formcate.controls['name'].errors?.['required']">
                             Tên danh mục không được để trống
                         </span>

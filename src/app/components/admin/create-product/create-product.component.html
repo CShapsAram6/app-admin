@@ -1,39 +1,43 @@
-<div class="row p-4">
-    <div class="cart col-12">
-        <div class="row">
-            <div class="col-6">
-                <div>
-                    <label for="defaultFormControlInput" class="form-label">Hình ảnh</label>
-                    <input class="form-control" type="file" id="formFileMultiple" multiple=""
-                        (change)="onFilesSelected($event)">
-                </div>
-            </div>
-            <div class="col-6">
-                <div>
-                    <label for="defaultFormControlInput" class="form-label">Tên sản phẩm</label>
-                    <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
-                        aria-describedby="defaultFormControlHelp" [(ngModel)]="name">
-                    <div id="defaultFormControlHelp" class="form-text text-danger">
-                        We'll never share your details with anyone else.
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row mt-4">
-            <div class="col-6">
-                <div class="image d-flex gap-3 flex-wrap">
-                    <div class="position-relative border border-1 h-50 rounded rounded-1"
-                        *ngFor="let item of imageUrls">
-                        <img [src]="item.url" alt="" class="rounded-1 h-100">
+<div class="card">
+    <div class="row p-4">
+        <h4>Thông tin cơ bản</h4>
+        <div class="cart col-12">
+            <!-- select image -->
+            <div class="">
+                <p><span class="text-danger">*</span>
+                    Hình ảnh sản phẩm
+                </p>
+                <input class="form-control d-none" type="file" id="formFileMultiple" multiple=""
+                    (change)="onFilesSelected($event)">
+                <div class="d-flex gap-3 flex-wrap">
+                    <div class="position-relative rounded rounded-1 privew-image" *ngFor="let item of imageUrls">
+                        <img [src]="item.url" alt="" class="rounded-1">
                         <button class="btn btn-sm btn-danger position-absolute btn-max-sm"
-                            (click)="RemoveItem(item.index)" style="top: 0px; right: 0px;"><i
-                                class="fa-solid fa-xmark"></i></button>
+                            (click)="RemoveItem(item.index)" style="top: 0px; right: 0px;">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
                     </div>
+                    <label for="formFileMultiple" class="form-label privew-image">
+                        <div class="">
+                            Tải lên hình ảnh
+                            <p>Định dạng: JPG, JPEG, PNG</p>
+                        </div>
+                    </label>
                 </div>
             </div>
-            <div class="col-6">
-                <div>
+            <!-- name , category -->
+            <div class="row">
+                <div class="col-6">
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label">Tên sản phẩm</label>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                            aria-describedby="defaultFormControlHelp" [(ngModel)]="name">
+                        <div id="defaultFormControlHelp" class="form-text text-danger">
+                            We'll never share your details with anyone else.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
                     <label for="defaultFormControlInput" class="form-label">Loại sản phẩm</label>
                     <select id="defaultSelect" class="form-select" [(ngModel)]="category">
                         <option [value]="item.id" *ngFor="let item of categorys">
@@ -41,118 +45,237 @@
                         </option>
                     </select>
                 </div>
-                <div class="mt-4">
-                    <label for="defaultFormControlInput" class="form-label">Kích thước</label>
-                    <form [formGroup]="formSize">
-                        <div class="row">
-                            <div class="col-3">
-                                <select name="" id="" class="form-control" formControlName="size">
-                                    <option [value]="item" *ngFor="let item of sizes">
-                                        {{item}}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-3">
-                                <input type="text" class="form-control" id="defaultFormControlInput"
-                                    placeholder="Đơn giá" formControlName="price">
-                            </div>
-                            <div class="col-3">
-                                <input type="text" class="form-control" id="defaultFormControlInput"
-                                    placeholder="Số lượng" formControlName="quantity">
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-primary w-100" (click)="OnSumbit()"
-                                    [disabled]="formSize.invalid">
-                                    Thêm
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card p-4 mt-4">
+    <h5> <span class="text-danger">*</span> File đính kèm</h5>
+    <div class="">
+        <input class="form-control d-none" type="file" id="selectFDF" multiple="" accept=".pdf,.doc,.docx"
+            (change)="onFileSelectedPDF($event)">
+        <div class="d-flex gap-3 flex-wrap">
+            <div class="privew-image position-relative" *ngFor="let item of arrFile">
+                <div class="">
+                    @if(item.type == 'application/pdf'){
+                    <i class="fa-regular fa-file-pdf fs-1"></i>
+                    }
+                    @else {
+                    <i class="fa-regular fa-file-word fs-1"></i>
+                    }
+                    <p class="fs-6 mt-1"> {{item.name}} </p>
                 </div>
-                <div class="can--turn mt-4">
-                    <div class="row">
-                        <table class="table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th style="color: white;">Size</th>
-                                    <th style="color: white;">Đơn giá</th>
-                                    <th style="color: white;">Số lượng</th>
-                                    <th style="color: white;"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0 mt-4">
-                                <tr *ngFor="let item of listSize">
-                                    <td> {{item.size}} </td>
-                                    <td>
-                                        {{item.price | currency:' ':'symbol':'1.0-0'}}.000 đ
-                                    </td>
-                                    <td>
-                                        {{item.quantity}}
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-danger" (click)="RemoveSize(item )">
-                                            <i class="fa-solid fa-xmark"></i>
+                <button class="btn btn-sm btn-danger position-absolute btn-max-sm" style="top: 0px; right: 0px;"
+                    (click)="RemoveFile(item.index)">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <label for="selectFDF" class="form-label privew-image" *ngIf="arrFile.length < 3">
+                <div class="">
+                    Tải lên file đính kèm
+                    <p>Tối đa: 3 file</p>
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+<div class="card p-4 mt-4">
+    <h4>Chi tiết sản phẩm</h4>
+    <div class="row">
+        <!-- variant products -->
+        <form [formGroup]="formSize" class="col-9">
+            <div class="">
+                <label class="form-label">
+                    <span class="text-danger">*</span>
+                    Kích thước sản phẩm
+                </label>
+            </div>
+            <div class="mt-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Kích thước</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listSize">
+                            <td>
+                                <div class="">
+                                    <input type="text" class="form-control" placeholder="{{item.size}}" disabled>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <input type="text" class="form-control" placeholder="{{item.quantity}}" disabled>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <input type="text" class="form-control" placeholder="{{item.price}}.000 đ" disabled>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <button class="btn btn-sm me-1" (click)="RemoveSize(item )">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="">
+                                    <select formControlName="size" class="form-select">
+                                        <option value="1">Lớn</option>
+                                        <option value="2">Vừa</option>
+                                        <option value="3">Nhỏ</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <input type="text" class="form-control" placeholder="Nhập số lượng"
+                                        formControlName="quantity">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <input type="text" class="form-control" placeholder="Nhập đơn giá"
+                                        formControlName="price">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="">
+                                    <button class="btn btn-sm btn-outline-primary" (click)="OnSumbit()"
+                                        [disabled]="formSize.invalid">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <!-- color -->
+        <div class="col-3">
+            <div class="">
+                <label class="form-label">
+                    <span class="text-danger">*</span>
+                    Màu sắc sản phẩm
+                </label>
+                <div class="mt-2">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mã màu</th>
+                                <th scope="col">Màu sắc</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of arrColor">
+                                <td>
+                                    <div class="">
+                                        {{item}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="color" name="" id="" class="form-control-color" [value]="item"
+                                            disabled>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <button class="btn btn-sm" (click)="RemoveColor(item)">
+                                            <i class="fa-solid fa-trash-can">
+
+                                            </i>
                                         </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="">
+                                        {{color}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <input type="color" class="form-control-color" [(ngModel)]="color">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="">
+                                        <button class="btn btn-sm btn-outline-primary" (click)="SumbitColor()">
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="mt-4">
-            <div>
-                <label for=" defaultFormControlInput" class="form-label text-primary">
-                    Mô tả sản phẩm do AI tạo
+    </div>
+
+
+    <div class="mt-4">
+        <div>
+            <label for=" defaultFormControlInput" class="form-label text-primary">
+                Mô tả sản phẩm do AI tạo
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </label>
+            <div class="row">
+                <div class="col-10">
+                    <input type="text" class="form-control" placeholder="Nhập gợi ý mô tả sản phẩm....."
+                        [(ngModel)]="prompt">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary w-100" (click)="CreateDes()"
+                        [disabled]="!prompt.trim() || isLoading">
+                        <div *ngIf="!isLoading">
+                            Tạo
+                        </div>
+                        <div class="spinner-border" role="status" style="width: 20px; height: 20px;" *ngIf="isLoading">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="mt-3" *ngIf="aiResponse.trim()">
+                <label for=" defaultFormControlInput" class="form-label fw-bold">
+                    Kết quả trả về
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
                 </label>
-                <div class="row">
-                    <div class="col-10">
-                        <input type="text" class="form-control" placeholder="Nhập gợi ý mô tả sản phẩm....."
-                            [(ngModel)]="prompt">
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-primary w-100" (click)="CreateDes()"
-                            [disabled]="!prompt.trim() || isLoading">
-                            <div *ngIf="!isLoading">
-                                Tạo
-                            </div>
-                            <div class="spinner-border" role="status" style="width: 20px; height: 20px;"
-                                *ngIf="isLoading">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-                <div class="mt-3" *ngIf="aiResponse.trim()">
-                    <label for=" defaultFormControlInput" class="form-label fw-bold">
-                        Kết quả trả về
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    </label>
-                    <p class="text-justify">
-                        {{aiResponse}}
-                        <button class="btn btn-sm btn-primary mx-3" (click)="BntUsing(aiResponse)">Sử dụng</button>
-                    </p>
-                </div>
+                <p class="text-justify" [innerHTML]="aiResponse">
+                </p>
+                <button class="btn btn-sm btn-primary mx-3" (click)="BntUsing(aiResponse)">Sử dụng</button>
             </div>
         </div>
-        <div class="mt-4">
-            <div>
-                <label for="defaultFormControlInput" class="form-label">
-                    Mô tả sản phẩm
-                </label>
-                <editor [(ngModel)]="describe" apiKey="zjaf3225wvypx5bbv8bie6lf440xmz7oynbi61624j3mhn0w" [init]="{
-                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                }"></editor>
-            </div>
+    </div>
+    <div class="mt-4">
+        <div>
+            <label for="defaultFormControlInput" class="form-label">
+                Mô tả sản phẩm
+            </label>
+            <editor [(ngModel)]="describe" apiKey="zjaf3225wvypx5bbv8bie6lf440xmz7oynbi61624j3mhn0w" [init]="{
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+            }"></editor>
         </div>
-        <div class="d-flex justify-content-end w-100">
-            <button class="btn btn-primary mt-3" (click)="Create()">
-                Thêm sản phẩm mới
-            </button>
-        </div>
+    </div>
+    <div class="d-flex justify-content-end w-100">
+        <button class="btn btn-primary mt-3" (click)="Create()">
+            Thêm sản phẩm mới
+        </button>
     </div>
 </div>
 

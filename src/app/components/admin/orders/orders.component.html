@@ -276,3 +276,26 @@
     </div>
   </div>
 </div>
+
+<!-- Page -->
+<div class=" d-flex justify-content-center align-items-center mt-3 bg-white rounded-3">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination mt-3">
+      <li class="page-item mx-1" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="onPageChange(currentPage - 1)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+      </li>
+
+      <li class="page-item mx-1" *ngFor="let page of generatePageNumbers()" [class.active]="currentPage === page">
+        <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+      </li>
+
+      <li class="page-item mx-1" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="onPageChange(currentPage + 1)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

@@ -145,3 +145,29 @@
         .popup  button:last-child {
             float: right; /* Đặt nút cuối cùng về phía phải */
         }
+
+// hình 
+.btn--zoom {
+    position: relative;
+    border: none;
+    background-color: transparent;
+    &::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        top: 0px;
+        left: 0px;
+    }
+    &:hover {
+        &::after {
+            background-color: #696cff65;
+        }
+    }
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

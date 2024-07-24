@@ -22,6 +22,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { CategoryComponent } from './category/category.component';
 import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
+import { CreateBlogComponent } from './create-blog/create-blog.component';
 
 const _routes: Routes = [
   {
@@ -78,9 +79,16 @@ const _routes: Routes = [
         title: 'Quản lý người dùng',
       },
       {
-        path: 'blogs',
+        path: 'blogs/:page',
         component: BlogsComponent,
-        title: 'Quản lý bài viết',
+        children:[
+          {path:':page',component:BlogsComponent,title:"Bài Viết"}
+        ]
+      },
+      {
+        path:'createblog',
+        component:CreateBlogComponent,
+        title:'Tạo bài viết',
       },
       {
         path: 'postcate',

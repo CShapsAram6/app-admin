@@ -35,16 +35,21 @@ const _routes: Routes = [
         title: 'Quản lý sản phẩm',
         children: [
           {
-            path: ':id',
-            component: UpdateProductsComponent,
-            title: 'Cập nhật sản phẩm',
-          },
-          {
             path: 'variant/:id',
             component: VariantComponent,
             title: 'Quản lý kích thước',
           },
         ],
+      },
+      {
+        path: 'update-products/:id',
+        component: UpdateProductsComponent,
+        title: 'Cập nhật sản phẩm',
+      },
+      {
+        path: 'product-create',
+        component: CreateProductComponent,
+        title: 'Thêm sản phẩm mới ',
       },
       { path: 'order', component: OrdersComponent, title: 'Quản lý đơn hàng' },
       {
@@ -78,20 +83,20 @@ const _routes: Routes = [
         title: 'Quản lý bài viết',
       },
       {
-        path:'postcate',
-        component:CreatecateComponent,
-        title:'Tạo danh mục'
+        path: 'postcate',
+        component: CreatecateComponent,
+        title: 'Tạo danh mục',
       },
       {
-        path:'getcate',
-        component:CategoryComponent,
-        title:' danh mục'
+        path: 'getcate',
+        component: CategoryComponent,
+        title: ' danh mục',
       },
       {
-        path:'putcate/:id',
-        component:UpdateCategoryComponent,
-        title:'Sửa danh mục',
-      }
+        path: 'putcate/:id',
+        component: UpdateCategoryComponent,
+        title: 'Sửa danh mục',
+      },
     ],
   },
 ];
@@ -112,7 +117,7 @@ const _routes: Routes = [
     PaymentComponent,
     CreatecateComponent,
     CategoryComponent,
-    UpdateCategoryComponent,    
+    UpdateCategoryComponent,
   ],
   imports: [
     BrowserModule,

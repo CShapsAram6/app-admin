@@ -22,12 +22,12 @@ export class OrderService {
     return this.http.put(`${environment.api}/Order/confirm-order-${id}`, {})
   }
 
-  cancelOrder(id: number, reason: string) {
-    const reasonDto: reasonDto = {
-      reasonCancel: reason
-    }
-    return this.http.put(`${environment.api}/Order/cancel-order-${id}`, reasonDto)
-  }
+  // cancelOrder(id: number, reason: string) {
+  //   const reasonDto: reasonDto = {
+  //     reasonCancel: reason
+  //   }
+  //   return this.http.put(`${environment.api}/Order/cancel-order-${id}`, reasonDto)
+  // }
 
   confirmDelivery(id: number) {
     return this.http.put(`${environment.api}/Order/confirm-delivery-${id}`, {})

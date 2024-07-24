@@ -22,6 +22,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { CategoryComponent } from './category/category.component';
 import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
+import { create } from 'domain';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
 
 const _routes: Routes = [
@@ -125,7 +126,9 @@ const _routes: Routes = [
     PaymentComponent,
     CreatecateComponent,
     CategoryComponent,
-    UpdateCategoryComponent,
+    UpdateCategoryComponent,    
+    BlogsComponent,
+    CreateBlogComponent
   ],
   imports: [
     BrowserModule,

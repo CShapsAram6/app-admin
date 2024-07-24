@@ -75,22 +75,22 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0 mt-4">
-                <tr>
-                    <td>1</td>
+                <tr *ngFor="let i of ListVoucher">
+                    <td>{{i.id}}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">Lê Văn A</button>
+                        <button class="btn btn-sm btn-outline-primary">{{i.name}}</button>
                     </td>
                     <td>
-                        20/20/2002
+                        {{i.status}}
                     </td>
                     <td>
-                        <span class="fw-bold text-primary">Đã thanh toán</span>
+                        <span class="fw-bold text-primary">{{i.timeStart}}</span>
                     </td>
                     <td>
-                        100.000 đ
+                        {{i.timeEnd}}
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">Đang chờ xử lý</button>
+                        <button class="btn btn-sm btn-outline-primary">{{i.minOrderVaule}}</button>
                     </td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary">

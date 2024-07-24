@@ -1,0 +1,59 @@
+$color: rgba(128, 128, 128, 0.349);
+.image {
+    width: 100%;
+    height: 20rem;
+    overflow: hidden;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+    }
+    & img {
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+    }
+}
+.can--turn {
+    height: 9rem;
+    overflow: hidden;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+    }
+}
+.btn-max-sm {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.privew-image {
+    width: 130px;
+    height: 150px;
+    overflow: hidden;
+    overflow-y: auto;
+    cursor: pointer;
+    border: 1px dashed $color;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    & p {
+        padding: 0 7px;
+        margin: 0px;
+        font-size: 9px;
+    }
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

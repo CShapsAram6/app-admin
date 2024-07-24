@@ -1,1 +1,79 @@
-<p>blogs works!</p>
+<div class="card p-4">
+    <div class="d-flex justify-content-between">
+        <div class="col-6">
+            <div class="group--search">
+                <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
+                    aria-describedby="defaultFormControlHelp" >
+                <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn btn-primary" routerLink="/admin/createblog">
+                Thêm blog mới
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- content -->
+ @if(blogs.length > 0){
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="color: white;">STT</th>
+                        <th style="color: white;">Hình ảnh</th>
+                        <th style="color: white;">Tiêu đề </th>
+                        <th style="color: white;">Nội dung</th>
+                        <th style="color: white;">Ngày tạo</th>
+                        <th style="color: white;"></th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0 mt-4">
+                    <tr *ngFor="let i of blogs; let stt = index" >
+                        <td>
+                            {{stt+1}}
+                        </td>
+                        <td>
+                            <div class="btn--zoom avatar">
+                                <img src="{{i.images}}">
+                            </div>
+                        </td>
+                        <td>
+                            <a class="btn-edit">
+                                {{i.header}}  
+                          </a>
+                        </td>
+                        <td>
+                            <a class="btn-edit">
+                                {{i.content}}  
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn-edit">
+                                {{ i.datePush | date: 'dd/MM/yyyy' }}                            
+                            </a>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ }@else{
+    <div class="d-flex justify-content-center mt-5">
+        <h2>
+            <i class="fa-solid fa-filter-circle-xmark"></i>
+            Không tìm thấy bài viết
+        </h2>
+    </div>
+ }
+
+<!-- content -->

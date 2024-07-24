@@ -1,6 +1,7 @@
 interface categoryDtos {
   id: number;
   name: string;
+  images : string;
 }
 interface createcategoryDtos {
   name: string;

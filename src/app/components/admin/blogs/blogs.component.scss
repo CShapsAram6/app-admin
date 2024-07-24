@@ -1,0 +1,15 @@
+.group--search {
+    position: relative;
+    & .btn--search {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        font-size: 20px;
+        & i {
+            color: #d9dee3;
+        }
+    }
+}

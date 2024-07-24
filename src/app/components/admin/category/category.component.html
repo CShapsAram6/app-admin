@@ -23,7 +23,7 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hình ảnh</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên danh mục</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -33,6 +33,9 @@
                                     <tr *ngFor="let i of ListCategory">
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{i.id}}</p>
+                                            <div class="btn--zoom avatar">
+                                                <img src="{{i.images + '=s100'}}">
+                                            </div>
                                         </td>
                                         
                                         <td>

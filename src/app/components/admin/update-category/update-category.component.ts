@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategorysService } from '../../../services/categorys.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { categoryDtos, createcategoryDtos } from '../../../model/category.model';
 
 @Component({
@@ -11,7 +11,7 @@ import { categoryDtos, createcategoryDtos } from '../../../model/category.model'
 })
 export class UpdateCategoryComponent implements OnInit {
   id: any;
-  constructor(private cate:CategorysService,private routes:ActivatedRoute, private form:FormBuilder){}
+  constructor(private cate:CategorysService,private routes:ActivatedRoute, private form:FormBuilder , private Router:Router){}
   ngOnInit(): void {
     this.id = Number(this.routes.snapshot.paramMap.get('id'));
     this.GetIdCate();
@@ -41,7 +41,10 @@ export class UpdateCategoryComponent implements OnInit {
       if(this.formupdatecate.valid){
         let request:createcategoryDtos = this.formupdatecate.value as unknown as createcategoryDtos
         this.cate.putCate(this.id,request).subscribe(
-          (res) => {console.log(res)}
+          (res) => {console.log(res)
+            this.Router.navigate(['/admin/getcate']);
+
+          }
         )
       }
     }

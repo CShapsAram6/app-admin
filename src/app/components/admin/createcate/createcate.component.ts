@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CategorysService } from '../../../services/categorys.service';
 import { FormBuilder, MinValidator, Validators } from '@angular/forms';
@@ -9,7 +10,7 @@ import { createcategoryDtos } from '../../../model/category.model';
   styleUrl: './createcate.component.scss'
 })
 export class CreatecateComponent implements OnInit {
-  constructor(private cate:CategorysService ,private form:FormBuilder, ){}
+  constructor(private cate:CategorysService ,private form:FormBuilder, private Router:Router ){}
 ngOnInit(): void {
   this.formcate;
 }
@@ -28,6 +29,7 @@ createcate() {
     this.cate.postCate(request).subscribe(
       (da) => {
         console.log(da);
+        this.Router.navigate(['/admin/getcate']);
       }
     )
   }

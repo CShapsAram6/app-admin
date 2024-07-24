@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment/environment';
-import { orderDetailDto, orderDto } from '../model/order.model';
+import { orderCancelDetailDto, orderCanelDto, orderDetailDto, orderDto } from '../model/order.model';
 import { ApiResponse } from '../model/ApiResponse.model';
 
 @Injectable({
@@ -32,5 +32,21 @@ export class OrderService {
 
   cancelDelivery(id: number) {
     return this.http.put(`${environment.api}/Order/cancel-delivery-${id}`, {})
+  }
+
+  getOrderCanel(): Observable<ApiResponse<orderCanelDto[]>> {
+    return this.http.get<ApiResponse<orderCanelDto[]>>(`${environment.api}/Order/order-canel`);
+  }
+
+  getOrderCanelDetail(id: number): Observable<ApiResponse<orderCancelDetailDto>> {
+    return this.http.get<ApiResponse<orderCancelDetailDto>>(`${environment.api}/Order/oder-cancel-detail-${id}`);
+  }
+
+  putConfirmOrderCancel(id: number) {
+    return this.http.put<any>(`${environment.api}/Order/confirm-odercanel-${id}`, {})
+  }
+
+  putResetOrderCancel(id: number) {
+    return this.http.put<any>(`${environment.api}/Order/reset-odercanel-${id}`, {})
   }
 }

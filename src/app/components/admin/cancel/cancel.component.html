@@ -1,76 +1,314 @@
 <div class="card p-4">
-    <div class="list-tab row">
-        <div class="col-6">
-            <button class="btn--tab btn--active">Tất cả</button>
-            <button class="btn--tab">Cần xử lý</button>
-            <button class="btn--tab">Đã hoàn thành</button>
-        </div>
-        <div class="col-6">
-            <div class="group--search">
-                <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
-                    aria-describedby="defaultFormControlHelp">
-                <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-        </div>
+  <div class="list-tab row">
+    <div class="col-6">
+      <button *ngFor="let tab of getTabs()" (click)="setActiveTab(tab)"
+        class="px-4 py-2 text-sm font-medium rounded-t-md border-b-2 focus:outline-none
+               hover:text-gray-600 hover:border-gray-300
+               {{ activeTab === tab ? 'btn--tab btn--active text-blue-500 border-blue-500' : 'btn--tab text-gray-500 border-transparent' }}">
+        {{ tab | titlecase }}
+      </button>
     </div>
-    <div class="header--bottom">
-        <div class="text-uppercase fw-bold">
-            Có 19 đơn hàng
-        </div>
-        <div class="header--bottom--button">
-            <button class="btn btn-primary">Xuất dữ liệu
-                <i class="fa-solid fa-arrow-up-right-from-square ms-3"></i>
-            </button>
-        </div>
+    <div class="col-6">
+      <div class="group--search">
+        <input
+          type="text"
+          class="form-control"
+          id="defaultFormControlInput"
+          placeholder="Tìm kiếm...."
+          aria-describedby="defaultFormControlHelp"
+        />
+        <button class="btn--search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
     </div>
+  </div>
+  <div class="header--bottom">
+    <div class="text-uppercase fw-bold">
+      {{ countOrder }}
+    </div>
+    <div class="header--bottom--button">
+      <button class="btn btn-primary">
+        Xuất dữ liệu
+        <i class="fa-solid fa-arrow-up-right-from-square ms-3"></i>
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="card mt-4">
-    <div class="table-responsive text-nowrap">
-        <table class="table">
-            <thead class="table-dark">
-                <tr>
-                    <th style="color: white;">STT</th>
-                    <th style="color: white;">Lý do hủy</th>
-                    <th style="color: white;">Người mua</th>
-                    <th style="color: white;">Ngày tháng</th>
-                    <th style="color: white;">Thanh toán</th>
-                    <th style="color: white;">Tổng tiền</th>
-                    <th style="color: white;">Trạng thái đơn hàng</th>
-                    <th style="color: white;"></th>
-                </tr>
-            </thead>
-            <tbody class="table-border-bottom-0 mt-4">
-                <tr>
-                    <td>1</td>
-                    <td>
-                        <p class="m-0 overflow-hidden" style="width: 75px; text-overflow: ellipsis;">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, minus. Laborum aspernatur
-                            ex ipsa
-                        </p>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary">Lê Văn A</button>
-                    </td>
-                    <td>
-                        20/20/2002
-                    </td>
-                    <td>
-                        <span class="fw-bold text-primary">Đã thanh toán</span>
-                    </td>
-                    <td>
-                        100.000 đ
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary">Đang chờ xử lý</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th style="color: white">STT</th>
+          <th style="color: white">Mã DH</th>
+          <th style="color: white">Lý do hủy</th>
+          <th style="color: white">Người mua</th>
+          <th style="color: white">Ngày tháng</th>
+          <th style="color: white">Thanh toán</th>
+          <th style="color: white">Tổng tiền</th>
+          <th style="color: white">Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody
+        class="table-border-bottom-0 mt-4"
+        *ngFor="let order of filteredOrderCancel; let i = index"
+      >
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ "#00" + order.id }}</td>
+          <td>
+            <p
+              class="m-0 overflow-hidden"
+              style="width: 75px; text-overflow: ellipsis"
+            >
+              {{ order.reasonCancel.title }}
+            </p>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary">
+              {{ order.customerName }}
+            </button>
+          </td>
+          <td>
+            {{ order.timeCancel | date : "hh:mm - dd/MM/yyyy" }}
+          </td>
+          <td>
+            <span class="fw-bold text-primary">{{
+              order.namePaymentMethod == 1 ? "Chưa thanh toán" : "Đã thanh toán"
+            }}</span>
+          </td>
+          <td>{{ (order.total * 1000).toLocaleString() }}₫</td>
+          <td>
+            <button
+              class="btn btn-sm btn-outline-primary cho-xu-ly"
+              data-bs-toggle="modal"
+              data-bs-target="#myModal"
+              *ngIf="order.statusOrder === 2"
+              (click)="LoadOderCanelDetail(order.id)"
+            >
+              Chờ xử lý
+            </button>
+            <button
+              class="btn btn-sm btn-outline-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#myModal"
+              *ngIf="order.statusOrder === 3"
+              (click)="LoadOderCanelDetail(order.id)"
+            >
+              Đã hủy
+            </button>
+          </td>
+          <!-- <td>
+            <button class="btn btn-sm btn-outline-primary">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          Mã đơn hàng: #{{ "00" + oderCanelDetail.id }} |
+          <button class="btn btn-sm btn-outline-danger fs-6 mb-1 w-100" *ngIf="oderCanelDetail.statusOrder === 2">
+            Chờ xử lý
+          </button>
+          <button class="btn btn-sm btn-outline-primary fs-6 mb-1 w-100" *ngIf="oderCanelDetail.statusOrder === 3">
+            Đã huỷ
+          </button>
+        </h4>
+        <button
+          type="button"
+          class="btn-close btn-danger"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="bg-card pb-2">
+              <p class="fw-bold text-uppercase fs-5 pt-3 ps-3 mb-0">
+                Thông tin đơn hàng
+              </p>
+              <!-- Title Order-->
+              <div class="row ms-2 pt-2 fw-bold">
+                <div class="col-lg-5">Sản phẩm</div>
+                <div class="col-lg-2">Giá bán</div>
+                <div class="col-lg-2">Số lượng</div>
+                <div class="col-lg-3 ps-2">Thành tiền</div>
+              </div>
+              <!-- Content Order-->
+              <div class="scroll-item">
+                <div class="card-item mb-2">
+                  <div
+                    class="row ms-2 pt-3 pb-3 align-items-center"
+                    *ngFor="let item of oderCanelDetail.itemOrder"
+                  >
+                    <div class="col-lg-5">
+                      <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                          <img
+                            src="{{ item.product.imageUrl }}"
+                            class="rounded"
+                            [height]="70"
+                            [width]="70"
+                          />
+                        </div>
+                        <div class="flex-grow-1 ms-3 mt-2">
+                          <p class="fw-bold name-order-product">
+                            {{ item.product.nameProduct }}
+                          </p>
+                          <p>Size: {{ item.product.nameProduct }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      {{ (item.product.price * 1000).toLocaleString() }}₫
+                    </div>
+                    <div class="col-lg-2">x{{ item.quantity }}</div>
+                    <div class="col-lg-3">
+                      {{
+                        (
+                          item.product.price *
+                          1000 *
+                          item.quantity
+                        ).toLocaleString()
+                      }}₫
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info Customer -->
+          <div class="col-lg-4 bg-card">
+            <p class="fw-bold text-uppercase fs-5 mt-2">Khách hàng</p>
+            <div class="d-flex flex-row mb-3">
+              <img
+                src="../../../../assets/img/avatars/1.png"
+                class="rounded-circle"
+                [height]="50"
+              />
+              <p class="ms-3 mt-3 fw-bold">
+                {{ oderCanelDetail.customerName }}
+              </p>
+            </div>
+            <hr class="line-infocustomer" />
+            <div class="d-flex flex-row">
+              <i class="fa-regular fa-calendar fs-4"></i>
+              <p class="ms-3">
+                {{ oderCanelDetail.timeCreate | date : " hh:mm dd/MM/yyyy" }}
+              </p>
+            </div>
+            <hr class="line-infocustomer" />
+            <p class="fw-bold fs-5">Thông tin liên hệ</p>
+            <div class="d-flex flex-row">
+              <i class="fa-regular fa-envelope fs-4"></i>
+              <p class="ms-3">{{ oderCanelDetail.customerEmail }}</p>
+            </div>
+            <div class="d-flex flex-row">
+              <i class="fa-solid fa-phone fs-4"></i>
+              <p class="ms-3">{{ oderCanelDetail.customerPhone }}</p>
+            </div>
+            <hr class="line-infocustomer" />
+            <p class="fw-bold fs-5">Thông tin nhận hàng</p>
+            <div class="d-flex flex-row">
+              <i class="fa-solid fa-location-dot fs-4"></i>
+              <p class="ms-3">{{ oderCanelDetail.customerAddress }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-8">
+            <div class="bg-card pb-1 pt-1">
+              <div class="d-flex card-item info-order">
+                <div class="p-2 flex-grow-1 info-order-left mt-3">
+                  <ul>
+                    <li>Tổng tiền hàng:</li>
+                    <li>Phí vận chuyển:</li>
+                    <li>Voucher:</li>
+                    <li>Thành tiền:</li>
+                    <li>Phương thức thanh toán:</li>
+                  </ul>
+                </div>
+                <div class="p-2 info-order-right mt-3">
+                  <ul>
+                    <li>{{ ((oderCanelDetail.total || 0) * 1000).toLocaleString() }}₫</li>
+                    <li>20.000₫</li>
+                    <li>0₫</li>
+                    <li>{{ ((oderCanelDetail.total || 0) * 1000).toLocaleString() }}₫</li>
+                    <li>{{ oderCanelDetail.namePaymentMethod }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Order -->
+          <div class="col-lg-4">
+            <div class="btn-group mt-1 mb-3">
+              <span style="font-weight: bold;">
+                Lý do hủy đơn : {{ oderCanelDetail?.reasonCancel?.title }}
+              </span>
+            </div>
+            <div *ngIf="oderCanelDetail?.reasonCancel?.content !== null" style="color: red;">
+              <span>{{ oderCanelDetail?.reasonCancel?.content }}</span>
+            </div>
+            <div *ngIf="oderCanelDetail?.reasonCancel?.content === null" style="color: red;">
+                <span>Không có lý do chi tiết!</span>
+              </div>
+            <div class="row mt-5" *ngIf="oderCanelDetail.statusOrder === 2">
+              <div class="col-lg-6">
+                <button class="btn btn-outline-primary w-100" (click)="ResetOrderCancel(oderCanelDetail.id)">Đặt lại</button>
+              </div>
+              <div class="col-lg-6">
+                <button class="btn btn-danger w-100" (click)="ConfirmOrderCancel(oderCanelDetail.id)">Duyệt</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Delivery -->
+          <!-- <div class="col-lg-4" *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 1">
+              <div class="btn-group mt-1 mb-3">
+                <button type="button" class="btn--dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  Lý do giao hàng thất bại
+                  <i class="fa-solid fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu" style="width: 100%;">
+                  <li><a class="dropdown-item">Khách boom hàng</a></li>
+                  <li><a class="dropdown-item">Lỗi kỹ thuật</a></li>
+                  <li><a class="dropdown-item">Lỗi đóng gói</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <input type="text" class="form-control" id="resion" placeholder="Lý do khác....">
+                </ul>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <button class="btn btn-outline-danger w-100" style="padding: 10px 5px;" (click)="cancelDelivery()">Hủy
+                    giao hàng</button>
+                </div>
+                <div class="col-lg-6">
+                  <button class="btn btn-primary w-100" style="padding: 10px 5px;" (click)="confirmDelivery()">Xác nhận
+                    giao hàng</button>
+                </div>
+              </div>
+            </div> -->
+        </div>
+      </div>
     </div>
+  </div>
 </div>

@@ -61,7 +61,7 @@
         </div>
 
         <div>
-            <button class="btn btn-primary" (click)="isShow = true">
+            <button class="btn btn-primary" [routerLink]="['/admin/product-create']">
                 Thêm sản phẩm mới
             </button>
         </div>
@@ -125,8 +125,8 @@
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" [routerLink]="[item.id]"
-                            (click)="create = false ; isShow = true">
+                        <button class="btn btn-sm btn-outline-primary"
+                            [routerLink]="['/admin/update-products/' + item.id]">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </td>
@@ -188,9 +188,7 @@
             </button>
         </div>
         <div class="model--content--body">
-            <app-create-product *ngIf="create"></app-create-product>
-            <!-- <app-update-products *ngIf="!create"></app-update-products> -->
-            <router-outlet *ngIf="!create"></router-outlet>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

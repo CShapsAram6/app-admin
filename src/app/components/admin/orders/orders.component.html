@@ -95,7 +95,7 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Mã đơn hàng: #{{(ordersDetail?.id || 0).toString().padStart(4, '0') }} |
-          <button class="btn btn-sm btn-warning fs-6 mb-1 w-100" *ngIf="ordersDetail?.statusOrder === 0">Chờ xử
+          <button class="btn btn-sm btn-warning fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 0">Chờ xử
             lý</button>
           <button class="btn btn-sm btn-info fs-6 mb-1"
             *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 1">Đang giao</button>
@@ -204,10 +204,10 @@
                 </div>
                 <div class="p-2 info-order-right mt-3">
                   <ul>
-                    <li>{{((ordersDetail?.total||0) * 1000).toLocaleString()}}₫</li>
-                    <li>20.000₫</li>
-                    <li>0₫</li>
-                    <li>{{((ordersDetail?.total||0) * 1000).toLocaleString()}}₫</li>
+                    <li>{{totalOrder.toLocaleString()}}₫</li>
+                    <li>{{feeOrder.toLocaleString()}}₫</li>
+                    <li>-{{discountOrder.toLocaleString()}}₫</li>
+                    <li>{{total.toLocaleString()}}₫</li>
                     <li>{{ordersDetail?.namePaymentMethod}}</li>
                   </ul>
                 </div>
@@ -219,17 +219,17 @@
           <div class="col-lg-4" *ngIf="ordersDetail?.statusOrder === 0">
             <div class="btn-group mt-1 mb-3">
               <button type="button" class="btn--dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Lý do hủy đơn
+                Lý do hủy đơn: {{reasonControl.value}}
                 <i class="fa-solid fa-angle-down"></i>
               </button>
               <ul class="dropdown-menu" style="width: 100%;">
-                <li><a class="dropdown-item">Hết hàng</a></li>
-                <li><a class="dropdown-item">Lỗi kỹ thuật</a></li>
-                <li><a class="dropdown-item">Lỗi đóng gói</a></li>
+                <li><a class="dropdown-item" (click)="reasonControl.setValue('Hết hàng')">Hết hàng</a></li>
+                <li><a class="dropdown-item" (click)="reasonControl.setValue('Lỗi kỹ thuật')">Lỗi kỹ thuật</a></li>
+                <li><a class="dropdown-item" (click)="reasonControl.setValue('Lỗi đóng gói')">Lỗi đóng gói</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <input type="text" class="form-control" id="resion" placeholder="Lý do khác....">
+                <input type="text" class="form-control" [formControl]="reasonControl" id="resion" placeholder="Lý do khác....">
               </ul>
             </div>
             <div class="row">
@@ -250,13 +250,13 @@
                 <i class="fa-solid fa-angle-down"></i>
               </button>
               <ul class="dropdown-menu" style="width: 100%;">
-                <li><a class="dropdown-item">Khách boom hàng</a></li>
-                <li><a class="dropdown-item">Lỗi kỹ thuật</a></li>
-                <li><a class="dropdown-item">Lỗi đóng gói</a></li>
+                <li><a class="dropdown-item" (click)="reasonControl.setValue('Khách boom hàng')">Khách boom hàng</a></li>
+                <li><a class="dropdown-item" (click)="reasonControl.setValue('Lỗi kỹ thuật')">Lỗi kỹ thuật</a></li>
+                <li><a class="dropdown-item" (click)="reasonControl.setValue('Lỗi đóng gói')">Lỗi đóng gói</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <input type="text" class="form-control" id="resion" placeholder="Lý do khác....">
+                <input type="text" class="form-control" [formControl]="reasonControl" id="resion" placeholder="Lý do khác....">
               </ul>
             </div>
             <div class="row">
@@ -275,4 +275,27 @@
 
     </div>
   </div>
+</div>
+
+<!-- Page -->
+<div class=" d-flex justify-content-center align-items-center mt-3 bg-white rounded-3">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination mt-3">
+      <li class="page-item mx-1" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="onPageChange(currentPage - 1)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+      </li>
+
+      <li class="page-item mx-1" *ngFor="let page of generatePageNumbers()" [class.active]="currentPage === page">
+        <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+      </li>
+
+      <li class="page-item mx-1" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="onPageChange(currentPage + 1)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>

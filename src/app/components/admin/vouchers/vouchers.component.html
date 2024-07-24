@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="col-2">
-            <button class="btn btn-primary w-100">Tạo khuyễn mãi mới</button>
+            <button class="btn btn-primary w-100" (click)="isShow()">Tạo khuyễn mãi mới</button>
         </div>
     </div>
 
@@ -72,33 +72,63 @@
                     <th style="color: white;">Ngày kết thúc</th>
                     <th style="color: white;">Điều kiện</th>
                     <th style="color: white;"></th>
+                    <th style="color: white;"></th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0 mt-4">
-                <tr>
-                    <td>1</td>
+                <tr *ngFor="let i of ListVoucher">
+                    <td>{{i.id}}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">Lê Văn A</button>
+                        <button class="btn btn-sm btn-outline-primary">{{i.name}}</button>
                     </td>
                     <td>
-                        20/20/2002
+                        {{getStatus(i.status)}}
                     </td>
                     <td>
-                        <span class="fw-bold text-primary">Đã thanh toán</span>
+                        <span class="fw-bold text-primary">{{i.timeStart | date:'hh:mm - dd/MM/yyyy'}}</span>
                     </td>
                     <td>
-                        100.000 đ
+                        {{i.timeEnd | date:'hh:mm - dd/MM/yyyy'}}
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">Đang chờ xử lý</button>
+                        <button class="btn btn-sm btn-outline-primary">{{i.min_Order_Value}} VNĐ</button>
                     </td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger">
+                            <i class="far fa-trash-alt"></i> </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <div class="modal" id="myModal" [class.hidden]="flag">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Modal Heading</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+              Modal body..
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+      
+<app-loading *ngIf="isLoading"></app-loading>
 </section>

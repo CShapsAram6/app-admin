@@ -3,6 +3,8 @@ import { OrderService } from '../../../services/order.service';
 import { orderDetailDto, orderDto } from '../../../model/order.model';
 import { tap } from 'rxjs';
 import { ApiResponse } from '../../../model/ApiResponse.model';
+import { FormControl } from '@angular/forms';
+import { log } from 'console';
 declare var $: any; // Khai báo jQuery
 
 
@@ -19,7 +21,15 @@ export class OrdersComponent implements OnInit {
 
   idOrder: number = 0;
   countOrder: number = 0;
+  totalOrder: number = 0;
+  feeOrder: number = 0;
+  total: number = 0;
+  discountOrder: number = 0;
+  
   activeTab = 'Tất cả';
+  currentPage = 1;
+  limit = 10;
+  tabsData: { [tab: string]: { currentPage: number, filteredOrders: orderDto[], count: number } } = {};
   //get all order
   orders: orderDto[] = [];
   //get order detail
@@ -32,8 +42,12 @@ export class OrdersComponent implements OnInit {
     this.idOrder = id;
     this.orderService.getOrderDetail(id).subscribe((data) => {
       this.ordersDetail = data;
-      console.log(this.ordersDetail);
+      this.totalOrder = (this.ordersDetail.total + this.ordersDetail.discount - this.ordersDetail.feeDelivery) * 1000;
+      this.feeOrder = this.ordersDetail.feeDelivery * 1000;
+      this.discountOrder = this.ordersDetail.discount * 1000;
+      this.total = this.ordersDetail.total * 1000;
     })
+
   }
 
   loadOrders() {
@@ -41,7 +55,17 @@ export class OrdersComponent implements OnInit {
       this.orders = response.data;
       this.filteredOrders = response.data;
       this.countOrder = this.orders.length;
-      console.log(response);
+
+      // Phân trang cho từng tab
+      this.getTabs().forEach(tab => {
+        this.tabsData[tab] = {
+          currentPage: 1,
+          filteredOrders: this.filterOrdersForTab(tab),
+          count: this.filterOrdersForTab(tab).length
+        };
+      });
+
+      this.updatePagination();
     });
   }
 
@@ -70,12 +94,11 @@ export class OrdersComponent implements OnInit {
       .subscribe();
   }
 
+  reasonControl = new FormControl('');
   cancelOrder(){
-    if (!this.idOrder) {
-      console.error('ID đơn hàng không hợp lệ.');
-      return;
-    }
-    this.orderService.cancelOrder(this.idOrder)
+    const selectedReason = this.reasonControl.value;
+    if(selectedReason){
+      this.orderService.cancelOrder(this.idOrder, selectedReason)
       .pipe(
         tap(
           () => {
@@ -90,6 +113,7 @@ export class OrdersComponent implements OnInit {
         )
       )
       .subscribe();
+    }
   }
 
   confirmDelivery(){
@@ -115,25 +139,24 @@ export class OrdersComponent implements OnInit {
   }
 
   cancelDelivery(){
-    if (!this.idOrder) {
-      console.error('ID đơn hàng không hợp lệ.');
-      return;
-    }
-    this.orderService.cancelDelivery(this.idOrder)
-      .pipe(
-        tap(
-          () => {
-            alert('Hủy giao hàng thành công!');
-            this.closeModal()
-            this.loadOrders()
-          },
-          (error) => {
-            alert('Hủy giao hàng thất bại!');
-            console.error('Lỗi khi hủy giao hàng:', error);
-          }
+    const selectedReasonDelivery = this.reasonControl.value;
+    if(selectedReasonDelivery){
+      this.orderService.cancelDelivery(this.idOrder, selectedReasonDelivery)
+        .pipe(
+          tap(
+            () => {
+              alert('Hủy giao hàng thành công!');
+              this.closeModal()
+              this.loadOrders()
+            },
+            (error) => {
+              alert('Hủy giao hàng thất bại!');
+              console.error('Lỗi khi hủy giao hàng:', error);
+            }
+          )
         )
-      )
-      .subscribe();
+        .subscribe();
+    }
   }
 
   getTabs() {
@@ -142,29 +165,45 @@ export class OrdersComponent implements OnInit {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
-    this.filterOrders();
+    this.currentPage = this.tabsData[tab].currentPage;
+    this.filteredOrders = this.tabsData[tab].filteredOrders;
+    this.countOrder = this.tabsData[tab].count;
+    this.updatePagination();
   }
 
-  filterOrders() {
-    if (this.activeTab === 'Tất cả') {
-      this.filteredOrders = this.orders;
-      this.countOrder = this.orders.length;
+  filterOrdersForTab(tab: string): orderDto[] {
+    if (tab === 'Tất cả') {
+      return this.orders;
+    } else if (tab === 'Chờ xử lý') {
+      return this.orders.filter(order => order.statusOrder === 0);
+    } else if (tab === 'Đang giao') {
+      return this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 1);
+    } else if (tab === 'Hoàn tất') {
+      return this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2);
+    } else if (tab === 'Đã hủy') {
+      return this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3);
+    } else {
+      return [];
     }
-    else if (this.activeTab === 'Chờ xử lý') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 0);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 0).length;
-    }
-    else if (this.activeTab === 'Đang giao') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 1);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 1).length;
-    }
-    else if (this.activeTab === 'Hoàn tất') {
-      this.filteredOrders = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2);
-      this.countOrder = this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2).length;
-    }
-    else if (this.activeTab === 'Đã hủy') {
-      this.filteredOrders = this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3);
-      this.countOrder = this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3).length;
-    }
+  }
+
+  updatePagination() {
+    const pageStart = (this.currentPage - 1) * this.limit;
+    const pageEnd = pageStart + this.limit;
+    this.filteredOrders = this.tabsData[this.activeTab].filteredOrders.slice(pageStart, pageEnd);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.tabsData[this.activeTab].count / this.limit);
+  }
+
+  generatePageNumbers(): number[] {
+    return Array.from({length: this.totalPages}, (_, i) => i + 1);
+  }
+
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.tabsData[this.activeTab].currentPage = pageNumber;
+    this.updatePagination();
   }
 }

@@ -10,14 +10,16 @@ import {
 } from '../../../model/category.model';
 import {
   productsModel,
-  productCreateRequest,
   imageDtos,
   productsUpdateDtos,
+  colorDtos,
+  filesDtos,
 } from '../../../model/products.model';
 import { CategorysService } from '../../../services/categorys.service';
 import { ProductsService } from '../../../services/products.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { forkJoin, tap } from 'rxjs';
+import hljs from 'highlight.js';
 
 @Component({
   selector: 'app-update-products',
@@ -63,6 +65,14 @@ export class UpdateProductsComponent implements OnInit {
 
   isButtonUpdate: boolean = false;
   isLoadingSumbit: boolean = false;
+
+  color: string = '';
+  arrColor: string[] = [];
+  arrFile: { index: number; file: File; name: string; type: string }[] = [];
+
+  arrColorRes: colorDtos[] = [];
+  arrFilesRes: filesDtos[] = [];
+  // https://drive.google.com/file/d/[idFile]/view
   ngOnInit(): void {
     this.formSize.get('size')!.setValue(this.sizes[0]);
     forkJoin([this.LoadCategory(), this.LoadProduct()]).subscribe({
@@ -92,8 +102,25 @@ export class UpdateProductsComponent implements OnInit {
         this.arrayVariant = res.data.variant;
         this.describe = res.data.description;
         this.arrImage = res.data.images;
+        this.arrColorRes = res.data.colors;
+        this.arrFilesRes = res.data.files;
       })
     );
+  }
+  formatResponse(response: string): string {
+    // Định dạng Markdown cho đoạn mã
+    let formatted = response
+      .replace(/`([^`]+)`/g, '<code>$1</code>') // Inline code
+      .replace(/```(\w+)?\n([\s\S]*?)\n```/g, (match, lang, code) => {
+        const language = lang || 'plaintext';
+        const highlighted = hljs.highlight(language, code.trim()).value;
+        return `<pre><code class="language-${language}">${highlighted}</code></pre>`;
+      }) // Code blocks
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>') // Bold
+      .replace(/\*([^*]+)\*/g, '<em>$1</em>') // Italic
+      .replace(/(\d+\.\s)/g, '<br><strong>$1</strong>') // Numbered list
+      .replace(/\n/g, '<br>'); // New lines
+    return formatted;
   }
   CreateDes() {
     this.isLoading = true;
@@ -101,7 +128,9 @@ export class UpdateProductsComponent implements OnInit {
       if (res) {
         this.isLoading = false;
       }
-      this.aiResponse = res['candidates'][0]['content']['parts'][0]['text'];
+      this.aiResponse = this.formatResponse(
+        res['candidates'][0]['content']['parts'][0]['text']
+      );
     });
   }
 
@@ -127,6 +156,28 @@ export class UpdateProductsComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+  onFileSelectedPDF(event: any): void {
+    const files = event.target.files;
+    for (let i = 0; i < 2; i++) {
+      const file = files[i];
+      if (file) {
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          this.arrFile.push({
+            index: i,
+            file: file,
+            name: file.name,
+            type: file.type,
+          });
+        };
+        fileReader.readAsArrayBuffer(file);
+      }
+    }
+    console.log(this.arrFile);
+  }
+  RemoveFile(index: number) {
+    this.arrFile = this.arrFile.splice(index, 1);
+  }
   RemoveItem(index: number) {
     this.imageUrls = this.imageUrls.filter((_, i) => i !== index);
   }
@@ -141,6 +192,16 @@ export class UpdateProductsComponent implements OnInit {
     data.id = shared.getRandomString(3);
     this.listSize.push(data);
   }
+
+  RemoveColor(item: string) {
+    const index = this.arrColor.findIndex((a) => item === a);
+    this.arrColor = this.arrColor.filter((_, i) => i !== index);
+  }
+
+  SumbitColor() {
+    this.arrColor.push(this.color);
+  }
+
   // call api create product
   Update() {
     this.isLoadingSumbit = true;

@@ -22,6 +22,8 @@ interface productsUpdateDtos {
   variant: variantResponse[];
   category: number;
   description: string;
+  colors: colorDtos[];
+  files: filesDtos[];
 }
 interface imageDtos {
   id: number;
@@ -31,6 +33,17 @@ interface imageDtos {
 interface pagesDtos {
   page: number;
   name: string;
+}
+
+interface colorDtos {
+  id: number;
+  code: string;
+}
+
+interface filesDtos {
+  id: number;
+  productId: number;
+  link: string;
 }
 class productsModel {
   static formRequest(
@@ -72,4 +85,6 @@ export {
   variantResponse,
   imageDtos,
   pagesDtos,
+  colorDtos,
+  filesDtos,
 };

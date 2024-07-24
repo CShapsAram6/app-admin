@@ -12,6 +12,8 @@ interface orderDto {
 interface orderDetailDto {
   id: number,
   total: number,
+  feeDelivery: number,
+  discount: number,
   timeCreate: string,
   statusOrder: number,
   statusDelivery: number,

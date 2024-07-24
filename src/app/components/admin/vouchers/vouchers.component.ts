@@ -9,9 +9,18 @@ import { ApiResponse } from '../../../model/ApiResponse.model';
   styleUrl: './vouchers.component.scss'
 })
 export class VouchersComponent implements OnInit {
-  constructor (private voucher:VoucherService ){}
-  ngOnInit(): void { 
+  constructor (private voucher:VoucherService){}
+  flag : boolean = false;
 
+  isLoading : boolean = false;
+  isShow(){
+    this.flag = true;
+    
+  }
+
+
+  ngOnInit(): void { 
+    this.GetListVoucher();
   }
   ListVoucher: voucherDto[]=[];
   GetListVoucher(){
@@ -19,5 +28,17 @@ export class VouchersComponent implements OnInit {
       console.log(data);
      this.ListVoucher = data.data;
     })
+  }
+  getStatus(status: number): string {
+    switch (status) {
+      case 1:
+        return 'Đang diễn ra';
+      case 0:
+        return 'Sắp diễn ra';
+      case 2:
+        return 'Đã kết thúc';
+      default:
+        return 'Không xác định';
+    }
   }
 }

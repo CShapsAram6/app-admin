@@ -4,6 +4,6 @@ interface voucherDto {
     status: number;
     timeStart : string;
     timeEnd : string;
-    minOrderVaule : number;
+    min_Order_Value : number;
 }
 export {voucherDto};

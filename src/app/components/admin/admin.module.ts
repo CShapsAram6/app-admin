@@ -22,6 +22,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { CategoryComponent } from './category/category.component';
 import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 const _routes: Routes = [
   {
@@ -127,6 +128,7 @@ const _routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     EditorModule,
+    NgxExtendedPdfViewerModule,
   ],
 })
 export class AdminModule {}

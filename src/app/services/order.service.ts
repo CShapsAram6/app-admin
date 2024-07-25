@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment/environment';
-import { orderCancelDetailDto, orderCanelDto, orderDetailDto, orderDto } from '../model/order.model';
+import { orderCancelDetailDto, orderCanelDto, orderDetailDto, orderDto, reasonDto } from '../model/order.model';
 import { ApiResponse } from '../model/ApiResponse.model';
 
 @Injectable({
@@ -22,19 +22,22 @@ export class OrderService {
     return this.http.put(`${environment.api}/Order/confirm-order-${id}`, {})
   }
 
-  // cancelOrder(id: number, reason: string) {
-  //   const reasonDto: reasonDto = {
-  //     reasonCancel: reason
-  //   }
-  //   return this.http.put(`${environment.api}/Order/cancel-order-${id}`, reasonDto)
-  // }
+  cancelOrder(id: number, reason: string) {
+    const reasonDto: reasonDto = {
+      reasonCancel: reason
+    }
+    return this.http.put(`${environment.api}/Order/cancel-order-${id}`, reasonDto)
+  }
 
   confirmDelivery(id: number) {
     return this.http.put(`${environment.api}/Order/confirm-delivery-${id}`, {})
   }
 
-  cancelDelivery(id: number) {
-    return this.http.put(`${environment.api}/Order/cancel-delivery-${id}`, {})
+  cancelDelivery(id: number, reason: string) {
+    const reasonDto: reasonDto = {
+      reasonCancel: reason
+    }
+    return this.http.put(`${environment.api}/Order/cancel-delivery-${id}`, reasonDto)
   }
 
   getOrderCanel(): Observable<ApiResponse<orderCanelDto[]>> {

@@ -37,6 +37,10 @@ interface orderDetailDto {
   ]
 }
 
+interface reasonDto {
+  reasonCancel: string
+}
+
 interface orderCanelDto {
   id: number,
   total: number,
@@ -48,7 +52,7 @@ interface orderCanelDto {
   voucherId: number,
   customerName: string,
   reasonCancel : reasonCancel
-} 
+}
 
 
 interface orderCancelDetailDto {
@@ -86,4 +90,4 @@ interface reasonCancel {
   timeCancel: string;
 }
 
-export { orderDto, orderDetailDto, orderCanelDto, reasonCancel, orderCancelDetailDto };
+export { orderDto, orderDetailDto, orderCanelDto, reasonCancel, orderCancelDetailDto, reasonDto };

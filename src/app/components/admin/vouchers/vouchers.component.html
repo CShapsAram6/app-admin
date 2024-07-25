@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="col-2">
-            <button class="btn btn-primary w-100" (click)="isShow()">Tạo khuyễn mãi mới</button>
+            <button class="btn btn-primary w-100" (click)="openDialog()" >Tạo khuyễn mãi mới</button>
         </div>
     </div>
 
@@ -106,29 +106,4 @@
             </tbody>
         </table>
     </div>
-    <div class="modal" id="myModal" [class.hidden]="flag">
-        <div class="modal-dialog">
-          <div class="modal-content">
-      
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Modal Heading</h4>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-      
-            <!-- Modal body -->
-            <div class="modal-body">
-              Modal body..
-            </div>
-      
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            </div>
-      
-          </div>
-        </div>
-      </div>
-      
-<app-loading *ngIf="isLoading"></app-loading>
-</section>
+      </section>

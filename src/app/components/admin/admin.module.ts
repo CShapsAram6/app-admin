@@ -22,6 +22,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { CategoryComponent } from './category/category.component';
 import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
+import { CreateVoucherDialogComponent } from './vouchers/create-voucher-dialog/create-voucher-dialog.component';
 
 const _routes: Routes = [
   {
@@ -118,6 +119,7 @@ const _routes: Routes = [
     CreatecateComponent,
     CategoryComponent,
     UpdateCategoryComponent,
+    CreateVoucherDialogComponent,
   ],
   imports: [
     BrowserModule,

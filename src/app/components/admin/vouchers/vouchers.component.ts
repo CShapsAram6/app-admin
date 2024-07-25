@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { voucherDto } from '../../../model/voucher.model';
 import { VoucherService } from '../../../services/voucher.service';
 import { ApiResponse } from '../../../model/ApiResponse.model';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateVoucherDialogComponent } from './create-voucher-dialog/create-voucher-dialog.component';
 
 @Component({
   selector: 'app-vouchers',
@@ -9,15 +11,19 @@ import { ApiResponse } from '../../../model/ApiResponse.model';
   styleUrl: './vouchers.component.scss'
 })
 export class VouchersComponent implements OnInit {
-  constructor (private voucher:VoucherService){}
-  flag : boolean = false;
+  constructor (private voucher:VoucherService, private dialog:MatDialog){}
 
-  isLoading : boolean = false;
-  isShow(){
-    this.flag = true;
+  openDialog(): void {
+   const dialogRef = this.dialog.open(CreateVoucherDialogComponent,{
+      height: '400px',
+      width: '600px',
+    });
+    dialogRef.afterClosed().subscribe(result=>{
+      console.log('close');
+      console.log(result);
+    })
     
   }
-
 
   ngOnInit(): void { 
     this.GetListVoucher();

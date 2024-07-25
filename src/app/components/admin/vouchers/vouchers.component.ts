@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { voucherDto } from '../../../model/voucher.model';
 import { VoucherService } from '../../../services/voucher.service';
 import { ApiResponse } from '../../../model/ApiResponse.model';
-import { MatDialog } from '@angular/material/dialog';
 import { CreateVoucherDialogComponent } from './create-voucher-dialog/create-voucher-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-vouchers',

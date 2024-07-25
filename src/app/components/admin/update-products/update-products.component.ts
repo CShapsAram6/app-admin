@@ -20,6 +20,8 @@ import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, tap } from 'rxjs';
 import hljs from 'highlight.js';
+import { ColorsService } from '../../../services/colors.service';
+import { VariantService } from '../../../services/variant.service';
 
 @Component({
   selector: 'app-update-products',
@@ -32,7 +34,9 @@ export class UpdateProductsComponent implements OnInit {
     private categorysServices: CategorysService,
     private form: FormBuilder,
     private productsService: ProductsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private colorsServices: ColorsService,
+    private variantServices: VariantService
   ) {}
   prompt: string = 'Mô tả về cây thông trồng trong nhà ngắn gọn';
   aiResponse: string = '';
@@ -72,7 +76,10 @@ export class UpdateProductsComponent implements OnInit {
 
   arrColorRes: colorDtos[] = [];
   arrFilesRes: filesDtos[] = [];
-  // https://drive.google.com/file/d/[idFile]/view
+  idProducts: number = this.route.snapshot.params['id'];
+  pdfSrc: string =
+    'https://drive.google.com/file/d/1EuWMdtLzHbH3pMHjd181oxP5g3ZRHF4n/view';
+
   ngOnInit(): void {
     this.formSize.get('size')!.setValue(this.sizes[0]);
     forkJoin([this.LoadCategory(), this.LoadProduct()]).subscribe({
@@ -83,6 +90,11 @@ export class UpdateProductsComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+  openFile(link: string) {
+    console.log(link);
+    this.pdfSrc = `https://drive.google.com/file/d/${link}/view`;
+    console.log(this.pdfSrc);
   }
   LoadCategory() {
     return this.categorysServices.getData().pipe(
@@ -181,25 +193,31 @@ export class UpdateProductsComponent implements OnInit {
   RemoveItem(index: number) {
     this.imageUrls = this.imageUrls.filter((_, i) => i !== index);
   }
-  RemoveSize(item: variant) {
-    const index = this.listSize.findIndex((a) => item.id === a.id);
-    this.listSize = this.listSize.filter((_, i) => i !== index);
+  RemoveSize(id: number) {
+    this.variantServices.DeleteVariant(id).subscribe((res) => {
+      if (res.success) {
+        this.ngOnInit();
+      }
+    });
   }
 
-  // sumbit form
   OnSumbit() {
     let data: variant = this.formSize.value as variant;
-    data.id = shared.getRandomString(3);
-    this.listSize.push(data);
+    data.id = this.idProducts.toString();
+    this.variantServices.createVariant(data).subscribe((res) => {
+      if (res.success) {
+        this.ngOnInit();
+        this.formSize.reset();
+      }
+    });
   }
 
-  RemoveColor(item: string) {
-    const index = this.arrColor.findIndex((a) => item === a);
-    this.arrColor = this.arrColor.filter((_, i) => i !== index);
-  }
-
-  SumbitColor() {
-    this.arrColor.push(this.color);
+  RemoveColor(id: number) {
+    this.colorsServices.Delete(id).subscribe((res) => {
+      if (res.success) {
+        this.ngOnInit();
+      }
+    });
   }
 
   // call api create product
@@ -214,7 +232,9 @@ export class UpdateProductsComponent implements OnInit {
     for (let item of this.imageUrls) {
       form.append('model.Images', item.file);
     }
-
+    for (let item of this.arrFile) {
+      form.append('model.Files', item.file);
+    }
     this.productsService;
     const idParameter: number = this.route.snapshot.params['id'];
     this.productsService
@@ -224,6 +244,7 @@ export class UpdateProductsComponent implements OnInit {
           this.isLoadingSumbit = false;
           this.ngOnInit();
           this.imageUrls = [];
+          this.arrFile = [];
           alert('Cập nhật thành công');
         }
       });
@@ -243,14 +264,29 @@ export class UpdateProductsComponent implements OnInit {
     let vartiant: variantResponse = productsModel.MapToVariant(
       this.formSize.value as variant
     );
-    this.productsService.updateVariant(vartiant).subscribe((response) => {
-      if (response.success) {
-        this.isButtonUpdate = false;
+    // this.productsService.updateVariant(vartiant).subscribe((response) => {
+    //   if (response.success) {
+    //     this.isButtonUpdate = false;
+    //     this.ngOnInit();
+    //     this.resetForm();
+    //     return;
+    //   }
+    // });
+  }
+
+  CreateColor() {
+    let request: colorDtos = {
+      id: this.idProducts,
+      code: this.color,
+    };
+    this.colorsServices.create(request).subscribe((res) => {
+      console.log(res);
+
+      if (res.success) {
         this.ngOnInit();
-        this.resetForm();
+        this.color = '';
         return;
       }
-      console.log(response);
     });
   }
 

@@ -48,7 +48,8 @@ $color: rgba(128, 128, 128, 0.349);
     text-align: center;
     & p {
         padding: 0 7px;
-        margin: 0px;
+        margin: 0px auto;
+        width: 73%;
         font-size: 9px;
     }
     & img {

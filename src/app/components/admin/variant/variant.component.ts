@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductsService } from '../../../services/products.service';
 import { variant, variantResponse } from '../../../model/category.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { productsModel } from '../../../model/products.model';
+import { VariantService } from '../../../services/variant.service';
 
 @Component({
   selector: 'app-variant',
@@ -12,7 +12,7 @@ import { productsModel } from '../../../model/products.model';
 })
 export class VariantComponent implements OnInit {
   constructor(
-    private productsService: ProductsService,
+    private variantService: VariantService,
     private route: ActivatedRoute,
     private form: FormBuilder
   ) {}
@@ -41,7 +41,7 @@ export class VariantComponent implements OnInit {
   LoadPage() {
     const idParameter: number = this.route.snapshot.params['id'];
     this.formVariant.get('id')?.setValue(idParameter.toString());
-    this.productsService.getVariantByIdProduct(idParameter).subscribe((res) => {
+    this.variantService.getVariantByIdProduct(idParameter).subscribe((res) => {
       this.arrVariant = res.data;
     });
   }
@@ -74,7 +74,7 @@ export class VariantComponent implements OnInit {
   // create variant by id product
   CreateVariant() {
     let request: variant = this.formVariant.value as variant;
-    this.productsService.createVariant(request).subscribe((res) => {
+    this.variantService.createVariant(request).subscribe((res) => {
       if (res.success) {
         this.transFormCreate = 'translateX(-100%)';
         this.LoadPage();
@@ -90,7 +90,7 @@ export class VariantComponent implements OnInit {
     let request: variantResponse = productsModel.MapToVariant(
       this.formVariant.value as variant
     );
-    this.productsService.updateVariant(request).subscribe((res) => {
+    this.variantService.updateVariant(request).subscribe((res) => {
       if (res.success) {
         this.transFormCreate = 'translateX(-100%)';
         this.LoadPage();
@@ -112,7 +112,7 @@ export class VariantComponent implements OnInit {
   }
 
   UpdateStatusVariant(id: number) {
-    this.productsService.updateStatusVariant(id).subscribe((res) => {
+    this.variantService.updateStatusVariant(id).subscribe((res) => {
       if (res.success) {
         this.LoadPage();
         alert('Cập nhật thành công');
@@ -123,7 +123,7 @@ export class VariantComponent implements OnInit {
     });
   }
   DeleteVariant(id: number) {
-    this.productsService.DeleteVariant(id).subscribe((res) => {
+    this.variantService.DeleteVariant(id).subscribe((res) => {
       if (res.success) {
         this.LoadPage();
         alert('Xóa nhật thành công');

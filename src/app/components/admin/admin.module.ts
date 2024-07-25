@@ -110,7 +110,7 @@ const _routes: Routes = [
     ],
   },
 ];
-@NgModule({
+@NgModule({ 
   declarations: [
     HomeComponent,
     ProductsComponent,

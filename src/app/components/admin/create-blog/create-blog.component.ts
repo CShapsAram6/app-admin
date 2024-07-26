@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { ApiResponse } from '../../../model/ApiResponse.model';
 import { createblog } from '../../../model/blog.model';
+import { BlogService } from '../../../services/blog.service';
 
 @Component({
   selector: 'app-create-blog',

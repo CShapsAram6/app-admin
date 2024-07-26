@@ -22,9 +22,9 @@ import { PaymentComponent } from './payment/payment.component';
 import { CategoryComponent } from './category/category.component';
 import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
-import { create } from 'domain';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { CreateVoucherDialogComponent } from './vouchers/create-voucher-dialog/create-voucher-dialog.component';
 
 const _routes: Routes = [
   {
@@ -83,14 +83,14 @@ const _routes: Routes = [
       {
         path: 'blogs/:page',
         component: BlogsComponent,
-        children:[
-          {path:':page',component:BlogsComponent,title:"Bài Viết"}
-        ]
+        children: [
+          { path: ':page', component: BlogsComponent, title: 'Bài Viết' },
+        ],
       },
       {
-        path:'createblog',
-        component:CreateBlogComponent,
-        title:'Tạo bài viết',
+        path: 'createblog',
+        component: CreateBlogComponent,
+        title: 'Tạo bài viết',
       },
       {
         path: 'postcate',
@@ -110,7 +110,7 @@ const _routes: Routes = [
     ],
   },
 ];
-@NgModule({ 
+@NgModule({
   declarations: [
     HomeComponent,
     ProductsComponent,
@@ -127,9 +127,10 @@ const _routes: Routes = [
     PaymentComponent,
     CreatecateComponent,
     CategoryComponent,
-    UpdateCategoryComponent,    
+    UpdateCategoryComponent,
     BlogsComponent,
-    CreateBlogComponent
+    CreateBlogComponent,
+    CreateVoucherDialogComponent,
   ],
   imports: [
     BrowserModule,

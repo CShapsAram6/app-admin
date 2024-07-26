@@ -1,0 +1,62 @@
+<div class="card">
+    <div class="row p-4">
+        <h4>Thông tin cơ bản</h4>
+        <div class="cart col-12">
+            <form [formGroup]="createBlogForm">
+                <!-- select image -->
+                <div class="">
+                    <p><span class="text-danger">*</span>
+                        Hình ảnh blog
+                    </p>
+                    <input class="form-control d-none" type="file" id="formFileMultiple" multiple=""
+                        (change)="onFilesSelected($event)">
+                    <div class="d-flex gap-3 flex-wrap">
+                        <div class="position-relative rounded rounded-1 privew-image" *ngFor="let item of imageUrls">
+                            <img [src]="item.url" alt="" class="rounded-1">
+                            <button class="btn btn-sm btn-danger position-absolute btn-max-sm"
+                                (click)="RemoveItem(item.index)" style="top: 0px; right: 0px;">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <label for="formFileMultiple" class="form-label privew-image">
+                            <div class="">
+                                Tải lên hình ảnh
+                                <p>Định dạng: JPG, JPEG, PNG</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div id="defaultFormControlHelp" class="form-text text-danger"
+                        *ngIf="(imageUrls.length <= 0) && (createBlogForm.controls['header'].dirty || createBlogForm.controls['header'].touched) ">
+                        Vui lòng chọn ít nhất 1 hình ảnh.
+                    </div>
+                </div>
+                <!-- hearder , content -->
+                <div>
+                    <label for="header" class="form-label">Tiêu đề</label>
+                    <input type="text" class="form-control" id="header" placeholder="Tiêu đề" formControlName="header">
+                    <div id="defaultFormControlHelp" class="form-text text-danger"
+                        *ngIf="createBlogForm.controls['header'].invalid && (createBlogForm.controls['header'].dirty || createBlogForm.controls['header'].touched)">
+                        Tiêu đề không được để trống.
+                    </div>
+                </div>
+
+                <div>
+                    <label for="content" class="form-label">Nội dung</label>
+                    <textarea type="text" class="form-control" id="content" placeholder="Nội dung"
+                        formControlName="content"></textarea>
+                    <div id="defaultFormControlHelp" class="form-text text-danger"
+                        *ngIf="createBlogForm.controls['content'].invalid && (createBlogForm.controls['content'].dirty || createBlogForm.controls['content'].touched)">
+                        Nội dung không được để trống
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end w-100">
+                    <button (click)="CreateBlog()" class="btn btn-primary mt-3">
+                        Thêm blog mới
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- // up load git -->

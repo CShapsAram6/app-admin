@@ -23,6 +23,7 @@ import { CategoryComponent } from './category/category.component';
 import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
 import { CreateVoucherDialogComponent } from './vouchers/create-voucher-dialog/create-voucher-dialog.component';
+import { CreateBlogComponent } from './create-blog/create-blog.component';
 
 const _routes: Routes = [
   {
@@ -79,11 +80,6 @@ const _routes: Routes = [
         title: 'Quản lý người dùng',
       },
       {
-        path: 'blogs',
-        component: BlogsComponent,
-        title: 'Quản lý bài viết',
-      },
-      {
         path: 'postcate',
         component: CreatecateComponent,
         title: 'Tạo danh mục',
@@ -98,6 +94,19 @@ const _routes: Routes = [
         component: UpdateCategoryComponent,
         title: 'Sửa danh mục',
       },
+      {
+        path: 'blogs/:page',
+        component: BlogsComponent,
+        children:[
+          {path:':page',component:BlogsComponent,title:'Bài Viết'}
+        ]
+      },
+      {
+        path:'createblog',
+        component:CreateBlogComponent,
+        title:'Thêm bài viết'
+      }
+
     ],
   },
 ];
@@ -120,6 +129,7 @@ const _routes: Routes = [
     CategoryComponent,
     UpdateCategoryComponent,
     CreateVoucherDialogComponent,
+    CreateBlogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,11 @@
 import { BlogService } from './../../../services/blog.service';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiResponse } from '../../../model/ApiResponse.model';
 import { createblog } from '../../../model/blog.model';
@@ -8,29 +13,33 @@ import { createblog } from '../../../model/blog.model';
 @Component({
   selector: 'app-create-blog',
   templateUrl: './create-blog.component.html',
-  styleUrl: './create-blog.component.scss'
+  styleUrl: './create-blog.component.scss',
 })
-export class CreateBlogComponent implements OnInit{
-constructor(private form:FormBuilder , private Blogsv:BlogService, private Router:Router){};
+export class CreateBlogComponent implements OnInit {
+  constructor(
+    private form: FormBuilder,
+    private Blogsv: BlogService,
+    private Router: Router
+  ) {}
 
   imageUrls: { url: string; index: number; file: File }[] = [];
   isLoadingSumbit: boolean = false;
-  createBlogForm = this.form.group({ 
+  createBlogForm = this.form.group({
     header: ['', Validators.required],
     content: ['', Validators.required],
     images: [null],
-   });
+  });
 
   ngOnInit(): void {
-
+    // up load git
   }
 
   //lấy thông tin hình ảnh
-  onFilesSelected(event:any){
+  onFilesSelected(event: any) {
     this.imageUrls = [];
-    const files = FileList = event.target.files;
-    for(let i = 0 ; i< files.length;i++){
-      const file =  files[i];
+    const files = (FileList = event.target.files);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const reader = new FileReader();
       reader.onload = () => {
         this.imageUrls.push({
@@ -47,7 +56,7 @@ constructor(private form:FormBuilder , private Blogsv:BlogService, private Route
     this.imageUrls = this.imageUrls.filter((_, i) => i !== index);
   }
 
-  CreateBlog(){    
+  CreateBlog() {
     console.log(this.imageUrls);
     if (this.createBlogForm.invalid || this.imageUrls.length < 0) {
       this.createBlogForm.markAllAsTouched();
@@ -76,7 +85,6 @@ constructor(private form:FormBuilder , private Blogsv:BlogService, private Route
           this.createBlogForm.reset();
           this.imageUrls = [];
           this.Router.navigate(['/admin/blogs/1']);
-
         } else {
           alert(response.message);
         }
@@ -87,6 +95,5 @@ constructor(private form:FormBuilder , private Blogsv:BlogService, private Route
         alert('Error creating blog');
       }
     );
-
   }
 }

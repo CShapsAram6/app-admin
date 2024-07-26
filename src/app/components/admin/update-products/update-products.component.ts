@@ -80,6 +80,7 @@ export class UpdateProductsComponent implements OnInit {
   pdfSrc: string =
     'https://drive.google.com/file/d/1EuWMdtLzHbH3pMHjd181oxP5g3ZRHF4n/view';
 
+
   ngOnInit(): void {
     this.formSize.get('size')!.setValue(this.sizes[0]);
     forkJoin([this.LoadCategory(), this.LoadProduct()]).subscribe({

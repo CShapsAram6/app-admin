@@ -21,6 +21,10 @@ export class OrdersComponent implements OnInit {
 
   idOrder: number = 0;
   countOrder: number = 0;
+  totalOrder: number = 0;
+  feeOrder: number = 0;
+  total: number = 0;
+  discountOrder: number = 0;
   activeTab = 'Tất cả';
   currentPage = 1;
   limit = 10;
@@ -37,7 +41,10 @@ export class OrdersComponent implements OnInit {
     this.idOrder = id;
     this.orderService.getOrderDetail(id).subscribe((data) => {
       this.ordersDetail = data;
-      console.log(this.ordersDetail);
+      this.totalOrder = (this.ordersDetail.total + this.ordersDetail.discount - this.ordersDetail.feeDelivery) * 1000;
+      this.feeOrder = this.ordersDetail.feeDelivery * 1000;
+      this.discountOrder = this.ordersDetail.discount * 1000;
+      this.total = this.ordersDetail.total * 1000;
     })
   }
 

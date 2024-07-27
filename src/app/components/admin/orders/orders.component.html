@@ -204,10 +204,10 @@
                 </div>
                 <div class="p-2 info-order-right mt-3">
                   <ul>
-                    <li>{{((ordersDetail?.total||0) * 1000).toLocaleString()}}₫</li>
-                    <li>20.000₫</li>
-                    <li>0₫</li>
-                    <li>{{((ordersDetail?.total||0) * 1000).toLocaleString()}}₫</li>
+                    <li>{{totalOrder.toLocaleString()}}₫</li>
+                    <li>{{feeOrder.toLocaleString()}}₫</li>
+                    <li>-{{discountOrder.toLocaleString()}}₫</li>
+                    <li>{{total.toLocaleString()}}₫</li>
                     <li>{{ordersDetail?.namePaymentMethod}}</li>
                   </ul>
                 </div>

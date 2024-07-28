@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './products/products.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -24,6 +23,8 @@ import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
 import { CreateVoucherDialogComponent } from './vouchers/create-voucher-dialog/create-voucher-dialog.component';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
+import { UpdateBlogComponent } from './update-blog/update-blog.component';
+import { AdminComponent } from './admin.component';
 
 const _routes: Routes = [
   {
@@ -105,6 +106,11 @@ const _routes: Routes = [
         path:'createblog',
         component:CreateBlogComponent,
         title:'Thêm bài viết'
+      },
+      {
+        path:'updateblog/:id',
+        component:UpdateBlogComponent,
+        title:'Sửa bài viết'
       }
 
     ],
@@ -130,6 +136,7 @@ const _routes: Routes = [
     UpdateCategoryComponent,
     CreateVoucherDialogComponent,
     CreateBlogComponent,
+    UpdateBlogComponent,
   ],
   imports: [
     BrowserModule,

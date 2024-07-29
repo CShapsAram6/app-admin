@@ -11,6 +11,7 @@ import { ApiResponse } from '../../../model/ApiResponse.model';
   styleUrl: './blogs.component.scss'
 })
 export class BlogsComponent implements OnInit{
+
   constructor(private blogsv:BlogService , private route: ActivatedRoute,private router: Router){
 
   }
@@ -55,7 +56,9 @@ export class BlogsComponent implements OnInit{
     ).subscribe(); // Ensure subscription
   }
 
-
+  showPopup(id: number) {
+    }
+    
 
 
 }

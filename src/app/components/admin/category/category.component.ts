@@ -13,6 +13,7 @@ export class CategoryComponent implements OnInit {
   constructor(private cate: CategorysService) {}
   ngOnInit(): void {
     this.ListCate();
+    
   }
   deleteError: { [key: number]: string } = {};
   popupVisible: { [key: number]: boolean } = {};
@@ -48,7 +49,7 @@ export class CategoryComponent implements OnInit {
               this.ListCate();
               this.closePopup(id);
             },
-            (error) => console.error('Lỗi khi xóa sản phẩm', error)
+            (error) => console.error('Lỗi khi xóa danh mục', error)
           );
         }
       },

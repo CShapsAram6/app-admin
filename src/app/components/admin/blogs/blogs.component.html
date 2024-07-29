@@ -62,7 +62,20 @@
                                 <button class="btn btn-sm btn-outline-danger ms-4" (click)="showPopup(i.id)">
                                     <i class="far fa-trash-alt me-2"></i>
                                 </button>
-
+                                <div *ngIf="popupVisible[i.id]" class="popup">
+                                    <div>
+                                        <p>Bạn có muốn xóa bài viết "{{i.header}}" không?</p>
+                                        <div>
+                                            <button (click)="deleteND(i.id)">Có</button>
+                                            <button (click)="closePopup(i.id)">Không</button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="deleteError[i.id]" class="text-danger">
+                                        <p>
+                                            {{deleteError[i.id]}}
+                                        </p>
+                                    </div>
+                                  </div>
                         </td>                        
                     </tr>
                 </tbody>

@@ -26,6 +26,8 @@ export class BlogsComponent implements OnInit{
   numberPages: number[] = [];
   blogs: blogDto[] = [];
   isActive: number = 0;
+  deleteError: { [key: number]: string } = {};
+  popupVisible: { [key: number]: boolean } = {};
 
   LoadBlog(page: number) {
     this.blogsv.getData(page).subscribe(
@@ -57,6 +59,22 @@ export class BlogsComponent implements OnInit{
   }
 
   showPopup(id: number) {
+    this.popupVisible[id] = true;
+    }
+
+    closePopup(id: number) {
+      this.popupVisible[id] = false;
+      this.deleteError[id] = '';
+    }
+    deleteND(id: number){
+      this.blogsv.deleteblog(id).subscribe(
+        (data) => {
+          console.log(data);
+          this.closePopup(id);
+
+        },
+        (error) => console.error('Lỗi khi xóa bài viết', error)
+      );
     }
     
 

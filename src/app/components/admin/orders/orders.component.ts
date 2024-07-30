@@ -179,7 +179,7 @@ export class OrdersComponent implements OnInit {
     } else if (tab === 'Hoàn tất') {
       return this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2);
     } else if (tab === 'Đã hủy') {
-      return this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3);
+      return this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3 || order.statusOrder === 2);
     } else {
       return [];
     }

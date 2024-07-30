@@ -20,8 +20,8 @@ export class CategorysService {
   postCate(data: FormData): Observable<createcategoryDtos> {
     return this.http.post<createcategoryDtos>(`${environment.api}/Category/Post-cate`, data);
   }
-  putCate(id: number, data: createcategoryDtos): Observable<any> {
-    return this.http.put<any>(
+  putCate(id: number, data: FormData): Observable<createcategoryDtos> {
+    return this.http.put<createcategoryDtos>(
       `${environment.api}/Category/Put-Cate-` + id,
       data
     );

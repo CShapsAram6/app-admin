@@ -2,25 +2,43 @@
     <div class="w-full">
         <h2 class="text-center text-blue-400 font-bold text-2xl uppercase mb-10">Sửa danh mục</h2>
         <div class="bg-white p-10 rounded-lg shadow md:w-3/4 mx-auto lg:w-1/2">
-            <form [formGroup]="formupdatecate">
+            <form (submit)="updatecate(); $event.preventDefault()">
+                <div class="ps-5">
+                    <p><span class="text-danger">*</span>
+                        Hình ảnh blog
+                    </p>
+                    <input class="form-control d-none" type="file" id="formFileMultiple" multiple=""
+                    (change)="onFilesSelected($event)" (blur)="isImagetouched = true" >
+                    <div class="d-flex gap-3 flex-wrap">
+                        
+                        <div class="position-relative rounded rounded-1 privew-image"  *ngIf="images.index == 1">
+                            <img  [src]="images.url" alt="" class="rounded-1">
+                            <button class="btn btn-sm btn-danger position-absolute btn-max-sm"
+                            (click)="RemoveItem(images.index)" style="top: 0px; right: 0px;" (blur)="isImagetouched = true" >
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <label for="formFileMultiple" class="form-label privew-image"  *ngIf="images.index == 0">
+                            <div class="">
+                                Tải lên hình ảnh
+                                <p>Định dạng: JPG, JPEG, PNG</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div id="defaultFormControlHelp" class="text-danger"  *ngIf="isImagetouched &&(images.index == 0)">
+                        Vui lòng chọn ít nhất 1 hình ảnh.
+                    </div>
+                </div>
                 <div class="p-5 form-group">
                     <label for="name" class="block mb-2 font-bold text-gray-600">Tên danh mục</label>
-                    <input type="text" class="border border-gray-300 form-control required input" id="name" formControlName="name" placeholder="Tên danh mục" >
-                    <div class="text-danger" *ngIf="formupdatecate.controls['name'].invalid && (formupdatecate.controls['name'].dirty || formupdatecate.controls['name'].touched)">
-                        <span *ngIf="formupdatecate.controls['name'].errors?.['required']">
-                            Tên danh mục không được để trống
-                        </span>
-                        <span *ngIf="formupdatecate.controls['name'].errors?.['maxlength']">
-                            Tên danh mục không quá 30 ký tự
-                        </span>
-                        <span *ngIf="formupdatecate.controls['name'].errors?.['minlength']">
-                            Tên danh mục phải lớn hơn 5 ký tự
-                        </span>
-                    </div>
-
+                    <input type="text" class="border border-gray-300 form-control required input" id="name"
+                    [(ngModel)]="name" name="name" placeholder="Tên danh mục" (blur)="isNameTouched = true">
+                  <span class="text-danger" *ngIf="isNameTouched && name.length === 0">
+                    Tên danh mục không được để trống
+                  </span>
                 </div>
                 <div class="d-flex justify-content-center pb-3">
-                    <button class="btn bgr-them text-white" (click)="editcate()">Sửa danh mục</button>
+                    <button class="btnsumbit bgr-them text-white" type="submit" >Sửa danh mục</button>
                 </div>
             </form>
         </div>

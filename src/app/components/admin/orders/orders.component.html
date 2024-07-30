@@ -74,6 +74,9 @@
 
             <button class="btn btn-sm btn-danger fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
               data-bs-toggle="modal" data-bs-target="#myModal" *ngIf="order.statusOrder === 3">Đã hủy</button>
+
+              <button class="btn btn-sm btn-danger fs-6 w-75" (click)="loadOrderDetail(order.id)" type="button"
+              data-bs-toggle="modal" data-bs-target="#myModal" *ngIf="order.statusOrder === 2">Đã hủy bởi khách hàng</button>
           </td>
           <!-- <td>
             <button class="btn btn-sm btn-outline-primary" (click)="loadOrderDetail(order.id)" type="button"
@@ -116,15 +119,15 @@
               <p class="fw-bold text-uppercase fs-5 pt-3 ps-3 mb-0">Thông tin đơn hàng</p>
               <!-- Title Order-->
               <div class="row ms-2 pt-2 fw-bold">
-                <div class="col-lg-5">
+                <div class="col-lg-7">
                   Sản phẩm
                 </div>
                 <div class="col-lg-2">
                   Giá bán
                 </div>
-                <div class="col-lg-2">
+                <!-- <div class="col-lg-2">
                   Số lượng
-                </div>
+                </div> -->
                 <div class="col-lg-3 ps-2">
                   Thành tiền
                 </div>
@@ -133,23 +136,32 @@
               <div class="scroll-item">
                 <div class="card-item mb-2" *ngFor="let item of ordersDetail?.itemOrder">
                   <div class="row ms-2 pt-3 pb-3 align-items-center">
-                    <div class="col-lg-5">
+                    <div class="col-lg-7">
                       <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
                           <img src="{{item.productDetail?.imageUrl}}" class="rounded" [height]="70" [width]="70">
                         </div>
                         <div class="flex-grow-1 ms-3 mt-2">
                           <p class="fw-bold name-order-product">{{item.productDetail?.nameProduct}}</p>
-                          <p>Size: {{item.productDetail?.size}}</p>
+                          <div class="mt-2 d-flex align-items-center gap-2">
+                            <p *ngIf="item.productDetail?.size == 1">Size: Lớn</p>
+                            <p *ngIf="item.productDetail?.size == 2">Size: Vừa</p>
+                            <button class="border rounded p-1 d-flex align-items-center gap-2" style="cursor: pointer;">
+                              <div class="rounded-circle"
+                              [ngStyle]="{ 'width': '17px', 'height': '17px', 'background-color': item.productDetail?.colorProduct }">
+                              </div>
+                              <span class="fw-light" style="font-size: 14px;">x{{item.quantity}}</span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-2">
                       {{((item.productDetail?.price || 0) * 1000).toLocaleString()}}₫
                     </div>
-                    <div class="col-lg-2">
+                    <!-- <div class="col-lg-2">
                       x{{item.quantity}}
-                    </div>
+                    </div> -->
                     <div class="col-lg-3">
                       {{(((item.productDetail?.price || 0) * item.quantity || 0) * 1000).toLocaleString()}}₫
                     </div>
@@ -229,7 +241,8 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <input type="text" class="form-control" [formControl]="reasonControl" id="resion" placeholder="Lý do khác....">
+                <input type="text" class="form-control" [formControl]="reasonControl" id="resion"
+                  placeholder="Lý do khác....">
               </ul>
             </div>
             <div class="row">
@@ -250,13 +263,15 @@
                 <i class="fa-solid fa-angle-down"></i>
               </button>
               <ul class="dropdown-menu" style="width: 100%;">
-                <li><a class="dropdown-item" (click)="reasonControl.setValue('Khách boom hàng')">Khách boom hàng</a></li>
+                <li><a class="dropdown-item" (click)="reasonControl.setValue('Khách boom hàng')">Khách boom hàng</a>
+                </li>
                 <li><a class="dropdown-item" (click)="reasonControl.setValue('Lỗi kỹ thuật')">Lỗi kỹ thuật</a></li>
                 <li><a class="dropdown-item" (click)="reasonControl.setValue('Lỗi đóng gói')">Lỗi đóng gói</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <input type="text" class="form-control" [formControl]="reasonControl" id="resion" placeholder="Lý do khác....">
+                <input type="text" class="form-control" [formControl]="reasonControl" id="resion"
+                  placeholder="Lý do khác....">
               </ul>
             </div>
             <div class="row">

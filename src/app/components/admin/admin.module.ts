@@ -5,7 +5,10 @@ import { ProductsComponent } from './products/products.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateProductsComponent } from './update-products/update-products.component';
 import { OrdersComponent } from './orders/orders.component';
@@ -14,7 +17,6 @@ import { ReturnComponent } from './return/return.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { UsersComponent } from './users/users.component';
 import { BlogsComponent } from './blogs/blogs.component';
-import { EditorModule } from '@tinymce/tinymce-angular';
 import { LoadingComponent } from './loading/loading.component';
 import { VariantComponent } from './variant/variant.component';
 import { PaymentComponent } from './payment/payment.component';
@@ -25,6 +27,11 @@ import { CreateVoucherDialogComponent } from './vouchers/create-voucher-dialog/c
 import { CreateBlogComponent } from './create-blog/create-blog.component';
 import { UpdateBlogComponent } from './update-blog/update-blog.component';
 import { AdminComponent } from './admin.component';
+import {
+  EditorComponent,
+  EditorModule,
+  TINYMCE_SCRIPT_SRC,
+} from '@tinymce/tinymce-angular';
 
 const _routes: Routes = [
   {
@@ -146,6 +153,11 @@ const _routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     EditorModule,
+    EditorComponent,
+  ],
+  providers: [
+    provideClientHydration(),
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
   ],
 })
 export class AdminModule {}

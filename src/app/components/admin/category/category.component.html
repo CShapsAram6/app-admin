@@ -24,6 +24,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hình ảnh</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên danh mục</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -34,7 +35,11 @@
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{i.id}}</p>
                                         </td>
-                                        
+                                        <td>
+                                            <div class="btn--zoom avatar">
+                                                <img src="{{i.images}}">
+                                            </div>
+                                        </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{i.name}}</p>
                                         </td>                                      

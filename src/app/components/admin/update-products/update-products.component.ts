@@ -73,6 +73,16 @@ export class UpdateProductsComponent implements OnInit {
   arrColorRes: colorDtos[] = [];
   arrFilesRes: filesDtos[] = [];
   // https://drive.google.com/file/d/[idFile]/view
+  idProducts: number = this.route.snapshot.params['id'];
+  pdfSrc: string =
+    'https://drive.google.com/file/d/1EuWMdtLzHbH3pMHjd181oxP5g3ZRHF4n/view';
+
+  tinyConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table wordcount media',
+  };
+
   ngOnInit(): void {
     this.formSize.get('size')!.setValue(this.sizes[0]);
     forkJoin([this.LoadCategory(), this.LoadProduct()]).subscribe({

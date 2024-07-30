@@ -10,6 +10,7 @@ import { blogDto, createblog, updateblog } from '../model/blog.model';
 })
 export class BlogService {
   constructor(private http: HttpClient) {}
+  
   getData(page: number): Observable<ApiResponse<blogDto[]>> {
     return this.http.get<ApiResponse<blogDto[]>>(
       `${environment.api}/Blog/getall-blog-${page}`
@@ -34,6 +35,11 @@ export class BlogService {
 
   updateblog(id:number, form:FormData):Observable<ApiResponse<updateblog>>{
     return this.http.put<ApiResponse<updateblog>>(`${environment.api}/Blog/Update-blog-${id}`,form);
+  }
+  deleteblog(id: number): Observable<any> {
+    return this.http.delete<any>(
+      `${environment.api}/Blog/deleteblog-` + id
+    );
   }
 }
 

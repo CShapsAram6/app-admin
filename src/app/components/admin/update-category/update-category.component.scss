@@ -1,19 +1,79 @@
-.btn {
-    display: inline-block;
-    font-weight: 700;
-    line-height: 1.4;
-    color: #67748e;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    transition: all 0.15s ease-in;
-  }
+.btnsumbit {
+  display: inline-block;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #67748e;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in;
+}
 .bgr-them{
-    background-image: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%);
+  background-image: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%);
+}
+
+$color: rgba(128, 128, 128, 0.349);
+.image {
+  width: 100%;
+  height: 20rem;
+  overflow: hidden;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+      width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+  }
+  & img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+  }
+}
+.can--turn {
+  height: 9rem;
+  overflow: hidden;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+      width: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+  }
+}
+.btn-max-sm {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.privew-image {
+  width: 130px;
+  height: 150px;
+  overflow: hidden;
+  overflow-y: auto;
+  cursor: pointer;
+  border: 1px dashed $color;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  & p {
+      padding: 0 7px;
+      margin: 0px;
+      font-size: 9px;
+  }
+  & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
 }

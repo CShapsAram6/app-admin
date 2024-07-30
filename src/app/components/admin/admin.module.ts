@@ -25,7 +25,6 @@ import { CategoryComponent } from './category/category.component';
 import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { CreateVoucherDialogComponent } from './vouchers/create-voucher-dialog/create-voucher-dialog.component';
 import {
   EditorComponent,
@@ -146,7 +145,6 @@ const _routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxExtendedPdfViewerModule,
     EditorModule,
     EditorComponent,
   ],

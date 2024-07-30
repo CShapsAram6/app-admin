@@ -34,13 +34,16 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets", 
+              { "glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/"}
             ],
             "styles": [
               "src/styles.scss",
               "node_modules/highlight.js/styles/default.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/tinymce/tinymce.min.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {

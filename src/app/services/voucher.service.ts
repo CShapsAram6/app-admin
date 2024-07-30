@@ -14,4 +14,7 @@ export class VoucherService {
     getData(): Observable<ApiResponse<voucherDto[]>> {
         return this.http.get<ApiResponse<voucherDto[]>>(`${environment.api}/Voucher/get-all`);
     }
+    CreateVoucher(data: any){
+        return this.http.post(`${environment.api}/Voucher/create-voucher`,data);
+    }
 }

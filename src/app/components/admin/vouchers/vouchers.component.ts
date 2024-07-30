@@ -4,6 +4,7 @@ import { VoucherService } from '../../../services/voucher.service';
 import { ApiResponse } from '../../../model/ApiResponse.model';
 import { CreateVoucherDialogComponent } from './create-voucher-dialog/create-voucher-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { title } from 'process';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class VouchersComponent implements OnInit {
   openDialog(): void {
    const dialogRef = this.dialog.open(CreateVoucherDialogComponent,{
       height: '400px',
-      width: '600px',
+      width: '60%',
+      data:{
+        title: 'Thêm Voucher'
+      }
     });
     dialogRef.afterClosed().subscribe(result=>{
       console.log('close');

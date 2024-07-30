@@ -80,6 +80,11 @@ export class UpdateProductsComponent implements OnInit {
   pdfSrc: string =
     'https://drive.google.com/file/d/1EuWMdtLzHbH3pMHjd181oxP5g3ZRHF4n/view';
 
+  tinyConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table wordcount media',
+  };
 
   ngOnInit(): void {
     this.formSize.get('size')!.setValue(this.sizes[0]);

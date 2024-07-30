@@ -12,6 +12,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminModule } from './components/admin/admin.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
   ],
-  providers: [provideClientHydration()],
+  providers: [
+    provideClientHydration(),
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -49,6 +49,12 @@ export class CreateProductComponent implements OnInit {
   color: string = '';
   arrColor: string[] = [];
   arrFile: { index: number; file: File; name: string; type: string }[] = [];
+
+  tinyConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table wordcount media',
+  };
   ngOnInit(): void {
     this.LoadCategory();
   }

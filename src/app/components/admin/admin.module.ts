@@ -152,7 +152,6 @@ const _routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxExtendedPdfViewerModule,
     EditorModule,
     EditorComponent,
   ],

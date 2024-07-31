@@ -204,4 +204,6 @@ export class OrdersComponent implements OnInit {
     this.tabsData[this.activeTab].currentPage = pageNumber;
     this.updatePagination();
   }
+
+  //Thêm dòng mới
 }

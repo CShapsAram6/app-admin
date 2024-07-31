@@ -1,21 +1,20 @@
 // update-voucher.component.ts
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VoucherService } from '../../../../services/voucher.service';
 import { ApiResponse } from '../../../../model/ApiResponse.model';
 import { voucherDto } from '../../../../model/voucher.model';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-update-voucher',
   templateUrl: './update-voucher.component.html',
   styleUrls: ['./update-voucher.component.scss']
 })
-export class UpdateVoucherComponent implements OnInit {
+export class UpdateVoucherComponent implements OnInit, OnChanges {
 
-  voucherId: number = 0;
+  @Input() voucherId?: number;
   voucherForm: FormGroup;
-  constructor(private service: VoucherService, private fb: FormBuilder,private route: ActivatedRoute ) {
+  constructor(private service: VoucherService, private fb: FormBuilder) {
     this.voucherForm = this.fb.group({
       name: ['', Validators.required],
       timeStart: ['', Validators.required],
@@ -26,21 +25,17 @@ export class UpdateVoucherComponent implements OnInit {
       min_Order_Value: ['', [Validators.required, Validators.min(0)]],
       maxDiscount: ['', [Validators.required, Validators.min(0)]],
     });
-    this.route.params.subscribe(params=>{
-      this.voucherId = +params['id'];
-      if(this.voucherId)
-      {
-        this.loadVoucher(this.voucherId);
-      }
-    })
+    
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['voucherId'] && this.voucherId) {
+      this.loadVoucher(this.voucherId);
+    }
   }
 
   ngOnInit(): void {
-    if(this.voucherId)
-    {
-      this.voucherId= this.route.snapshot.params['id'];
-      this.loadVoucher(this.voucherId);
-    }
+   
   }
 
   loadVoucher(id: number) {

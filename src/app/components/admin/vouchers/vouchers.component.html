@@ -109,7 +109,7 @@
                         <button class="btn btn-sm btn-outline-primary">{{i.min_Order_Value}} VNĐ</button>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" [routerLink]="['vouchers/update-voucher', i.id]" (click)="openUpdateMode(i.id)">
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="openUpdateMode(i.id)">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </td>
@@ -135,12 +135,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm khuyến mãi</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ modalTitle }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <app-create-voucher-dialog *ngIf="isCreateMode"></app-create-voucher-dialog>
-                <app-update-voucher *ngIf="!isCreateMode"></app-update-voucher>
+                <app-update-voucher *ngIf="!isCreateMode" [voucherId]="seclectedVoucherId"></app-update-voucher>
             </div>
         </div>
     </div>

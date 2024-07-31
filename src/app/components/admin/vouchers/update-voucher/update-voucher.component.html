@@ -1,1 +1,82 @@
-<p>update-voucher works!</p>
+<!-- update-voucher.component.html -->
+<form [formGroup]="voucherForm" (ngSubmit)="onSave()">
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <input formControlName="name" type="text" id="name" class="form-control" />
+          <label class="form-label" for="name">Tên khuyến mãi</label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline datepicker">
+          <input formControlName="timeStart" type="datetime-local" id="startDate" class="form-control" />
+          <label for="startDate" class="form-label">Ngày bắt đầu</label>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="form-outline datepicker">
+          <input formControlName="timeEnd" type="datetime-local" id="endDate" class="form-control" />
+          <label for="endDate" class="form-label">Ngày kết thúc</label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <h6 class="mb-2 pb-1">Loại giảm giá</h6>
+        <div class="form-check form-check-inline">
+          <input formControlName="discountType" class="form-check-input" type="radio" id="percentDiscount" value="percent" />
+          <label class="form-check-label" for="percentDiscount">Phần trăm</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input formControlName="discountType" class="form-check-input" type="radio" id="directDiscount" value="direct" />
+          <label class="form-check-label" for="directDiscount">Trực tiếp</label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <input formControlName="discount" type="number" id="discount" class="form-control" />
+          <label class="form-label" for="discount">Giảm giá</label>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <input formControlName="stock" type="number" id="stock" class="form-control" />
+          <label class="form-label" for="stock">Số lượng</label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <input formControlName="min_Order_Value" type="number" id="minOrderValue" class="form-control" />
+          <label class="form-label" for="minOrderValue">Giá trị tối thiểu</label>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <input formControlName="maxDiscount" type="number" id="maxDiscount" class="form-control" />
+          <label class="form-label" for="maxDiscount">Giảm giá tối đa</label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end">
+        <div class="mt-4">
+          <button class="btn btn-primary btn-lg" type="submit">Lưu</button>
+        </div>
+        <div class="mt-4">
+          <button class="btn btn-danger btn-lg" type="button" (click)="onCancel()">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  

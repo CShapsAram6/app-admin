@@ -119,6 +119,11 @@ const _routes: Routes = [
         path:'updateblog/:id',
         component:UpdateBlogComponent,
         title:'Sửa bài viết'
+      },
+      {
+        path:'updatevoucher/:id',
+        component:UpdateVoucherComponent,
+        title:'Sửa voucher'
       }
 
     ],

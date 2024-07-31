@@ -53,12 +53,12 @@
             <button class="btn--tab" [ngClass]="{'btn--active': isActive(2)}" (click)="GetListVoucherByStatus(2)">
                 Tạm ngưng
             </button>
-            <button class="btn--tab" [ngClass]="{'btn--active': isActive(4)}" (click)="GetListVoucherByStatus(4)">
-                Đã hủy
-            </button>
             <button class="btn--tab" [ngClass]="{'btn--active': isActive(3)}" (click)="GetListVoucherByStatus(3)">
                 Đã kết thúc
             </button>   
+            <button class="btn--tab" [ngClass]="{'btn--active': isActive(4)}" (click)="GetListVoucherByStatus(4)">
+                Đã hủy
+            </button>
         </div>
     </div>
     <div class="row mt-4">
@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="col-2">
-            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tạo khuyễn mãi
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="openCreateMode()">Tạo khuyễn mãi
                 mới</button>
         </div>
     </div>
@@ -85,8 +85,9 @@
                     <th style="color: white;">Ngày bắt đầu</th>
                     <th style="color: white;">Ngày kết thúc</th>
                     <th style="color: white;">Điều kiện</th>
-                    <th style="color: white;"></th>
-                    <th style="color: white;"></th>
+                    <th style="color: white;">Chỉnh sửa</th>
+                    <th style="color: white;">Thao tác</th>
+                    <th style="color: white;">Hủy</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0 mt-4">
@@ -102,14 +103,19 @@
                         <span class="fw-bold text-primary">{{i.timeStart | date:'hh:mm - dd/MM/yyyy'}}</span>
                     </td>
                     <td>
-                        {{i.timeEnd | date:'hh:mm - dd/MM/yyyy'}}
+                        <span class="fw-bold text-primary">{{i.timeEnd | date:'hh:mm - dd/MM/yyyy'}}</span>
                     </td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary">{{i.min_Order_Value}} VNĐ</button>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="openUpdateMode(i.id)">
                             <i class="fa-regular fa-pen-to-square"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="fa-solid fa-pause"></i>
                         </button>
                     </td>
                     <td>
@@ -129,11 +135,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm khuyến mãi</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ modalTitle }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <app-create-voucher-dialog></app-create-voucher-dialog>
+                <app-create-voucher-dialog *ngIf="isCreateMode"></app-create-voucher-dialog>
+                <app-update-voucher *ngIf="!isCreateMode" [voucherId]="seclectedVoucherId"></app-update-voucher>
             </div>
         </div>
     </div>

@@ -10,7 +10,19 @@ import { ApiResponse } from '../../../model/ApiResponse.model';
 })
 export class VouchersComponent implements OnInit {
   constructor(private voucher: VoucherService) {}
-  selectedStatus: number = 1;
+  selectedStatus: number = -1;
+  isCreateMode : boolean = true;
+  modalTitle: string ='Thêm khuyến mãi';
+  seclectedVoucherId?: number ;
+  openCreateMode() {
+    this.isCreateMode = true;
+    this.modalTitle = 'Thêm khuyến mãi'; 
+  }
+  openUpdateMode(voucherId: number) {
+    this.isCreateMode = false;
+    this.seclectedVoucherId =  voucherId;
+  }
+  
   ngOnInit(): void {
     this.GetListVoucherByStatus(this.selectedStatus);
   }
@@ -19,7 +31,6 @@ export class VouchersComponent implements OnInit {
   GetListVoucherByStatus(status: number) {
     this.selectedStatus = status; 
     this.voucher.getDataByStatus(status).subscribe((vouchers: ApiResponse<voucherDto[]>) => {
-      console.log(vouchers);
       this.ListVoucher = vouchers.data;
     });
   }
@@ -42,4 +53,6 @@ export class VouchersComponent implements OnInit {
   isActive(status: number): boolean {
     return this.selectedStatus === status;
   }
+
+ 
 }

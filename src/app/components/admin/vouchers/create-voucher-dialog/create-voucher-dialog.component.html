@@ -1,109 +1,122 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-9 col-xl-7">
-            <div class="card">
-                <div class="card-body p-4 p-md-5">
-                    <h3 class="mb-4 pb-2">Khuyễn mãi</h3>
 
-                    <form action="">
 
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-
-                                <div class="form-outline">
-                                    <input type="text" id="firstName" class="form-control" />
-                                    <label class="form-label" for="firstName">Tên khuyến mãi</label>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-
-                                <div class="form-outline datepicker">
-                                    <input type="datetime" class="form-control" id="birthdayDate" />
-                                    <label for="birthdayDate" class="form-label">Thời gian bắt đầu</label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4">
-
-                                <div class="form-outline datepicker">
-                                    <input type="datetime" class="form-control" id="birthdayDate" />
-                                    <label for="birthdayDate" class="form-label">Thời gian kết thúc</label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4">
-
-                                <h6 class="mb-2 pb-1">Loại giảm giá </h6>
-
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="femaleGender" value="option1" />
-                                    <label class="form-check-label" for="femaleGender">Phần trăm</label>
-                                </div>
-
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="maleGender" value="option2" />
-                                    <label class="form-check-label" for="maleGender">Trực tiếp</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-
-                                <div class="form-outline">
-                                    <input type="number" id="emailAddress" class="form-control" />
-                                    <label class="form-label" for="emailAddress">Số lượng</label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4">
-
-                                <div class="form-outline">
-                                    <input type="number" id="phoneNumber" class="form-control" />
-                                    <label class="form-label" for="phoneNumber">Giảm giá</label>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-
-                                <div class="form-outline">
-                                    <input type="number" id="emailAddress" class="form-control" />
-                                    <label class="form-label" for="emailAddress">Giá trị tối thiểu</label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4">
-
-                                <div class="form-outline">
-                                    <input type="number" id="phoneNumber" class="form-control" />
-                                    <label class="form-label" for="phoneNumber">Giảm giá tối đa</label>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="mt-4">
-                                    <input class="btn btn-primary btn-lg" type="submit" value="Lưu" />
-                                </div>
-
-                                <div class="mt-4">
-                                    <input class="btn btn-danger btn-lg" type="submit" value="Hủy" />
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
+          <form [formGroup]="myForm" (ngSubmit)="saveVoucher()">
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <input formControlName="name" type="text" id="firstName" class="form-control" />
+                  <label class="form-label" for="firstName">Tên khuyến mãi</label>
+                  <div *ngIf="myForm.get('name')?.invalid && myForm.get('name')?.touched" class="text-danger">
+                    Tên khuyến mãi là bắt buộc.
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-outline datepicker">
+                  <input formControlName="timeStart" type="datetime-local" name="date" class="form-control" id="startDate" [min]="minDate"/>
+                  <label for="startDate" class="form-label">Thời gian bắt đầu</label>
+                  <div *ngIf="myForm.get('timeStart')?.invalid && myForm.get('timeStart')?.touched" class="text-danger">
+                    Thời gian bắt đầu là bắt buộc.
+                  </div>
+                  <div *ngIf="myForm.errors?.['startDateInvalid'] && myForm.get('timeStart')?.touched"
+                    class="text-danger">
+                    Thời gian bắt đầu phải lớn hơn thời gian hiện tại.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="form-outline datepicker">
+                  <input formControlName="timeEnd" type="datetime-local" name="date" class="form-control" id="endDate" [min]="minDate" />
+                  <label for="endDate" class="form-label">Thời gian kết thúc</label>
+                  <div *ngIf="myForm.get('timeEnd')?.invalid && myForm.get('timeEnd')?.touched" class="text-danger">
+                    Thời gian kết thúc là bắt buộc.
+                  </div>
+                  <div *ngIf="myForm.errors?.['endDateInvalid'] && myForm.get('timeEnd')?.touched" class="text-danger" >
+                    Thời gian kết thúc phải lớn hơn thời gian hiện tại.
+                  </div>
+                  <div
+                    *ngIf="myForm.errors?.['timeRangeInvalid'] && (myForm.get('timeStart')?.touched || myForm.get('timeEnd')?.touched)"
+                    class="text-danger">
+                    Thời gian kết thúc phải lớn hơn thời gian bắt đầu.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <h6 class="mb-2 pb-1">Loại giảm giá </h6>
+                <div class="form-check form-check-inline">
+                  <input formControlName="discountType" class="form-check-input" type="radio" name="discountType"
+                    id="percentDiscount" value="percent" />
+                  <label class="form-check-label" for="percentDiscount">Phần trăm</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input formControlName="discountType" class="form-check-input" type="radio" name="discountType"
+                    id="directDiscount" value="direct" />
+                  <label class="form-check-label" for="directDiscount">Trực tiếp</label>
+                </div>
+                <div *ngIf="myForm.get('discountType')?.invalid && myForm.get('discountType')?.touched"
+                  class="text-danger">
+                  Loại giảm giá là bắt buộc.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <input formControlName="discount" type="number" id="discount" class="form-control" />
+                  <label class="form-label" for="discount">Giảm giá</label>
+                  <div *ngIf="myForm.get('discount')?.invalid && myForm.get('discount')?.touched" class="text-danger">
+                    Giảm giá là bắt buộc và phải là số dương.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <input formControlName="stock" type="number" id="stock" class="form-control" />
+                  <label class="form-label" for="stock">Số lượng</label>
+                  <div *ngIf="myForm.get('stock')?.invalid && myForm.get('stock')?.touched" class="text-danger">
+                    Số lượng là bắt buộc và phải là số dương.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <input formControlName="min_Order_Value" type="number" id="minOrderValue" class="form-control" />
+                  <label class="form-label" for="minOrderValue">Giá trị tối thiểu</label>
+                  <div *ngIf="myForm.get('min_Order_Value')?.invalid && myForm.get('min_Order_Value')?.touched"
+                    class="text-danger">
+                    Giá trị tối thiểu là bắt buộc và phải là số dương.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <input formControlName="maxDiscount" type="number" id="maxDiscount" class="form-control" />
+                  <label class="form-label" for="maxDiscount">Giảm giá tối đa</label>
+                  <div *ngIf="myForm.get('maxDiscount')?.invalid && myForm.get('maxDiscount')?.touched"
+                    class="text-danger">
+                    Giảm giá tối đa là bắt buộc và phải là số dương.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col-12 d-flex justify-content-end">
+                <div class="mt-4">
+                  <button class="btn btn-primary btn-lg me-4" type="button" (click)="saveVoucher()">
+                    Lưu
+                  </button>
+                </div>
+                <div class="mt-4">
+                  <button class="btn btn-danger btn-lg" type="button" (click)="close()">
+                    Hủy
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        
+

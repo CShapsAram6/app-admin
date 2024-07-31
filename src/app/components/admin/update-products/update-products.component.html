@@ -328,10 +328,8 @@
             <label for="defaultFormControlInput" class="form-label">
                 Mô tả sản phẩm
             </label>
-            <editor [(ngModel)]="describe" apiKey="zjaf3225wvypx5bbv8bie6lf440xmz7oynbi61624j3mhn0w" [init]="{
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-            }"></editor>
+            <editor name="Text" [(ngModel)]="describe" [init]="tinyConfig" class="text-sm">
+            </editor>
         </div>
     </div>
     <div class="d-flex justify-content-end w-100">

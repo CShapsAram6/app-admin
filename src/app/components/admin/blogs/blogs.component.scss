@@ -18,3 +18,132 @@
     width: 10rem !important;
     overflow: hidden;
 }
+
+
+.popup {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ADADAD;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+    .popup button {
+        margin: 10px;
+        padding: 5px 15px;
+        float: left; /* Đặt nút về phía trái */
+        background-color: #E48700;
+        color: white;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        outline: none;
+        border-radius: 10px;
+    }
+
+        .popup button:last-child {
+            float: right; /* Đặt nút cuối cùng về phía phải */
+        }
+
+        .popup button:hover {
+            background-color: #E46B00;
+        }
+
+    /* Đảm bảo rằng nội dung bên trong popup không bị ảnh hưởng bởi các nút float */
+    .popup:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .popup a {
+        margin: 10px;
+        padding: 5px 15px;
+        float: left; /* Đặt nút về phía trái */
+        background-color: #E48700;
+        color: white;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        outline: none;
+        border-radius: 10px;
+        text-decoration: none;
+    }
+
+        .popup a:last-child {
+            float: right; /* Đặt nút cuối cùng về phía phải */
+        }
+
+        .popup a:hover {
+            background-color: #E46B00;
+        }
+
+
+
+    .popup button {
+        width: unset;
+        margin: 10px;
+        padding: 5px 15px;
+        float: left; /* Đặt nút về phía trái */
+        background-color: #E48700;
+        color: white;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        outline: none;
+        border-radius: 10px;
+    }
+
+        .popup button:last-child {
+            float: right; /* Đặt nút cuối cùng về phía phải */
+        }
+
+        .popup button:hover {
+            background-image: linear-gradient(310deg, #2100ff 0%, #21d9fd 100%);
+        }
+
+    /* Đảm bảo rằng nội dung bên trong popup không bị ảnh hưởng bởi các nút float */
+    .popup:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .popup a {
+        margin: 10px;
+        padding: 5px 15px;
+        float: left; /* Đặt nút về phía trái */
+        background-color: #49ad49;
+        color: white;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        outline: none;
+        border-radius: 10px;
+        text-decoration: none;
+    }
+
+        .popup a:last-child {
+            float: right; /* Đặt nút cuối cùng về phía phải */
+        }
+
+        .popup a:hover {
+            background-color: #E46B00;
+        }
+
+    .popup  button {
+        margin: 10px;
+        padding: 5px 15px;
+        float: left; /* Đặt nút về phía trái */
+        background-image: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%);
+        color: white;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        outline: none;
+        border-radius: 10px;
+    }
+
+        .popup  button:last-child {
+            float: right; /* Đặt nút cuối cùng về phía phải */
+        }

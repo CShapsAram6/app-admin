@@ -1,3 +1,4 @@
+
 interface blogDto {
   id: number;
   header: string;
@@ -11,6 +12,27 @@ interface createblog {
   // chuaw theem accontID
   images: File[];
 }
+interface getblogupdate{
+  id:number;
+  header: string;
+  content: string;  
+  images?: imageDtos[];
+
+}
+interface updateblog{
+  id:number;
+  header: string;
+  content: string;  
+  ImageDelete?:number[];
+  images?: File[];
+}
+interface imageDtos {
+  id: number;
+  link: string;
+  isActive: boolean;
+}
+
+
 // up git
 
-export { blogDto, createblog };
+export { blogDto, createblog,updateblog,getblogupdate };

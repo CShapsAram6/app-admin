@@ -1,9 +1,11 @@
 interface categoryDtos {
   id: number;
   name: string;
+  images: string;
 }
 interface createcategoryDtos {
   name: string;
+  images: File;
 }
 interface variant {
   id: string;

@@ -21,6 +21,10 @@ export class OrdersComponent implements OnInit {
 
   idOrder: number = 0;
   countOrder: number = 0;
+  totalOrder: number = 0;
+  feeOrder: number = 0;
+  total: number = 0;
+  discountOrder: number = 0;
   activeTab = 'Tất cả';
   currentPage = 1;
   limit = 10;
@@ -37,7 +41,10 @@ export class OrdersComponent implements OnInit {
     this.idOrder = id;
     this.orderService.getOrderDetail(id).subscribe((data) => {
       this.ordersDetail = data;
-      console.log(this.ordersDetail);
+      this.totalOrder = (this.ordersDetail.total + this.ordersDetail.discount - this.ordersDetail.feeDelivery) * 1000;
+      this.feeOrder = this.ordersDetail.feeDelivery * 1000;
+      this.discountOrder = this.ordersDetail.discount * 1000;
+      this.total = this.ordersDetail.total * 1000;
     })
   }
 
@@ -172,7 +179,7 @@ export class OrdersComponent implements OnInit {
     } else if (tab === 'Hoàn tất') {
       return this.orders.filter(order => order.statusOrder === 1 && order.statusDelivery === 2);
     } else if (tab === 'Đã hủy') {
-      return this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3);
+      return this.orders.filter(order => (order.statusOrder === 1 && order.statusDelivery === 3) || order.statusOrder === 3 || order.statusOrder === 2);
     } else {
       return [];
     }
@@ -197,4 +204,6 @@ export class OrdersComponent implements OnInit {
     this.tabsData[this.activeTab].currentPage = pageNumber;
     this.updatePagination();
   }
+
+  //Thêm dòng mới
 }

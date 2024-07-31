@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './products/products.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateProductsComponent } from './update-products/update-products.component';
 import { OrdersComponent } from './orders/orders.component';
@@ -15,7 +17,6 @@ import { ReturnComponent } from './return/return.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { UsersComponent } from './users/users.component';
 import { BlogsComponent } from './blogs/blogs.component';
-import { EditorModule } from '@tinymce/tinymce-angular';
 import { LoadingComponent } from './loading/loading.component';
 import { VariantComponent } from './variant/variant.component';
 import { PaymentComponent } from './payment/payment.component';
@@ -24,6 +25,16 @@ import { CreatecateComponent } from './createcate/createcate.component';
 import { UpdateCategoryComponent } from './update-category/update-category.component';
 import { CreateVoucherDialogComponent } from './vouchers/create-voucher-dialog/create-voucher-dialog.component';
 import { CreateBlogComponent } from './create-blog/create-blog.component';
+import { UpdateBlogComponent } from './update-blog/update-blog.component';
+import { AdminComponent } from './admin.component';
+import {
+  EditorComponent,
+  EditorModule,
+  TINYMCE_SCRIPT_SRC,
+} from '@tinymce/tinymce-angular';
+import { UpdateVoucherComponent } from './vouchers/update-voucher/update-voucher.component';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr, ToastrModule } from 'ngx-toastr';
 
 const _routes: Routes = [
   {
@@ -105,6 +116,16 @@ const _routes: Routes = [
         path:'createblog',
         component:CreateBlogComponent,
         title:'Thêm bài viết'
+      },
+      {
+        path:'updateblog/:id',
+        component:UpdateBlogComponent,
+        title:'Sửa bài viết'
+      },
+      {
+        path:'updatevoucher/:id',
+        component:UpdateVoucherComponent,
+        title:'Sửa voucher'
       }
 
     ],
@@ -130,6 +151,8 @@ const _routes: Routes = [
     UpdateCategoryComponent,
     CreateVoucherDialogComponent,
     CreateBlogComponent,
+    UpdateBlogComponent,
+    UpdateVoucherComponent,
   ],
   imports: [
     BrowserModule,
@@ -139,6 +162,15 @@ const _routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     EditorModule,
+    EditorComponent,    
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
+  ],
+  providers: [
+    provideClientHydration(),
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
+    provideAnimations(), // required animations providers
+    provideToastr(), // Toastr providers
   ],
 })
 export class AdminModule {}

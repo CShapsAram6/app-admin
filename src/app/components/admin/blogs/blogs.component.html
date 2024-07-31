@@ -56,10 +56,27 @@
                             </a>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-outline-primary">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </button>
-                        </td>
+                                <button class="btn btn-sm btn-outline-primary" [routerLink]="['/admin/updateblog', i.id]">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger ms-4" (click)="showPopup(i.id)">
+                                    <i class="far fa-trash-alt me-2"></i>
+                                </button>
+                                <div *ngIf="popupVisible[i.id]" class="popup">
+                                    <div>
+                                        <p>Bạn có muốn xóa bài viết "{{i.header}}" không?</p>
+                                        <div>
+                                            <button (click)="deleteND(i.id)">Có</button>
+                                            <button (click)="closePopup(i.id)">Không</button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="deleteError[i.id]" class="text-danger">
+                                        <p>
+                                            {{deleteError[i.id]}}
+                                        </p>
+                                    </div>
+                                  </div>
+                        </td>                        
                     </tr>
                 </tbody>
             </table>
@@ -73,3 +90,14 @@
         </h2>
     </div>
  }
+ <div class="card mt-4 pt-3">
+    <div class="d-flex justify-content-center align-items-center">
+        <ul class="pagination">
+            <li class="page-item" *ngFor="let item of numberPages" routerLinkActive="active">
+                <a class="page-link" [routerLink]="['/admin/blogs/' + item]">
+                    {{item}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

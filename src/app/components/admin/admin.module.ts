@@ -32,6 +32,7 @@ import {
   EditorModule,
   TINYMCE_SCRIPT_SRC,
 } from '@tinymce/tinymce-angular';
+import { UpdateVoucherComponent } from './vouchers/update-voucher/update-voucher.component';
 
 const _routes: Routes = [
   {
@@ -118,6 +119,11 @@ const _routes: Routes = [
         path:'updateblog/:id',
         component:UpdateBlogComponent,
         title:'Sửa bài viết'
+      },
+      {
+        path:'updatevoucher/:id',
+        component:UpdateVoucherComponent,
+        title:'Sửa voucher'
       }
 
     ],
@@ -144,6 +150,7 @@ const _routes: Routes = [
     CreateVoucherDialogComponent,
     CreateBlogComponent,
     UpdateBlogComponent,
+    UpdateVoucherComponent,
   ],
   imports: [
     BrowserModule,

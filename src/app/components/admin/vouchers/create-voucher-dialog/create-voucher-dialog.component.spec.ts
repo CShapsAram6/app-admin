@@ -8,9 +8,8 @@ describe('CreateVoucherDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateVoucherDialogComponent]
-    })
-    .compileComponents();
+      declarations: [CreateVoucherDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreateVoucherDialogComponent);
     component = fixture.componentInstance;

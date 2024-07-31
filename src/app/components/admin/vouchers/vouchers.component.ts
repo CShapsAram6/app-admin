@@ -10,18 +10,18 @@ import { ApiResponse } from '../../../model/ApiResponse.model';
 })
 export class VouchersComponent implements OnInit {
   constructor(private voucher: VoucherService) {}
-
+  selectedStatus: number = 1;
   ngOnInit(): void {
-    this.GetListVoucher();
+    this.GetListVoucherByStatus(this.selectedStatus);
   }
   ListVoucher: voucherDto[] = [];
-  GetListVoucher() {
-    return this.voucher
-      .getData()
-      .subscribe((data: ApiResponse<voucherDto[]>) => {
-        console.log(data);
-        this.ListVoucher = data.data;
-      });
+ 
+  GetListVoucherByStatus(status: number) {
+    this.selectedStatus = status; 
+    this.voucher.getDataByStatus(status).subscribe((vouchers: ApiResponse<voucherDto[]>) => {
+      console.log(vouchers);
+      this.ListVoucher = vouchers.data;
+    });
   }
   getStatus(status: number): string {
     switch (status) {
@@ -30,9 +30,16 @@ export class VouchersComponent implements OnInit {
       case 0:
         return 'Sắp diễn ra';
       case 2:
+        return 'Tạm ngưng';
+      case 4:
+        return 'Đã hủy';
+      case 3:
         return 'Đã kết thúc';
       default:
         return 'Không xác định';
     }
+  }
+  isActive(status: number): boolean {
+    return this.selectedStatus === status;
   }
 }

@@ -41,11 +41,24 @@
 <section class="card p-4 mt-4">
     <div class="list-tab">
         <div>
-            <button class="btn--tab btn--active">Tất cả</button>
-            <button class="btn--tab">Đang diễn ra</button>
-            <button class="btn--tab">Sắp tới</button>
-            <button class="btn--tab">Đã hủy kích hoạt</button>
-            <button class="btn--tab">Đã kết thúc</button>
+            <button class="btn--tab" [ngClass]="{'btn--active': isActive(-1)}" (click)="GetListVoucherByStatus(-1)">
+                Tất cả
+            </button>
+            <button class="btn--tab" [ngClass]="{'btn--active': isActive(1)}" (click)="GetListVoucherByStatus(1)">
+                Đang diễn ra
+            </button>
+            <button class="btn--tab" [ngClass]="{'btn--active': isActive(0)}" (click)="GetListVoucherByStatus(0)">
+                Sắp diễn ra
+            </button>
+            <button class="btn--tab" [ngClass]="{'btn--active': isActive(2)}" (click)="GetListVoucherByStatus(2)">
+                Tạm ngưng
+            </button>
+            <button class="btn--tab" [ngClass]="{'btn--active': isActive(4)}" (click)="GetListVoucherByStatus(4)">
+                Đã hủy
+            </button>
+            <button class="btn--tab" [ngClass]="{'btn--active': isActive(3)}" (click)="GetListVoucherByStatus(3)">
+                Đã kết thúc
+            </button>   
         </div>
     </div>
     <div class="row mt-4">
@@ -95,7 +108,7 @@
                         <button class="btn btn-sm btn-outline-primary">{{i.min_Order_Value}} VNĐ</button>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </td>
@@ -116,15 +129,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Thêm khuyến mãi</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <app-create-voucher-dialog></app-create-voucher-dialog>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
             </div>
         </div>
     </div>

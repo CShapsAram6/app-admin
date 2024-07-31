@@ -33,7 +33,7 @@ export class CreateVoucherDialogComponent implements OnInit {
         discountType: ['', Validators.required],
         discount: ['', [Validators.required, Validators.min(0)]],
         min_Order_Value: ['', [Validators.required, Validators.min(0)]],
-        maxDiscount: ['', [Validators.required, Validators.min(0)]],
+        max_Discount: ['', [Validators.required, Validators.min(0)]],
         stock: ['', [Validators.required, Validators.min(0)]],
         status: [1, Validators.required],
       },

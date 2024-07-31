@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, viewChild } from '@angular/core';
 import { voucherDto } from '../../../model/voucher.model';
 import { VoucherService } from '../../../services/voucher.service';
 import { ApiResponse } from '../../../model/ApiResponse.model';
+import { UpdateVoucherComponent } from './update-voucher/update-voucher.component';
 
 @Component({
   selector: 'app-vouchers',
@@ -9,6 +10,8 @@ import { ApiResponse } from '../../../model/ApiResponse.model';
   styleUrl: './vouchers.component.scss',
 })
 export class VouchersComponent implements OnInit {
+
+  @ViewChild(UpdateVoucherComponent) updateVoucherComponent!: UpdateVoucherComponent;
   constructor(private service: VoucherService) { }
   selectedStatus: number = -1;
   isCreateMode: boolean = true;
@@ -24,6 +27,7 @@ export class VouchersComponent implements OnInit {
     this.isCreateMode = false;
     this.seclectedVoucherId = voucherId;
     this.modalTitle = 'Cập Nhật khuyến mãi';
+    this.updateVoucherComponent.saveSuccess.subscribe(() => this.onVoucherSaved());
   }
 
   ngOnInit(): void {
@@ -122,6 +126,9 @@ export class VouchersComponent implements OnInit {
       default:
         return 'fa-solid fa-question';
     }
+  }
+  onVoucherSaved() {
+    this.GetListVoucherByStatus(this.selectedStatus);
   }
 
 

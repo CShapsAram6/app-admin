@@ -5,7 +5,7 @@ interface voucherDto {
     timeStart : string;
     timeEnd : string;
     min_Order_Value : number;
-    maxDiscount : number;
+    max_Discount : number;
     stock : number;
     discount: number;
     discountType : string;

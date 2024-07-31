@@ -14,6 +14,8 @@ export class CreatecateComponent implements OnInit {
   constructor(private cate:CategorysService ,private form: FormBuilder,private route: ActivatedRoute , private Router:Router ){}
   images: { url: string; index: number; file: File } = { url: "", index: 0, file: new File([], "") };
   name:string = '';
+  isNameTouched: boolean = false;
+  isImagetouched: boolean = false;
 ngOnInit(): void {
   console.log(this.images.index);
 }
@@ -21,6 +23,15 @@ ngOnInit(): void {
 
 
   createcate() {
+    // console.log(this.name + "name")
+    // console.log(this.images.index +"img");
+    if(this.name == '' || this.images.index == 0){
+      this.isImagetouched = true;
+      this.isNameTouched = true;
+      // console.log("hihi");
+      return;      
+    }
+    // console.log("ngoài");
     const formData = new FormData();
     formData.append('name',this.name);
     formData.append('images' , this.images.file)

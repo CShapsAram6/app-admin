@@ -30,6 +30,7 @@ interface orderDetailDto {
         id: number,
         size: number,
         price: number,
+        colorProduct: string,
         nameProduct: string,
         imageUrl: string
       }

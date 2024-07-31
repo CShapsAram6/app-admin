@@ -4,6 +4,7 @@ import { FormBuilder, MinValidator, Validators } from '@angular/forms';
 import { createcategoryDtos } from '../../../model/category.model';
 import { url } from 'inspector';
 import { ActivatedRoute , Router} from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-createcate',
@@ -11,7 +12,7 @@ import { ActivatedRoute , Router} from '@angular/router';
   styleUrl: './createcate.component.scss'
 })
 export class CreatecateComponent implements OnInit {
-  constructor(private cate:CategorysService ,private form: FormBuilder,private route: ActivatedRoute , private Router:Router ){}
+  constructor(private cate:CategorysService ,private form: FormBuilder,private route: ActivatedRoute , private Router:Router , private toastr: ToastrService ){}
   images: { url: string; index: number; file: File } = { url: "", index: 0, file: new File([], "") };
   name:string = '';
   isNameTouched: boolean = false;
@@ -42,9 +43,13 @@ ngOnInit(): void {
       next:(res) => {
         console.log("Sao không vô dc ???");
         this.Router.navigate(['/admin/getcate']);
+        this.toastr.success('Tạo danh mục mới thành công');
+
       },
       error: (err) => {
         console.error('Error updating blog', err);
+        this.toastr.error('Tạo danh mục thât bại');
+
       }
     })
 

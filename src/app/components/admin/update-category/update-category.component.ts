@@ -3,6 +3,7 @@ import { CategorysService } from '../../../services/categorys.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute ,Router} from '@angular/router';
 import { categoryDtos, createcategoryDtos } from '../../../model/category.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-category',
@@ -11,7 +12,7 @@ import { categoryDtos, createcategoryDtos } from '../../../model/category.model'
 })
 export class UpdateCategoryComponent implements OnInit {
   id: any;
-  constructor(private cate:CategorysService ,private form: FormBuilder,private route: ActivatedRoute , private Router:Router ){}
+  constructor(private cate:CategorysService ,private form: FormBuilder,private route: ActivatedRoute , private Router:Router , private toastr: ToastrService){}
   images: { url: string; index: number; file: File } = { url: "", index: 0, file: new File([], "") };
   name:string = '';
   isNameTouched: boolean = false;
@@ -50,10 +51,12 @@ export class UpdateCategoryComponent implements OnInit {
         next: (res) => {
           console.log(formData.get('name'));
           this.Router.navigate(['/admin/getcate']);
-  
+          this.toastr.success('Sửa danh mục mới thành công');
         },
         error: (err) => {
           console.error('Error updating blog', err);
+          this.toastr.error('Sửa danh mục thất bại');
+
         }
       })
    }

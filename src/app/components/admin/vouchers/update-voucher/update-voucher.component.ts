@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VoucherService } from '../../../../services/voucher.service';
 import { ApiResponse } from '../../../../model/ApiResponse.model';
 import { voucherDto } from '../../../../model/voucher.model';
-
+declare var bootstrap: any;
 @Component({
   selector: 'app-update-voucher',
   templateUrl: './update-voucher.component.html',
@@ -16,6 +16,7 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
   voucherForm: FormGroup;
   constructor(private service: VoucherService, private fb: FormBuilder) {
     this.voucherForm = this.fb.group({
+      id: this.voucherId,
       name: ['', Validators.required],
       timeStart: ['', Validators.required],
       timeEnd: ['', Validators.required],
@@ -43,6 +44,7 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
       const voucher = response.data;
       if (voucher) {
         this.voucherForm.patchValue({
+          id: this.voucherId,
           name: voucher.name,
           timeStart: voucher.timeStart,
           timeEnd: voucher.timeEnd,
@@ -57,14 +59,23 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
   }
 
   onSave() {
+    console.log(this.voucherForm.value);
+
     if (this.voucherForm.valid) {
-      const updatedVoucher: voucherDto = this.voucherForm.value;
-      // Call the service to update voucher with updatedVoucher
-      // this.service.updateVoucher(this.voucherId, updatedVoucher).subscribe(...);
+
+      this.service.UpdateVoucher(this.voucherForm.value).subscribe(res => {
+        this.onCancel();
+      });
+    } else {
+      this.voucherForm.markAllAsTouched();
     }
   }
 
   onCancel() {
-    // Logic to cancel or close the form
+    const modal = document.getElementById('staticBackdrop');
+    if (modal) {
+      const modalInstance = bootstrap.Modal.getInstance(modal);
+      modalInstance.hide();
+    }
   }
 }

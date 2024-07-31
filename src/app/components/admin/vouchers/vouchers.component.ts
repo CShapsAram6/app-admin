@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { voucherDto } from '../../../model/voucher.model';
 import { VoucherService } from '../../../services/voucher.service';
 import { ApiResponse } from '../../../model/ApiResponse.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vouchers',
@@ -9,8 +10,21 @@ import { ApiResponse } from '../../../model/ApiResponse.model';
   styleUrl: './vouchers.component.scss',
 })
 export class VouchersComponent implements OnInit {
-  constructor(private voucher: VoucherService) {}
-  selectedStatus: number = 1;
+  constructor(private voucher: VoucherService, private router : Router) {}
+  selectedStatus: number = -1;
+  isCreateMode : boolean = true;
+  modalTitle: string ='Thêm khuyến mãi';
+  openCreateMode() {
+    this.isCreateMode = true;
+    this.modalTitle = 'Thêm khuyến mãi'; 
+  }
+  openUpdateMode(voucherId: number) {
+    this.isCreateMode = false;
+    this.modalTitle = 'Cập nhật khuyến mãi'; 
+    this.router.navigate(['/update-voucher', voucherId]);
+    console.log(voucherId);
+  }
+  
   ngOnInit(): void {
     this.GetListVoucherByStatus(this.selectedStatus);
   }
@@ -42,4 +56,6 @@ export class VouchersComponent implements OnInit {
   isActive(status: number): boolean {
     return this.selectedStatus === status;
   }
+
+ 
 }

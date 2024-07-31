@@ -18,5 +18,8 @@ export class VoucherService {
         const params = new HttpParams().set('status', status.toString());
     
         return this.http.get<ApiResponse<voucherDto[]>>(`${environment.api}/Voucher/get-voucher-by-status`, { params });
+    }
+    getVoucherById(id: number): Observable<ApiResponse<voucherDto>> {
+        return this.http.get<ApiResponse<voucherDto>>(`${environment.api}/Voucher/get-voucher-by-id?id=${id}`);
       }
 }

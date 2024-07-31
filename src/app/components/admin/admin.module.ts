@@ -33,6 +33,8 @@ import {
   TINYMCE_SCRIPT_SRC,
 } from '@tinymce/tinymce-angular';
 import { UpdateVoucherComponent } from './vouchers/update-voucher/update-voucher.component';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr, ToastrModule } from 'ngx-toastr';
 
 const _routes: Routes = [
   {
@@ -160,11 +162,15 @@ const _routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     EditorModule,
-    EditorComponent,
+    EditorComponent,    
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
   ],
   providers: [
     provideClientHydration(),
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
+    provideAnimations(), // required animations providers
+    provideToastr(), // Toastr providers
   ],
 })
 export class AdminModule {}

@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, tap } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-blog',
@@ -19,7 +19,7 @@ export class UpdateBlogComponent implements OnInit {
   arrImage: { link: string; id: number; isNew: boolean }[] = [];
   ImageDelete: number[] = [];
   IdBlog:number = this.route.snapshot.params['id'];
-  constructor(private blogsv: BlogService, private form: FormBuilder, private route: ActivatedRoute , private Router:Router) {}
+  constructor(private blogsv: BlogService, private form: FormBuilder, private route: ActivatedRoute , private Router:Router , private toastr: ToastrService) {}
 
   ngOnInit(): void {
     forkJoin([this.LoadBlog()]).subscribe({
@@ -92,12 +92,13 @@ export class UpdateBlogComponent implements OnInit {
 
     this.blogsv.updateblog(this.IdBlog,formData).subscribe({
       next: (res) => {
-        console.log(formData.get('header'));
+        console.log('hoàn tất');
         this.Router.navigate(['/admin/blogs/1']);
-
+        this.toastr.success('Sửa bài viết thành công');
       },
       error: (err) => {
         console.error('Error updating blog', err);
+        this.toastr.error('Sửa bài viết thất bại');
       }
     })
   }

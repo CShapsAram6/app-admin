@@ -4,6 +4,7 @@ import { BlogService } from '../../../services/blog.service';
 import { ApiResponse } from '../../../model/ApiResponse.model';
 import { createblog } from '../../../model/blog.model';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './create-blog.component.scss'
 })
 export class CreateBlogComponent implements OnInit{
-  constructor(private form:FormBuilder , private Blogsv:BlogService, private Router:Router){};
+  constructor(private form:FormBuilder , private Blogsv:BlogService, private Router:Router, private toastr: ToastrService){};
 
   imageUrls: { url: string; index: number; file: File }[] = [];
   isLoadingSumbit: boolean = false;
@@ -77,7 +78,7 @@ export class CreateBlogComponent implements OnInit{
           this.createBlogForm.reset();
           this.imageUrls = [];
           this.Router.navigate(['/admin/blogs/1']);
-
+          this.toastr.success('Tạo bài viết mới thành công');
         } else {
           alert(response.message);
         }
@@ -85,7 +86,8 @@ export class CreateBlogComponent implements OnInit{
       (error) => {
         this.isLoadingSumbit = false;
         console.error('Error creating blog', error);
-        alert('Error creating blog');
+        this.toastr.error('Tạo bài viết thất bại');
+
       }
     );
 

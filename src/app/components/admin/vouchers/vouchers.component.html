@@ -44,18 +44,18 @@
             <button class="btn--tab" [ngClass]="{'btn--active': isActive(-1)}" (click)="GetListVoucherByStatus(-1)">
                 Tất cả
             </button>
-            <button class="btn--tab" [ngClass]="{'btn--active': isActive(1)}" (click)="GetListVoucherByStatus(1)">
-                Đang diễn ra
-            </button>
             <button class="btn--tab" [ngClass]="{'btn--active': isActive(0)}" (click)="GetListVoucherByStatus(0)">
                 Sắp diễn ra
+            </button>
+            <button class="btn--tab" [ngClass]="{'btn--active': isActive(1)}" (click)="GetListVoucherByStatus(1)">
+                Đang diễn ra
             </button>
             <button class="btn--tab" [ngClass]="{'btn--active': isActive(2)}" (click)="GetListVoucherByStatus(2)">
                 Tạm ngưng
             </button>
             <button class="btn--tab" [ngClass]="{'btn--active': isActive(3)}" (click)="GetListVoucherByStatus(3)">
                 Đã kết thúc
-            </button>   
+            </button>
             <button class="btn--tab" [ngClass]="{'btn--active': isActive(4)}" (click)="GetListVoucherByStatus(4)">
                 Đã hủy
             </button>
@@ -70,7 +70,8 @@
             </div>
         </div>
         <div class="col-2">
-            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="openCreateMode()">Tạo khuyễn mãi
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                (click)="openCreateMode()">Tạo khuyễn mãi
                 mới</button>
         </div>
     </div>
@@ -109,18 +110,20 @@
                         <button class="btn btn-sm btn-outline-primary">{{i.min_Order_Value}} VNĐ</button>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="openUpdateMode(i.id)">
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" (click)="openUpdateMode(i.id)">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">
-                            <i class="fa-solid fa-pause"></i>
+                        <button class="btn btn-sm btn-outline-primary" (click)="updateVoucherStatus(i.id, i.status)" >
+
+                            <i [ngClass]="getStatusClass(i.status)"></i>
                         </button>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="far fa-trash-alt"></i> </button>
+                        <button class="btn btn-sm btn-outline-danger" (click)="RemoveVoucher(i.id,i.status)">
+                            <i [ngClass]="getStopClass(i.status)"></i> </button>
                     </td>
                 </tr>
             </tbody>

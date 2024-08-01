@@ -107,6 +107,7 @@
           <button class="btn btn-sm btn-danger fs-6 mb-1"
             *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 3">Giao hàng thất bại</button>
           <button class="btn btn-danger fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 3">Đã hủy</button>
+          <button class="btn btn-danger fs-6 mb-1" *ngIf="ordersDetail?.statusOrder === 2">Đã hủy bởi khách hàng</button>
         </h4>
         <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"></button>
       </div>

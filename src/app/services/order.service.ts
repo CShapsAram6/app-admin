@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment/environment';
-import { orderDetailDto, orderDto, reasonDto } from '../model/order.model';
+import { orderCancelDetailDto, orderCanelDto, orderDetailDto, orderDto, orderRefundDetailDto, orderRefundDto, reasonDto } from '../model/order.model';
 import { ApiResponse } from '../model/ApiResponse.model';
 
 @Injectable({
@@ -38,5 +38,29 @@ export class OrderService {
       reasonCancel: reason
     }
     return this.http.put(`${environment.api}/Order/cancel-delivery-${id}`, reasonDto)
+  }
+
+  getOrderCanel(): Observable<ApiResponse<orderCanelDto[]>> {
+    return this.http.get<ApiResponse<orderCanelDto[]>>(`${environment.api}/Order/order-canel`);
+  }
+
+  getOrderCanelDetail(id: number): Observable<ApiResponse<orderCancelDetailDto>> {
+    return this.http.get<ApiResponse<orderCancelDetailDto>>(`${environment.api}/Order/oder-cancel-detail-${id}`);
+  }
+
+  putConfirmOrderCancel(id: number) {
+    return this.http.put<any>(`${environment.api}/Order/confirm-odercanel-${id}`, {})
+  }
+
+  putResetOrderCancel(id: number) {
+    return this.http.put<any>(`${environment.api}/Order/reset-odercanel-${id}`, {})
+  }
+
+  getOrderRefund(): Observable<ApiResponse<orderRefundDto[]>> {
+    return this.http.get<ApiResponse<orderRefundDto[]>>(`${environment.api}/Order/order-refund`);
+  }
+
+  getOrderRefundDetail(id: number): Observable<ApiResponse<orderRefundDetailDto>> {
+    return this.http.get<ApiResponse<orderRefundDetailDto>>(`${environment.api}/Order/order-refundDetail-${id}`);
   }
 }

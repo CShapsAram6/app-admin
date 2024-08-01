@@ -33,3 +33,13 @@ $color-primary: #696cff;
     align-items: center;
     margin-top: 20px;
 }
+
+.cho-xu-ly {
+    color: #e69a00;
+    border-color: #e69a00;
+}
+.cho-xu-ly:hover {
+    color: #ffffff;
+    background-color: #e69a00;
+    border-color: #e69a00;
+}

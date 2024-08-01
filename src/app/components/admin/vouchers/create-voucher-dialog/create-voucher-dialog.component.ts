@@ -1,16 +1,14 @@
 // create-voucher-dialog.component.ts
 
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { VoucherService } from '../../../../services/voucher.service';
-import { voucherDto } from '../../../../model/voucher.model';
-import { ApiResponse } from '../../../../model/ApiResponse.model';
+
 
 declare var bootstrap: any;
 

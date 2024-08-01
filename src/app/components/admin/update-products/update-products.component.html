@@ -62,15 +62,23 @@
         <input class="form-control d-none" type="file" id="selectFDF" multiple="" accept=".pdf,.doc,.docx"
             (change)="onFileSelectedPDF($event)">
         <div class="d-flex gap-3 flex-wrap">
-            <div class="privew-image position-relative" *ngFor="let item of arrFilesRes">
+            <!-- file res -->
+            <a class="privew-image position-relative" *ngFor="let item of arrFilesRes" (click)="openFile(item.link)"
+                href="https://drive.google.com/file/d/{{item.link}}/view">
                 <div class="">
+                    @if(item.fileType == 'application/pdf'){
                     <i class="fa-regular fa-file-pdf fs-1"></i>
-                    <p class="mt-1"> {{item.link}} </p>
+                    }
+                    @else {
+                    <i class="fa-regular fa-file-word fs-1"></i>
+                    }
+                    <p class="fs-6 mt-1"> {{item.fileName}} </p>
                 </div>
                 <button class="btn btn-sm btn-danger position-absolute btn-max-sm" style="top: 0px; right: 0px;">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-            </div>
+            </a>
+
             <div class="privew-image position-relative" *ngFor="let item of arrFile">
                 <div class="">
                     @if(item.type == 'application/pdf'){
@@ -86,7 +94,7 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <label for="selectFDF" class="form-label privew-image" *ngIf="arrFile.length < 3">
+            <label for="selectFDF" class="form-label privew-image" *ngIf="arrFilesRes.length + arrFile.length < 3">
                 <div class="">
                     Tải lên file đính kèm
                     <p>Tối đa: 3 file</p>
@@ -135,31 +143,7 @@
                             </td>
                             <td>
                                 <div class="">
-                                    <button class="btn btn-sm me-1">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr *ngFor="let item of listSize">
-                            <td>
-                                <div class="">
-                                    <input type="text" class="form-control" placeholder="{{item.size}}" disabled>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="">
-                                    <input type="text" class="form-control" placeholder="{{item.quantity}}" disabled>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="">
-                                    <input type="text" class="form-control" placeholder="{{item.price}}.000 đ" disabled>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="">
-                                    <button class="btn btn-sm me-1" (click)="RemoveSize(item )">
+                                    <button class="btn btn-sm me-1" (click)="RemoveSize(item.id)">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </div>
@@ -231,28 +215,6 @@
                                 </td>
                                 <td>
                                     <div class="">
-                                        <button class="btn btn-sm">
-                                            <i class="fa-solid fa-trash-can">
-
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr *ngFor="let item of arrColorRes">
-                                <td>
-                                    <div class="">
-                                        {{item}}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
-                                        <input type="color" name="" id="" class="form-control-color" [value]="item"
-                                            disabled>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="">
                                         <button class="btn btn-sm" (click)="RemoveColor(item.id)">
                                             <i class="fa-solid fa-trash-can">
 
@@ -261,7 +223,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td>
                                     <div class="">

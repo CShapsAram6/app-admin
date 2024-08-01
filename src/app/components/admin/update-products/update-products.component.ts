@@ -22,6 +22,7 @@ import { forkJoin, tap } from 'rxjs';
 import hljs from 'highlight.js';
 import { ColorsService } from '../../../services/colors.service';
 import { VariantService } from '../../../services/variant.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-products',
@@ -36,7 +37,8 @@ export class UpdateProductsComponent implements OnInit {
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private colorsServices: ColorsService,
-    private variantServices: VariantService
+    private variantServices: VariantService,
+    private toastr: ToastrService
   ) {}
   prompt: string = 'Mô tả về cây thông trồng trong nhà ngắn gọn';
   aiResponse: string = '';
@@ -251,7 +253,7 @@ export class UpdateProductsComponent implements OnInit {
           this.ngOnInit();
           this.imageUrls = [];
           this.arrFile = [];
-          alert('Cập nhật thành công');
+          this.toastr.success('Cập nhật thành công');
         }
       });
   }
@@ -286,27 +288,11 @@ export class UpdateProductsComponent implements OnInit {
       code: this.color,
     };
     this.colorsServices.create(request).subscribe((res) => {
-      console.log(res);
-
       if (res.success) {
         this.ngOnInit();
         this.color = '';
-        return;
+        this.toastr.success('Thêm màu thành công');
       }
-    });
-  }
-
-  // reset
-  cancelForm() {
-    this.isButtonUpdate = false;
-    this.resetForm();
-  }
-  resetForm() {
-    this.formSize.setValue({
-      size: this.sizes[0].toString(),
-      price: '',
-      quantity: '',
-      id: '',
     });
   }
 }

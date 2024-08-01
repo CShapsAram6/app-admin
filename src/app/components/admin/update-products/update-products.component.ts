@@ -20,6 +20,7 @@ import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, tap } from 'rxjs';
 import hljs from 'highlight.js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-products',
@@ -32,7 +33,8 @@ export class UpdateProductsComponent implements OnInit {
     private categorysServices: CategorysService,
     private form: FormBuilder,
     private productsService: ProductsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
   prompt: string = 'Mô tả về cây thông trồng trong nhà ngắn gọn';
   aiResponse: string = '';
@@ -210,6 +212,7 @@ export class UpdateProductsComponent implements OnInit {
 
   SumbitColor() {
     this.arrColor.push(this.color);
+    this.toastr.success('Thêm màu thành công');
   }
 
   // call api create product
@@ -234,7 +237,7 @@ export class UpdateProductsComponent implements OnInit {
           this.isLoadingSumbit = false;
           this.ngOnInit();
           this.imageUrls = [];
-          alert('Cập nhật thành công');
+          this.toastr.success('Sửa thành công');
         }
       });
   }
@@ -260,7 +263,6 @@ export class UpdateProductsComponent implements OnInit {
         this.resetForm();
         return;
       }
-      console.log(response);
     });
   }
 

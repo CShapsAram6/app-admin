@@ -10,7 +10,7 @@ import { environment } from '../environment/environment';
 })
 export class ColorsService {
   constructor(private http: HttpClient) {}
-
+// adadadad
   create(request: colorDtos): Observable<ApiResponse<string>> {
     return this.http.post<ApiResponse<string>>(
       `${environment.api}/Colors/create-color  `,

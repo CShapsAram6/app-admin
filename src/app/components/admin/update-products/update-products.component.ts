@@ -266,6 +266,7 @@ export class UpdateProductsComponent implements OnInit {
     });
   }
 
+  // reset
   cancelForm() {
     this.isButtonUpdate = false;
     this.resetForm();

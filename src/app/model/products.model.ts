@@ -13,6 +13,7 @@ interface productsDtos {
   name: string;
   image: string;
   category: number;
+  status: boolean;
 }
 
 interface productsUpdateDtos {
@@ -44,6 +45,8 @@ interface filesDtos {
   id: number;
   productId: number;
   link: string;
+  fileName: string;
+  fileType: string;
 }
 class productsModel {
   static formRequest(

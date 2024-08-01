@@ -11,7 +11,7 @@ import { productsUpdateDtos } from '../model/products.model';
 })
 export class VariantService {
   constructor(private http: HttpClient) {}
-
+  // cc
   getVariantByIdProduct(
     id: number
   ): Observable<ApiResponse<variantResponse[]>> {

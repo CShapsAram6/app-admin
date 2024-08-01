@@ -4,7 +4,7 @@ import { orderDetailDto, orderDto } from '../../../model/order.model';
 import { tap } from 'rxjs';
 import { ApiResponse } from '../../../model/ApiResponse.model';
 import { FormControl } from '@angular/forms';
-import { log } from 'console';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any; // Khai báo jQuery
 
 
@@ -14,7 +14,7 @@ declare var $: any; // Khai báo jQuery
   styleUrl: './orders.component.scss'
 })
 export class OrdersComponent implements OnInit {
-  constructor (private orderService: OrderService) {}
+  constructor (private orderService: OrderService,private toastr: ToastrService) {}
   ngOnInit(): void {
     this.loadOrders();
   }
@@ -79,12 +79,12 @@ export class OrdersComponent implements OnInit {
       .pipe(
         tap(
           () => {
-            alert('Xác nhận đơn hàng thành công!');
+            this.toastr.success('Xác nhận đơn hàng thành công!');
             this.closeModal()
             this.loadOrders()
           },
           (error) => {
-            alert('Xác nhận đơn hàng thất bại!');
+            this.toastr.error('Xác nhận đơn hàng thất bại!');
             console.error('Lỗi khi xác nhận đơn hàng:', error);
           }
         )
@@ -100,12 +100,12 @@ export class OrdersComponent implements OnInit {
       .pipe(
         tap(
           () => {
-            alert('Hủy đơn hàng thành công!');
+            this.toastr.success('Hủy đơn hàng thành công!');
             this.closeModal()
             this.loadOrders()
           },
           (error) => {
-            alert('Hủy đơn hàng thất bại!');
+            this.toastr.error('Hủy đơn hàng thất bại!');
             console.error('Lỗi khi hủy đơn hàng:', error);
           }
         )
@@ -123,12 +123,12 @@ export class OrdersComponent implements OnInit {
       .pipe(
         tap(
           () => {
-            alert('Xác nhận giao hàng thành công!');
+            this.toastr.success('Xác nhận giao hàng thành công!');
             this.closeModal()
             this.loadOrders()
           },
           (error) => {
-            alert('Xác nhận giao hàng thát bại!');
+            this.toastr.error('Xác nhận giao hàng thát bại!');
             console.error('Lỗi khi xác nhận giao hàng:', error);
           }
         )
@@ -143,12 +143,12 @@ export class OrdersComponent implements OnInit {
         .pipe(
           tap(
             () => {
-              alert('Hủy giao hàng thành công!');
+              this.toastr.success('Hủy giao hàng thành công!');
               this.closeModal()
               this.loadOrders()
             },
             (error) => {
-              alert('Hủy giao hàng thất bại!');
+              this.toastr.error('Hủy giao hàng thất bại!');
               console.error('Lỗi khi hủy giao hàng:', error);
             }
           )

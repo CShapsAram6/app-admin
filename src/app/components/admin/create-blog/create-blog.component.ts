@@ -22,6 +22,11 @@ export class CreateBlogComponent implements OnInit{
     content: ['', Validators.required],
     images: [null],
    });
+   tinyConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table wordcount media',
+  };
 
   ngOnInit(): void {
 
@@ -73,7 +78,6 @@ export class CreateBlogComponent implements OnInit{
       (response: ApiResponse<createblog>) => {
         this.isLoadingSumbit = false;
         if (response.success) {
-          alert('Blog created successfully');
           // handle success scenario, maybe reset the form
           this.createBlogForm.reset();
           this.imageUrls = [];

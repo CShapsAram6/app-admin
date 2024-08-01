@@ -19,6 +19,11 @@ export class UpdateBlogComponent implements OnInit {
   arrImage: { link: string; id: number; isNew: boolean }[] = [];
   ImageDelete: number[] = [];
   IdBlog:number = this.route.snapshot.params['id'];
+  tinyConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table wordcount media',
+  };
   constructor(private blogsv: BlogService, private form: FormBuilder, private route: ActivatedRoute , private Router:Router , private toastr: ToastrService) {}
 
   ngOnInit(): void {

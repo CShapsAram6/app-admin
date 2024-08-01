@@ -25,9 +25,17 @@ export class CreateBlogComponent implements OnInit {
     header: ['', Validators.required],
     content: ['', Validators.required],
     images: [null],
-  });
 
-  ngOnInit(): void {}
+   });
+   tinyConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table wordcount media',
+  };
+
+  ngOnInit(): void {
+
+  }
 
   //lấy thông tin hình ảnh
   onFilesSelected(event: any) {
@@ -75,7 +83,6 @@ export class CreateBlogComponent implements OnInit {
       (response: ApiResponse<createblog>) => {
         this.isLoadingSumbit = false;
         if (response.success) {
-          alert('Blog created successfully');
           // handle success scenario, maybe reset the form
           this.createBlogForm.reset();
           this.imageUrls = [];

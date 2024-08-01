@@ -47,7 +47,7 @@
                         </td>
                         <td>
                             <a class="btn-edit">
-                                {{i.content}}  
+                                {{i.content.length > 150 ? (i.content | slice:0:150) + '...' : i.content}}                            
                             </a>
                         </td>
                         <td>

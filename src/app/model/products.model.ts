@@ -7,7 +7,7 @@ interface productCreateRequest {
   images: File[];
   variants: variant[];
 }
-
+/// con accccc
 interface productsDtos {
   id: number;
   name: string;

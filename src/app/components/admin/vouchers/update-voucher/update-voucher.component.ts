@@ -1,9 +1,10 @@
 // update-voucher.component.ts
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VoucherService } from '../../../../services/voucher.service';
 import { ApiResponse } from '../../../../model/ApiResponse.model';
 import { voucherDto } from '../../../../model/voucher.model';
+import { map, Observable } from 'rxjs';
 declare var bootstrap: any;
 @Component({
   selector: 'app-update-voucher',
@@ -12,11 +13,15 @@ declare var bootstrap: any;
 })
 export class UpdateVoucherComponent implements OnInit, OnChanges {
 
+  @Output() saveSuccess = new EventEmitter< void>();
   @Input() voucherId?: number;
   voucherForm: FormGroup;
+  currentStatus: number = 0;
   constructor(private service: VoucherService, private fb: FormBuilder) {
     this.voucherForm = this.fb.group({
       id: this.voucherId,
+      status:  ['', [Validators.required, Validators.min(0)]],
+
       name: ['', Validators.required],
       timeStart: ['', Validators.required],
       timeEnd: ['', Validators.required],
@@ -24,11 +29,10 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
       discount: ['', [Validators.required, Validators.min(0)]],
       stock: ['', [Validators.required, Validators.min(0)]],
       min_Order_Value: ['', [Validators.required, Validators.min(0)]],
-      maxDiscount: ['', [Validators.required, Validators.min(0)]],
+      max_Discount: ['', [Validators.required, Validators.min(0)]],
     });
     
   }
-
   ngOnChanges(changes: SimpleChanges) {
     if (changes['voucherId'] && this.voucherId) {
       this.loadVoucher(this.voucherId);
@@ -45,6 +49,7 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
       if (voucher) {
         this.voucherForm.patchValue({
           id: this.voucherId,
+          status: voucher.status,
           name: voucher.name,
           timeStart: voucher.timeStart,
           timeEnd: voucher.timeEnd,
@@ -52,7 +57,7 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
           discount: voucher.discount,
           stock: voucher.stock,
           min_Order_Value: voucher.min_Order_Value,
-          maxDiscount: voucher.maxDiscount
+          max_Discount: voucher.max_Discount
         });
       }
     });
@@ -65,6 +70,8 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
 
       this.service.UpdateVoucher(this.voucherForm.value).subscribe(res => {
         this.onCancel();
+        this.saveSuccess.emit();
+
       });
     } else {
       this.voucherForm.markAllAsTouched();

@@ -143,7 +143,7 @@
             </div>
             <div class="modal-body">
                 <app-create-voucher-dialog *ngIf="isCreateMode"></app-create-voucher-dialog>
-                <app-update-voucher *ngIf="!isCreateMode" [voucherId]="seclectedVoucherId"></app-update-voucher>
+                <app-update-voucher *ngIf="!isCreateMode" [voucherId]="seclectedVoucherId" (saveSuccess)="onVoucherSaved()"></app-update-voucher>
             </div>
         </div>
     </div>

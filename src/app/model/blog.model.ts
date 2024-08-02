@@ -21,6 +21,8 @@ interface getblogupdate{
   header: string;
   content: string;  
   images?: imageDtos[];
+  imageacc:string;
+  nameacc:string;  
 }
 interface updateblog{
   id:number;

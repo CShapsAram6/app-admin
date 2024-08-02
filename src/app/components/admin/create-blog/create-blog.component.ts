@@ -6,33 +6,43 @@ import { createblog } from '../../../model/blog.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Component({
   selector: 'app-create-blog',
   templateUrl: './create-blog.component.html',
-  styleUrl: './create-blog.component.scss'
+  styleUrl: './create-blog.component.scss',
 })
-export class CreateBlogComponent implements OnInit{
-  constructor(private form:FormBuilder , private Blogsv:BlogService, private Router:Router, private toastr: ToastrService){};
+export class CreateBlogComponent implements OnInit {
+  constructor(
+    private form: FormBuilder,
+    private Blogsv: BlogService,
+    private Router: Router,
+    private toastr: ToastrService
+  ) {}
 
   imageUrls: { url: string; index: number; file: File }[] = [];
   isLoadingSumbit: boolean = false;
-  createBlogForm = this.form.group({ 
+  createBlogForm = this.form.group({
     header: ['', Validators.required],
     content: ['', Validators.required],
     images: [null],
+
    });
+   tinyConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table wordcount media',
+  };
 
   ngOnInit(): void {
 
   }
 
   //lấy thông tin hình ảnh
-  onFilesSelected(event:any){
+  onFilesSelected(event: any) {
     this.imageUrls = [];
-    const files = FileList = event.target.files;
-    for(let i = 0 ; i< files.length;i++){
-      const file =  files[i];
+    const files = (FileList = event.target.files);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const reader = new FileReader();
       reader.onload = () => {
         this.imageUrls.push({
@@ -49,7 +59,7 @@ export class CreateBlogComponent implements OnInit{
     this.imageUrls = this.imageUrls.filter((_, i) => i !== index);
   }
 
-  CreateBlog(){    
+  CreateBlog() {
     console.log(this.imageUrls);
     if (this.createBlogForm.invalid || this.imageUrls.length < 0) {
       this.createBlogForm.markAllAsTouched();
@@ -73,7 +83,6 @@ export class CreateBlogComponent implements OnInit{
       (response: ApiResponse<createblog>) => {
         this.isLoadingSumbit = false;
         if (response.success) {
-          alert('Blog created successfully');
           // handle success scenario, maybe reset the form
           this.createBlogForm.reset();
           this.imageUrls = [];
@@ -87,9 +96,7 @@ export class CreateBlogComponent implements OnInit{
         this.isLoadingSumbit = false;
         console.error('Error creating blog', error);
         this.toastr.error('Tạo bài viết thất bại');
-
       }
     );
-
   }
 }

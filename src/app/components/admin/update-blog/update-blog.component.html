@@ -44,10 +44,6 @@
           </div>
           <div>
             <label for="content" class="form-label">Nội dung</label>
-            <editor [(ngModel)]="content" id="content" name="content" apiKey="zjaf3225wvypx5bbv8bie6lf440xmz7oynbi61624j3mhn0w" [init]="{
-              plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-              toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-            }"></editor>
             <editor name="Text" [(ngModel)]="content" [init]="tinyConfig" class="text-sm">
             </editor>
             <div id="defaultFormControlHelp" *ngIf="content.length <= 0" class="form-text text-danger">

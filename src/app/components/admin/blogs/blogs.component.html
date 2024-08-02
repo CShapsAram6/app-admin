@@ -24,6 +24,7 @@
                     <tr>
                         <th style="color: white;">STT</th>
                         <th style="color: white;">Hình ảnh</th>
+                        <th style="color: white;">Người tạo</th>
                         <th style="color: white;">Tiêu đề </th>
                         <th style="color: white;">Nội dung</th>
                         <th style="color: white;">Ngày tạo</th>
@@ -41,13 +42,15 @@
                             </div>
                         </td>
                         <td>
+                            {{i.nameacc}}
+                        </td>
+                        <td>
                             <a class="btn-edit">
                                 {{i.header}}  
                           </a>
                         </td>
                         <td>
-                            <a class="btn-edit">
-                                {{i.content.length > 150 ? (i.content | slice:0:150) + '...' : i.content}}                            
+                            <a class="btn-edit" [innerHTML]="i.content.length > 40 ? (i.content | slice:0:40) + '...' : i.content">                                                
                             </a>
                         </td>
                         <td>

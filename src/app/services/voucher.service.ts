@@ -22,12 +22,15 @@ export class VoucherService {
     getVoucherById(id: number): Observable<ApiResponse<voucherDto>> {
         return this.http.get<ApiResponse<voucherDto>>(`${environment.api}/Voucher/get-voucher-by-id?id=${id}`);
     }
-    UpdateVoucher(data: any){
+    UpdateVoucher(data: any) {
         return this.http.put(`${environment.api}/Voucher/update-voucher`, data)
     }
-   
-  UpdateStatusVoucherById(id: number, status: number) {
-    return this.http.patch(`${environment.api}/Voucher/update-status?id=${id}&status=${status}`, {});
-  }
+
+    UpdateStatusVoucherById(id: number, status: number) {
+        return this.http.patch(`${environment.api}/Voucher/update-status?id=${id}&status=${status}`, {});
+    }
+    SearchVoucher(search: string, status: number): Observable<ApiResponse<voucherDto[]>> {
+        return this.http.get<ApiResponse<voucherDto[]>>(`${environment.api}/Voucher/search-vouchers?name=${search}&status=${status}`,{});
+      }
 
 }

@@ -65,7 +65,7 @@
         <div class="col-4">
             <div class="group--search">
                 <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
-                    aria-describedby="defaultFormControlHelp">
+                    aria-describedby="defaultFormControlHelp" (input)="onSearch($event)">
                 <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
@@ -92,8 +92,8 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0 mt-4">
-                <tr *ngFor="let i of ListVoucher">
-                    <td>{{i.id}}</td>
+                <tr *ngFor="let i of ListVoucher; let idx= index" >
+                    <td>{{idx+1}}</td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary">{{i.name}}</button>
                     </td>

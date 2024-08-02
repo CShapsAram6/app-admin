@@ -3,6 +3,7 @@ import { voucherDto } from '../../../model/voucher.model';
 import { VoucherService } from '../../../services/voucher.service';
 import { ApiResponse } from '../../../model/ApiResponse.model';
 import { UpdateVoucherComponent } from './update-voucher/update-voucher.component';
+import { debounce, debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-vouchers',
@@ -19,6 +20,11 @@ export class VouchersComponent implements OnInit {
   seclectedVoucherId?: number;
   currentStatus: number = 0;
   flag: boolean = true;
+  ListVoucher: voucherDto[] = [];
+
+  searchSubject: Subject<string> = new Subject<string>();
+
+
   openCreateMode() {
     this.isCreateMode = true;
     this.modalTitle = 'Thêm khuyến mãi';
@@ -32,8 +38,20 @@ export class VouchersComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetListVoucherByStatus(this.selectedStatus);
+
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchText => {
+      if (searchText.trim() === '') {
+        this.GetListVoucherByStatus(this.selectedStatus);
+      } else {
+        this.service.SearchVoucher(searchText,this.selectedStatus).subscribe((response: ApiResponse<voucherDto[]>) => {
+          this.ListVoucher = response.data;
+        });
+      }
+    });
   }
-  ListVoucher: voucherDto[] = [];
 
   RemoveVoucher(voucherId: number, status: number) {
     const newStatus = status === 0 ? 4 : 3;
@@ -60,13 +78,15 @@ export class VouchersComponent implements OnInit {
       case 2:
         newStatus = 1;
         break;
+      case 4:
+        newStatus = 0;
+        break;
       default:
         newStatus = 1;
     }
 
     this.service.UpdateStatusVoucherById(voucherId, newStatus).subscribe({
       next: (response) => {
-        console.log(newStatus);
         this.GetListVoucherByStatus(this.selectedStatus);
       },
       error: (err) => {
@@ -81,6 +101,11 @@ export class VouchersComponent implements OnInit {
     this.service.getDataByStatus(status).subscribe((vouchers: ApiResponse<voucherDto[]>) => {
       this.ListVoucher = vouchers.data;
     });
+  }
+  onSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchSubject.next(input.value);
+
   }
   getStatus(status: number): string {
     switch (status) {
@@ -109,6 +134,8 @@ export class VouchersComponent implements OnInit {
         return 'fa-solid fa-stop';
       case 2:
         return 'fa-solid fa-stop';
+      case 4:
+        return 'fa fa-trash-alt';
       default:
         return 'fa-solid fa-question';
     }
@@ -123,6 +150,8 @@ export class VouchersComponent implements OnInit {
         return 'fa-solid fa-play';
       case 3:
         return 'fa-solid fa-stop';
+      case 4:
+        return 'fa-solid fa-rotate-right ';
       default:
         return 'fa-solid fa-question';
     }

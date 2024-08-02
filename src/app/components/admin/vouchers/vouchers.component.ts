@@ -126,6 +126,22 @@ export class VouchersComponent implements OnInit {
   isActive(status: number): boolean {
     return this.selectedStatus === status;
   }
+  getButtonStatus(status:number): string{
+    switch(status){
+      case 0:
+        return 'btn btn-primary btn-rounded'
+      case 1:
+        return 'btn btn-warning btn-rounded'
+      case 2:
+        return 'btn btn-secondary btn-rounded'
+      case 3:
+        return 'btn btn-success btn-rounded'
+      case 4: 
+      return 'btn btn-danger btn-rounded'
+      default:
+      return 'btn btn-info btn-rounded'
+    }
+  }
   getStopClass(status: number): string {
     switch (status) {
       case 0:

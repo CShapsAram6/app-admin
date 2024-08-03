@@ -1,0 +1,173 @@
+<section>
+  <!-- infor total -->
+  <div>
+    <div class="row g-3">
+      <div class="col-xl-3">
+        <div class="card">
+          <div class="card-body d-flex">
+            <div class="icon bg-primary d-flex align-items-center justify-content-center rounded-2"
+              style="width: 50px; height: 50px;">
+              <i class="fa-solid fa-user fs-4" style="color: #ffffff;"></i>
+            </div>
+            <div class="title ms-3">
+              <p class="mb-0">Khách hàng</p>
+              <h4 class="mb-0">100</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3">
+        <div class="card">
+          <div class="card-body d-flex">
+            <div class="icon bg-primary d-flex align-items-center justify-content-center rounded-2"
+              style="width: 50px; height: 50px;">
+              <i class="fa-solid fa-truck-fast fs-4" style="color: #ffffff;"></i>
+            </div>
+            <div class="title ms-3">
+              <p class="mb-0">Tổng số sản phẩm đã bán</p>
+              <h4 class="mb-0">100</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3">
+        <div class="card">
+          <div class="card-body d-flex">
+            <div class="icon bg-primary d-flex align-items-center justify-content-center rounded-2"
+              style="width: 50px; height: 50px;">
+              <i class="fa-solid fa-calendar-check fs-4" style="color: #ffffff;"></i>
+            </div>
+            <div class="title ms-3">
+              <p class="mb-0">Tổng số đơn hàng đã đặt</p>
+              <h4 class="mb-0">2000</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3">
+        <div class="card">
+          <div class="card-body d-flex">
+            <div class="icon bg-primary d-flex align-items-center justify-content-center rounded-2"
+              style="width: 50px; height: 50px;">
+              <i class="fa-solid fa-dong-sign fs-4" style="color: #ffffff;"></i>
+            </div>
+            <div class="title ms-3">
+              <p class="mb-0">Doanh thu</p>
+              <h4 class="mb-0">200.000.000đ</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Chart -->
+  <div>
+    <div class="row g-3 mt-3">
+      <div class="col-xl-8">
+        <div class="card" style="height: 470px;">
+          <div class="ps-4 pt-4 pb-3 pe-4 position-relative">
+            <div class="position-absolute end-0 me-4" style="margin-top: -10px;">
+              <div class="dropdown float-end">
+                <button class="btn border dropdown-toggle p-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Năm
+                </button>
+                <ul class="dropdown-menu" style="min-width: 35px;">
+                  <li><a class="dropdown-item"  >2023</a></li>
+                  <li><a class="dropdown-item" >2024</a></li>
+                </ul>
+              </div>
+              <div class="dropdown float-end me-3">
+                <button class="btn border dropdown-toggle p-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Tháng
+                </button>
+                <ul class="dropdown-menu" style="min-width: 35px;">
+                  <li><a class="dropdown-item"  >1</a></li>
+                  <li><a class="dropdown-item" >2</a></li>
+                  <li><a class="dropdown-item" >3</a></li>
+                  <li><a class="dropdown-item" >4</a></li>
+                  <li><a class="dropdown-item" >5</a></li>
+                  <li><a class="dropdown-item" >6</a></li>
+                  <li><a class="dropdown-item" >7</a></li>
+                  <li><a class="dropdown-item" >8</a></li>
+                  <li><a class="dropdown-item" >9</a></li>
+                  <li><a class="dropdown-item" >10</a></li>
+                  <li><a class="dropdown-item" >11</a></li>
+                  <li><a class="dropdown-item" >12</a></li>
+                </ul>
+              </div>
+            </div>
+            <canvas id="canvas" style="height: 400px;">{{chartBar}}</canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card" style="height: 470px;">
+          <p class="mb-0 ps-3 mt-3 fs-4"><i class="fa-solid fa-crown" style="color: #FFD43B;"></i> Top sản phẩm đạt doanh thu cao nhất</p>
+          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center">
+            <img src="https://lh3.googleusercontent.com/d/1KyxF4hTIEAuW4AXILTh1hYvYUIEQmJTy=s100"
+              class="rounded-2 border border-1" style="height: 80px; width: 80px;" alt="">
+            <div class="info-product ps-3">
+              <p class="fw-bold mb-1">Vinkems tilefix</p>
+              <span class="bg-primary text-white p-1 rounded">#02 </span> <span
+                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: 200</span>
+            </div>
+            <div class="price-product ms-auto fw-bold mt-4 fs-6">200.000.000đ</div>
+          </div>
+          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center">
+            <img src="https://lh3.googleusercontent.com/d/1KyxF4hTIEAuW4AXILTh1hYvYUIEQmJTy=s100"
+              class="rounded-2 border border-1" style="height: 80px; width: 80px;" alt="">
+            <div class="info-product ps-3">
+              <p class="fw-bold mb-1">Vinkems tilefix</p>
+              <span class="bg-primary text-white p-1 rounded">#02 </span> <span
+                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: 200</span>
+            </div>
+            <div class="price-product ms-auto fw-bold mt-4 fs-6">200.000.000đ</div>
+          </div>
+          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center">
+            <img src="https://lh3.googleusercontent.com/d/1KyxF4hTIEAuW4AXILTh1hYvYUIEQmJTy=s100"
+              class="rounded-2 border border-1" style="height: 80px; width: 80px;" alt="">
+            <div class="info-product ps-3">
+              <p class="fw-bold mb-1">Vinkems tilefix</p>
+              <span class="bg-primary text-white p-1 rounded">#02 </span> <span
+                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: 200</span>
+            </div>
+            <div class="price-product ms-auto fw-bold mt-4 fs-6">200.000.000đ</div>
+          </div>
+          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center">
+            <img src="https://lh3.googleusercontent.com/d/1KyxF4hTIEAuW4AXILTh1hYvYUIEQmJTy=s100"
+              class="rounded-2 border border-1" style="height: 80px; width: 80px;" alt="">
+            <div class="info-product ps-3">
+              <p class="fw-bold mb-1">Vinkems tilefix</p>
+              <span class="bg-primary text-white p-1 rounded">#02 </span> <span
+                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: 200</span>
+            </div>
+            <div class="price-product ms-auto fw-bold mt-4 fs-6">200.000.000đ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart line -->
+   <div>
+    <div class="row g-3 mt-1">
+      <div class="col-xl-8">
+        <div class="card p-4" style="height: 300px;">
+          <canvas id="canvas2" style="width: 100%; height: 100%;">{{chartLine}}</canvas>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card" style="height: 300px;">
+          <ul class="list-group list-group-flush p-3 mt-1">
+            <li class="list-group-item"><button class="bg-warning border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn chờ xác nhận <span class="float-end fw-bold">2000 đơn</span></li>
+            <li class="list-group-item"><button class="bg-info border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn đang giao<span class="float-end fw-bold">2000 đơn</span></li>
+            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn bị hủy bởi khách <span class="float-end fw-bold">2000 đơn</span></li>
+            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn bị hủy bởi Admin <span class="float-end fw-bold">2000 đơn</span></li>
+            <li class="list-group-item"><button class="bg-success border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn giao thành công <span class="float-end fw-bold">2000 đơn</span></li>
+            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn giao thất bại <span class="float-end fw-bold">2000 đơn</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+   </div>
+</section>

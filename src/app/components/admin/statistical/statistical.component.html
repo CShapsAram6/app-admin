@@ -11,7 +11,7 @@
             </div>
             <div class="title ms-3">
               <p class="mb-0">Khách hàng</p>
-              <h4 class="mb-0">100</h4>
+              <h4 class="mb-0">{{statistical.totalUser}}</h4>
             </div>
           </div>
         </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="title ms-3">
               <p class="mb-0">Tổng số sản phẩm đã bán</p>
-              <h4 class="mb-0">100</h4>
+              <h4 class="mb-0">{{statistical.totalProductSell}}</h4>
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
             </div>
             <div class="title ms-3">
               <p class="mb-0">Tổng số đơn hàng đã đặt</p>
-              <h4 class="mb-0">2000</h4>
+              <h4 class="mb-0">{{statistical.totalOrder}}</h4>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
             </div>
             <div class="title ms-3">
               <p class="mb-0">Doanh thu</p>
-              <h4 class="mb-0">200.000.000đ</h4>
+              <h4 class="mb-0">{{(statistical.totalStatistical*1000).toLocaleString()}}₫</h4>
             </div>
           </div>
         </div>
@@ -69,30 +69,30 @@
             <div class="position-absolute end-0 me-4" style="margin-top: -10px;">
               <div class="dropdown float-end">
                 <button class="btn border dropdown-toggle p-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Năm
+                  Năm: {{selectedYear}}
                 </button>
                 <ul class="dropdown-menu" style="min-width: 35px;">
-                  <li><a class="dropdown-item"  >2023</a></li>
-                  <li><a class="dropdown-item" >2024</a></li>
+                  <li><a class="dropdown-item" (click)="onYearSelect(2023)">2023</a></li>
+                  <li><a class="dropdown-item" (click)="onYearSelect(2024)">2024</a></li>
                 </ul>
               </div>
               <div class="dropdown float-end me-3">
                 <button class="btn border dropdown-toggle p-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Tháng
+                  Tháng: {{selectedMonth}}
                 </button>
                 <ul class="dropdown-menu" style="min-width: 35px;">
-                  <li><a class="dropdown-item"  >1</a></li>
-                  <li><a class="dropdown-item" >2</a></li>
-                  <li><a class="dropdown-item" >3</a></li>
-                  <li><a class="dropdown-item" >4</a></li>
-                  <li><a class="dropdown-item" >5</a></li>
-                  <li><a class="dropdown-item" >6</a></li>
-                  <li><a class="dropdown-item" >7</a></li>
-                  <li><a class="dropdown-item" >8</a></li>
-                  <li><a class="dropdown-item" >9</a></li>
-                  <li><a class="dropdown-item" >10</a></li>
-                  <li><a class="dropdown-item" >11</a></li>
-                  <li><a class="dropdown-item" >12</a></li>
+                  <li><a class="dropdown-item"  (click)="onMonthSelect(1)">1</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(2)">2</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(3)">3</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(4)">4</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(5)">5</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(6)">6</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(7)">7</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(8)">8</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(9)">9</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(10)">10</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(11)">11</a></li>
+                  <li><a class="dropdown-item" (click)="onMonthSelect(12)">12</a></li>
                 </ul>
               </div>
             </div>
@@ -103,45 +103,15 @@
       <div class="col-xl-4">
         <div class="card" style="height: 470px;">
           <p class="mb-0 ps-3 mt-3 fs-4"><i class="fa-solid fa-crown" style="color: #FFD43B;"></i> Top sản phẩm đạt doanh thu cao nhất</p>
-          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center">
-            <img src="https://lh3.googleusercontent.com/d/1KyxF4hTIEAuW4AXILTh1hYvYUIEQmJTy=s100"
+          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center" *ngFor="let item of topProduct">
+            <img src="{{item.imageLink}}"
               class="rounded-2 border border-1" style="height: 80px; width: 80px;" alt="">
             <div class="info-product ps-3">
-              <p class="fw-bold mb-1">Vinkems tilefix</p>
-              <span class="bg-primary text-white p-1 rounded">#02 </span> <span
-                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: 200</span>
+              <p class="fw-bold mb-1">{{item.productName}}</p>
+              <span class="bg-primary text-white p-1 rounded">#0{{item.productId}} </span> <span
+                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: {{item.totalQuantitySold}}</span>
             </div>
-            <div class="price-product ms-auto fw-bold mt-4 fs-6">200.000.000đ</div>
-          </div>
-          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center">
-            <img src="https://lh3.googleusercontent.com/d/1KyxF4hTIEAuW4AXILTh1hYvYUIEQmJTy=s100"
-              class="rounded-2 border border-1" style="height: 80px; width: 80px;" alt="">
-            <div class="info-product ps-3">
-              <p class="fw-bold mb-1">Vinkems tilefix</p>
-              <span class="bg-primary text-white p-1 rounded">#02 </span> <span
-                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: 200</span>
-            </div>
-            <div class="price-product ms-auto fw-bold mt-4 fs-6">200.000.000đ</div>
-          </div>
-          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center">
-            <img src="https://lh3.googleusercontent.com/d/1KyxF4hTIEAuW4AXILTh1hYvYUIEQmJTy=s100"
-              class="rounded-2 border border-1" style="height: 80px; width: 80px;" alt="">
-            <div class="info-product ps-3">
-              <p class="fw-bold mb-1">Vinkems tilefix</p>
-              <span class="bg-primary text-white p-1 rounded">#02 </span> <span
-                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: 200</span>
-            </div>
-            <div class="price-product ms-auto fw-bold mt-4 fs-6">200.000.000đ</div>
-          </div>
-          <div class="card-product ps-3 pt-3 pe-3 pb-1 d-flex align-items-center">
-            <img src="https://lh3.googleusercontent.com/d/1KyxF4hTIEAuW4AXILTh1hYvYUIEQmJTy=s100"
-              class="rounded-2 border border-1" style="height: 80px; width: 80px;" alt="">
-            <div class="info-product ps-3">
-              <p class="fw-bold mb-1">Vinkems tilefix</p>
-              <span class="bg-primary text-white p-1 rounded">#02 </span> <span
-                class="bg-primary text-white ms-3 p-1 fs-6 rounded">Đã bán: 200</span>
-            </div>
-            <div class="price-product ms-auto fw-bold mt-4 fs-6">200.000.000đ</div>
+            <div class="price-product ms-auto fw-bold mt-4 fs-6">{{(item.totalRevenue*1000).toLocaleString()}}₫</div>
           </div>
         </div>
       </div>
@@ -159,12 +129,12 @@
       <div class="col-xl-4">
         <div class="card" style="height: 300px;">
           <ul class="list-group list-group-flush p-3 mt-1">
-            <li class="list-group-item"><button class="bg-warning border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn chờ xác nhận <span class="float-end fw-bold">2000 đơn</span></li>
-            <li class="list-group-item"><button class="bg-info border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn đang giao<span class="float-end fw-bold">2000 đơn</span></li>
-            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn bị hủy bởi khách <span class="float-end fw-bold">2000 đơn</span></li>
-            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn bị hủy bởi Admin <span class="float-end fw-bold">2000 đơn</span></li>
-            <li class="list-group-item"><button class="bg-success border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn giao thành công <span class="float-end fw-bold">2000 đơn</span></li>
-            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn giao thất bại <span class="float-end fw-bold">2000 đơn</span></li>
+            <li class="list-group-item"><button class="bg-warning border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn chờ xác nhận <span class="float-end fw-bold">{{totalOrder.order1}} đơn</span></li>
+            <li class="list-group-item"><button class="bg-info border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn đang giao<span class="float-end fw-bold">{{totalOrder.order2}} đơn</span></li>
+            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn bị hủy bởi khách <span class="float-end fw-bold">{{totalOrder.order3}} đơn</span></li>
+            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn bị hủy bởi Admin <span class="float-end fw-bold">{{totalOrder.order4}} đơn</span></li>
+            <li class="list-group-item"><button class="bg-success border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn giao thành công <span class="float-end fw-bold">{{totalOrder.order5}} đơn</span></li>
+            <li class="list-group-item"><button class="bg-danger border-0 rounded-circle" style="height: 15px; width: 15px;"></button> Đơn giao thất bại <span class="float-end fw-bold">{{totalOrder.order6}} đơn</span></li>
           </ul>
         </div>
       </div>

@@ -158,6 +158,7 @@ const _routes: Routes = [
     CreateBlogComponent,
     UpdateBlogComponent,
     UpdateVoucherComponent,
+    StatisticalComponent,
   ],
   imports: [
     BrowserModule,

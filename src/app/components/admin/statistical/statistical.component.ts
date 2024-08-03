@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart, registerables} from 'chart.js';
+import { StatisticalService } from '../../../services/statistical.service';
+import { TopProductDto } from '../../../model/statistical.model';
 Chart.register(...registerables);
 @Component({
   selector: 'app-statistical',
@@ -7,7 +9,7 @@ Chart.register(...registerables);
   styleUrl: './statistical.component.scss'
 })
 export class StatisticalComponent implements OnInit {
-  constructor() { }
+  constructor(private statisticalService: StatisticalService) { }
   public configBar: any = {
     type: 'bar',
     data: {
@@ -75,11 +77,77 @@ export class StatisticalComponent implements OnInit {
 
   chartBar: any;
   chartLine: any;
+  statistical: any;
+  selectedYear: number = new Date().getFullYear();
+  selectedMonth: number | null = null;
+  topProduct: TopProductDto[] = [];
+  totalOrder: any;
   ngOnInit(): void {
-
+    this.loadData();
+    this.loadRevenue(this.selectedYear);
+    this.loadTopProduct();
+    this.loadRatioOrder();
+    this.loadTotalOrder();
   }
   ngAfterViewInit(): void {
     this.chartBar = new Chart('canvas', this.configBar);
     this.chartLine = new Chart('canvas2', this.configLine);
+  }
+  loadData() {
+    this.statisticalService.getData().subscribe(res => {
+      this.statistical = res.data;
+    })
+  }
+  onYearSelect(year: number) {
+    this.selectedYear = year;
+    this.selectedMonth = null; // Bỏ chọn tháng khi chọn năm mới
+    this.loadRevenue(year); // Tải dữ liệu theo năm
+  }
+
+  onMonthSelect(month: number) {
+    this.selectedMonth = month;
+    this.loadRevenueMonthYear(this.selectedYear, this.selectedMonth);
+  }
+  loadRevenue(year: number) {
+    this.statisticalService.getRevenue(year).subscribe(res => {
+      this.configBar.data.labels = res.data.month;
+      this.configBar.data.datasets[0].data = res.data.quantitySold;
+      this.configBar.data.datasets[1].data = res.data.revenue;
+      this.chartBar.update();
+      console.log(res);
+    })
+  }
+
+  loadRevenueMonthYear(year: number, month: number) {
+    this.statisticalService.getRevenueByMonthYear(year, month).subscribe(res => {
+      this.configBar.data.labels = res.data.month;
+      this.configBar.data.datasets[0].data = res.data.quantitySold;
+      this.configBar.data.datasets[1].data = res.data.revenue;
+      this.chartBar.update();
+      console.log(res);
+    })
+  }
+
+  loadTopProduct() {
+    this.statisticalService.getTopProduct().subscribe(res => {
+      this.topProduct = res.data;
+      console.log(this.topProduct);
+    })
+  }
+
+  loadRatioOrder() {
+    this.statisticalService.getRatioOrder().subscribe(res => {
+      this.configLine.data.datasets[0].data = res.data.orderComplete;
+      this.configLine.data.datasets[1].data = res.data.orderCancel;
+      this.chartLine.update();
+      console.log(res.data);
+    })
+  }
+
+  loadTotalOrder() {
+    this.statisticalService.getTotalOrder().subscribe(res => {
+      this.totalOrder = res.data;
+      console.log(res);
+    })
   }
 }

@@ -35,6 +35,7 @@ import {
 import { UpdateVoucherComponent } from './vouchers/update-voucher/update-voucher.component';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr, ToastrModule } from 'ngx-toastr';
+import { StatisticalComponent } from './statistical/statistical.component';
 
 const _routes: Routes = [
   {
@@ -126,8 +127,12 @@ const _routes: Routes = [
         path:'updatevoucher/:id',
         component:UpdateVoucherComponent,
         title:'Sửa voucher'
-      }
-
+      },
+      {
+        path:'statistical',
+        component:StatisticalComponent,
+        title:'Thống kê'
+      },
     ],
   },
 ];
@@ -162,7 +167,7 @@ const _routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     EditorModule,
-    EditorComponent,    
+    EditorComponent,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
   ],

@@ -39,4 +39,12 @@ export class CategorysService {
   catehaspro(id: number): Observable<any> {
     return this.http.get<boolean>(`${environment.api}/Category/hasPro-` + id);
   }
+
+  SearchCateByName(name:String):Observable<ApiResponse<categoryDtos[]>>{
+    return this.http.post<ApiResponse<categoryDtos[]>>(`${environment.api}/Category/search-cate`, JSON.stringify(name), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
 }

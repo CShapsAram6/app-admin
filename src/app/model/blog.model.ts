@@ -37,12 +37,7 @@ interface imageDtos {
   isActive: boolean;
 }
 
-interface pageBlogDtos {
-  page: number;
-  name: string;
-}
-
 
 // up git
 
-export { blogDto, createblog,updateblog,getblogupdate,pageBlogDtos };
+export { blogDto, createblog,updateblog,getblogupdate };

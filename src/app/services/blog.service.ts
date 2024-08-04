@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../model/ApiResponse.model';
-import { blogDto, createblog, pageBlogDtos, updateblog } from '../model/blog.model';
+import { blogDto, createblog, updateblog } from '../model/blog.model';
 
 @Injectable({
   providedIn: 'root',
@@ -41,14 +41,6 @@ export class BlogService {
       `${environment.api}/Blog/deleteblog-` + id
     );
   }
-  SearchBlogName(request: pageBlogDtos
-  ): Observable<ApiResponse<blogDto[]>> {
-    return this.http.post<ApiResponse<blogDto[]>>(
-      `${environment.api}/Blog/search-blog`,
-      request
-    );
-  }
-
 }
 
 // cc

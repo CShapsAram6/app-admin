@@ -14,6 +14,7 @@ interface orderDetailDto {
   total: number,
   feeDelivery: number,
   discount: number,
+  nameVoucher: string,
   timeCreate: string,
   statusOrder: number,
   statusDelivery: number,
@@ -53,7 +54,7 @@ interface orderCanelDto {
   voucherId: number,
   customerName: string,
   reasonCancel : reasonCancel
-} 
+}
 
 
 interface orderCancelDetailDto {
@@ -103,7 +104,7 @@ interface orderRefundDto {
   voucherId: number,
   customerName: string,
   reasonRefund : reasonRefund
-} 
+}
 
 
 interface orderRefundDetailDto {

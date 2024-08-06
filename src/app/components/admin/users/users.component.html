@@ -1,1 +1,109 @@
-<p>users works!</p>
+<div class="card p-4">
+    <div class="d-flex justify-content-between">
+        <div class="col-6">
+            <div class="group--search">
+                <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
+                    aria-describedby="defaultFormControlHelp" [formControl]="inputControl">
+                <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+ @if(users.length > 0){
+    <div class="card mt-4">
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="color: white;">STT</th>
+                        <th style="color: white;">Hình ảnh</th>
+                        <th style="color: white;">Họ và tên</th>
+                        <th style="color: white;">Tên tài khoản </th>
+                        <th style="color: white;">Email</th>
+                        <th style="color: white;">Số điện thoại</th>
+                        <th style="color: white;">Địa chỉ</th>
+                        <th style="color: white;">Ngày tạo</th>
+                        <th style="color: white;">Trạng thái</th>
+                        <th style="color: white;"></th>
+
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0 mt-4">
+                    <tr *ngFor="let i of users; let stt = index" >
+                        <td>
+                            {{stt+1}}
+                        </td>
+                        <td>
+                            <div class="btn--zoom avatar">
+                                <img src="https://assets.website-files.com/6371f9c50ce0bd588f4fa954/6385974f39e0d684a66a812a_003-man-1.png"
+                                *ngIf="i.linkAvatar == null" alt="">
+                                <img src="{{i.linkAvatar}}" *ngIf="i.linkAvatar != null">
+                            </div>
+                        </td>
+                        <td>                            
+                            {{i.fullName}}
+                        </td>
+                        <td>
+                            <a class="btn-edit">
+                                {{i.userName}}  
+                          </a>
+                        </td>
+                        <td>      
+                            @if(i.email == null){
+                                
+                            }@else{
+                                {{i.email.length > 25 ? (i.email | slice:0:25) + '...' : i.email}}
+
+                            }                        
+                        </td>
+                        <td>
+                            {{i.phone}}
+                        </td>
+                        <td>
+                            @if(i.address == null){
+                                
+                            }@else{
+                                {{i.address.length > 25 ? (i.address | slice:0:25) + '...' : i.address}}
+
+                            }
+                        </td>
+                        <td>
+                            <a class="btn-edit">
+                                {{ i.dateCreate | date: 'dd/MM/yyyy' }}                            
+                            </a>
+                        </td>
+                        <td> 
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [checked]="i.status" (click)="updateStatus(i.id, $event)">
+                              </div>
+                        </td>  
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" [routerLink]="['/admin/updateblog', i.id]">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        </td>                      
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ }@else{
+    <div class="d-flex justify-content-center mt-5">
+        <h2>
+            <i class="fa-solid fa-filter-circle-xmark"></i>
+            Không tìm thấy bài viết
+        </h2>
+    </div>
+ }
+ <div class="card mt-4 pt-3">
+    <div class="d-flex justify-content-center align-items-center">
+        <ul class="pagination">
+            <li class="page-item" *ngFor="let item of numberPages" routerLinkActive="active">
+                <a class="page-link" [routerLink]="['/admin/users/' + item]">
+                    {{item}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

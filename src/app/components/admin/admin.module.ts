@@ -87,7 +87,7 @@ const _routes: Routes = [
         title: 'Quản lý vouchers',
       },
       {
-        path: 'users',
+        path: 'users/:page',
         component: UsersComponent,
         title: 'Quản lý người dùng',
       },

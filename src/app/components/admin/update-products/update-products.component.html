@@ -142,11 +142,9 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="">
-                                    <button class="btn btn-sm me-1" (click)="RemoveSize(item.id)">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </button>
-                                </div>
+                                <button class="btn btn-sm btn-outline-primary" (click)="IsMountFormVariant(item)">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
                             </td>
                         </tr>
                         <tr>
@@ -173,10 +171,18 @@
                             </td>
                             <td>
                                 <div class="">
+                                    @if(!isButtonUpdate){
                                     <button class="btn btn-sm btn-outline-primary" (click)="OnSumbit()"
                                         [disabled]="formSize.invalid">
                                         <i class="fa-solid fa-check"></i>
                                     </button>
+                                    }
+                                    @else {
+                                    <button class="btn btn-sm btn-outline-primary" (click)="SaveChangeVatiant()"
+                                        [disabled]="formSize.invalid">
+                                        Luu
+                                    </button>
+                                    }
                                 </div>
                             </td>
                         </tr>

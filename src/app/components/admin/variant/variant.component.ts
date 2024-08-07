@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductsService } from '../../../services/products.service';
 import { variant, variantResponse } from '../../../model/category.model';
 import { FormBuilder, Validators } from '@angular/forms';
 import { productsModel } from '../../../model/products.model';
+import { VariantService } from '../../../services/variant.service';
 
 @Component({
   selector: 'app-variant',
@@ -12,10 +12,10 @@ import { productsModel } from '../../../model/products.model';
 })
 export class VariantComponent implements OnInit {
   constructor(
-    private productsService: ProductsService,
+    private productsService: VariantService,
     private route: ActivatedRoute,
     private form: FormBuilder
-  ) {}
+  ) { }
   arrVariant: variantResponse[] = [];
   transFormCreate: string = 'translateX(-100%)';
   formVariant = this.form.group({

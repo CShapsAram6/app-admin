@@ -77,10 +77,7 @@
             <thead class="table-dark">
                 <tr>
                     <th style="color: white;">STT</th>
-                    <th style="color: white;">Hình ảnh</th>
-                    <th style="color: white;">Tên</th>
-                    <th style="color: white;">Số lượng</th>
-                    <th style="color: white;">Đơn giá</th>
+                    <th style="color: white;">Sản phẩm</th>
                     <th style="color: white;">Kích thước</th>
                     <th style="color: white;">Trạng thái</th>
                     <th style="color: white;"></th>
@@ -91,44 +88,59 @@
                     <td>
                         {{i + 1}}
                     </td>
-                    <td>
-                        <div class="btn--zoom avatar">
-                            <img src="{{item.image + '=s100'}}">
+                    <td style="width: 24rem; overflow: hidden;">
+                        <div class="d-flex gap-3 align-items-center">
+                            <img src="{{item.image + '=s55'}}" style="object-fit: cover;">
+                            <div class="">
+                                <p class="m-0 fs-5 btn-edit">
+                                    {{item.name}}
+                                </p>
+                                <div class="d-flex gap-2 btn-edit">
+                                    <p class=" fs-6 m-0 fw-line">
+                                        {{item.variant[selectedSizeIndices[i]].price | currency:'
+                                        ':'symbol':'1.0-0'}},000đ
+                                    </p>
+                                    <p class="text-primary fw-bold">Còn
+                                        {{item.variant[selectedSizeIndices[i]].quantity}}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </td>
-                    <td>
-                        <a class="btn-edit">
-                            {{item.name}}
-                        </a>
-                    </td>
-                    <td>
-                        <a class="btn-edit">
-                        </a>
-                    </td>
-                    <td>
-                        <a class="btn-edit">
-                            100.000 đ
-                        </a>
-                    </td>
-                    <td>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-outline-warning"
-                                (click)="isShow = true; create = false; isVariant = true"
-                                [routerLink]="['variant/'+ item.id]">
-                                <i class="fa-solid fa-eye"></i>
+                    <td style="width: 20rem; overflow: hidden">
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                            <button class="btn btn-sm btn-variant"
+                                *ngFor="let variant of item.variant; let variantIndex = index"
+                                [class.btn-secondary]="selectedSizeIndices[i] === variantIndex"
+                                (click)="selectedSizeIndices[i] = variantIndex">
+                                Size {{StringSize(variant.size)}}
                             </button>
                         </div>
                     </td>
                     <td>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                        </div>
+                        @if (item.variant[selectedSizeIndices[i]].status == false) {
+                        <button class="btn btn-sm btn-danger"
+                            (click)="UpdateStatusVariant(item.variant[selectedSizeIndices[i]].id)">
+                            Tạm dừng
+                        </button>
+                        }
+                        @else {
+                        <button class="btn btn-sm btn-primary"
+                            (click)="UpdateStatusVariant(item.variant[selectedSizeIndices[i]].id)">
+                            Còn hàng
+                        </button>
+                        }
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary"
-                            [routerLink]="['/admin/update-products/' + item.id]">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </button>
+                        <div class="d-flex align-items-center">
+                            <button class=" btn me-3">
+                                <i class="fa-regular fa-rectangle-list"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary"
+                                [routerLink]="['/admin/update-products/' + item.id]">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -154,23 +166,6 @@
         <i class="fa-solid fa-filter-circle-xmark"></i>
         Không tìm thấy sản phẩm
     </h2>
-</div>
-
-<div class="mt-3">
-    <!-- Modal -->
-    <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        [routerLink]="['/admin/products']"></button>
-                </div>
-                <div class="modal-body" style="height: 50rem;">
-                    <!-- <router-outlet></router-outlet> -->
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="model" [class.hidden]="!isShow">

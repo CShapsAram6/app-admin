@@ -9,17 +9,21 @@ $color-primary: #696cff;
     border: 1px solid #d9dee3;
     background-color: transparent;
     padding: 7px 20px;
+
     &:hover {
         border: 1px solid $color-primary;
         color: $color-primary;
     }
+
     &:focus {
         border: 1px solid $color-primary;
         color: $color-primary;
     }
 }
+
 .group--search {
     position: relative;
+
     & .btn--search {
         position: absolute;
         top: 0px;
@@ -28,24 +32,24 @@ $color-primary: #696cff;
         border: none;
         background-color: transparent;
         font-size: 20px;
+
         & i {
             color: #d9dee3;
         }
     }
 }
+
 .btn-edit {
-    cursor: pointer;
     color: black;
     font-size: 16px;
     font-weight: 500;
-    &:hover {
-        color: $color-primary;
-    }
 }
+
 .btn--zoom {
     position: relative;
     border: none;
     background-color: transparent;
+
     &::after {
         position: absolute;
         content: "";
@@ -55,17 +59,20 @@ $color-primary: #696cff;
         top: 0px;
         left: 0px;
     }
+
     &:hover {
         &::after {
             background-color: #696cff65;
         }
     }
+
     & img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 }
+
 @media (min-width: 576px) {
     .modal-dialog {
         max-width: 70rem;
@@ -83,35 +90,42 @@ $color-primary: #696cff;
     display: flex;
     justify-content: center;
     align-items: center;
+
     & .model--content {
         width: 70%;
         height: 95%;
         background-color: white;
         border-radius: 5px;
+
         & .model--content--header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
             padding: 20px;
+
             & .title {
                 font-weight: bold;
                 text-transform: uppercase;
             }
         }
+
         & .model--content--body {
             height: 48rem;
             overflow: hidden;
             overflow-y: auto;
+
             &::-webkit-scrollbar {
                 width: 2px;
             }
+
             &::-webkit-scrollbar-thumb {
                 border-radius: 10px;
             }
         }
     }
 }
+
 .hidden {
     display: none;
 }
@@ -119,4 +133,16 @@ $color-primary: #696cff;
 .model--variant {
     width: 42% !important;
     height: 50% !important;
+}
+
+.btn-color {
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    background: transparent;
+    border-radius: 50%;
+}
+
+.btn-variant {
+    border: 1px solid !important;
 }

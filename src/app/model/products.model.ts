@@ -14,6 +14,8 @@ interface productsDtos {
   image: string;
   category: number;
   status: boolean;
+  variant: variantResponse[];
+  colors: colorDtos[];
 }
 
 interface productsUpdateDtos {

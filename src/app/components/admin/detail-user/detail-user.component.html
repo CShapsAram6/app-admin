@@ -14,7 +14,7 @@
                     <div class="mt-3">
                         <label for="defaultFormControlInput" class="form-label">Trạng thái</label>
                         <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [checked]="getuserid?.status">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [checked]="getuserid?.status" (click)="updateStatus(IdUser,$event)">
                         </div>
                     </div>
                     <div class="mt-3">

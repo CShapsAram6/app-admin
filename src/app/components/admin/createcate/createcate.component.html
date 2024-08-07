@@ -9,37 +9,38 @@
                         Hình ảnh danh mục
                     </p>
                     <input class="form-control d-none" type="file" id="formFileMultiple" multiple=""
-                    (change)="onFilesSelected($event)" (blur)="isImagetouched = true" >
+                        (change)="onFilesSelected($event)" (blur)="isImagetouched = true">
                     <div class="d-flex gap-3 flex-wrap">
-                        
-                        <div class="position-relative rounded rounded-1 privew-image"  *ngIf="images.index == 1">
-                            <img  [src]="images.url" alt="" class="rounded-1">
+
+                        <div class="position-relative rounded rounded-1 privew-image" *ngIf="images.index == 1">
+                            <img [src]="images.url" alt="" class="rounded-1">
                             <button class="btn btn-sm btn-danger position-absolute btn-max-sm"
-                            (click)="RemoveItem(images.index)" style="top: 0px; right: 0px;" (blur)="isImagetouched = true" >
+                                (click)="RemoveItem(images.index)" style="top: 0px; right: 0px;"
+                                (blur)="isImagetouched = true">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
-                        <label for="formFileMultiple" class="form-label privew-image"  *ngIf="images.index == 0">
+                        <label for="formFileMultiple" class="form-label privew-image" *ngIf="images.index == 0">
                             <div class="">
                                 Tải lên hình ảnh
                                 <p>Định dạng: JPG, JPEG, PNG</p>
                             </div>
                         </label>
                     </div>
-                    <div id="defaultFormControlHelp" class="text-danger"  *ngIf="isImagetouched &&(images.index == 0)">
+                    <div id="defaultFormControlHelp" class="text-danger" *ngIf="isImagetouched &&(images.index == 0)">
                         Vui lòng chọn ít nhất 1 hình ảnh.
                     </div>
                 </div>
                 <div class="px-4 form-group">
                     <label for="name" class="block mb-2 font-bold text-gray-600">Tên danh mục</label>
                     <input type="text" class="border border-gray-300 form-control required input" id="name"
-                    [(ngModel)]="name" name="name" placeholder="Tên danh mục" (blur)="isNameTouched = true">
-                  <span class="text-danger" *ngIf="isNameTouched && name.length === 0">
-                    Tên danh mục không được để trống
-                  </span>
+                        [(ngModel)]="name" name="name" placeholder="Tên danh mục" (blur)="isNameTouched = true">
+                    <span class="text-danger" *ngIf="isNameTouched && name.length === 0">
+                        Tên danh mục không được để trống
+                    </span>
                 </div>
                 <div class="d-flex justify-content-center pb-3 mt-4">
-                    <button class="btnsumbit bgr-them text-white" type="submit" >Thêm danh mục</button>
+                    <button class="btnsumbit bgr-them text-white" type="submit">Thêm danh mục</button>
                 </div>
             </form>
         </div>

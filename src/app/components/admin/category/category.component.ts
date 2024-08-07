@@ -15,7 +15,7 @@ import { ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 })
 export class CategoryComponent implements OnInit {
   constructor(private cate: CategorysService, private route: ActivatedRoute,private router: Router) {}
-
+  isLoading: boolean = false;
   inputControl = new FormControl();
   deleteError: { [key: number]: string } = {};
   popupVisible: { [key: number]: boolean } = {};
@@ -33,9 +33,12 @@ export class CategoryComponent implements OnInit {
   }
 
   ListCate() {
+    this.isLoading = true;
     return this.cate.getData().subscribe((data: ApiResponse<categoryDtos[]>) => {
       console.log(data);
       this.ListCategory = data.data;
+      this.isLoading = false;
+
     });
   }
 

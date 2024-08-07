@@ -1,21 +1,22 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="row card-header pb-0">
-                    <div class="col-lg-6">
-                        <div class="">
-                            <a class="btn bgr-them w-50 text-white" routerLink="/admin/postcate">Thêm danh mục</a>
+                <div class="card p-4">
+                    <div class="d-flex justify-content-between">
+                        <div class="col-6">
+                            <div class="group--search">
+                                <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
+                                    aria-describedby="defaultFormControlHelp" [formControl]="inputControl">
+                                <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                                <div class="d-flex align-items-center">
-                                    <div class="input-group">
-                                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                                        <input type="text" id="TKonkeyup" class="form-control" name="searchString" placeholder="Tìm kiếm ..." [formControl]="inputControl">
-                                    </div>
-                                </div>
-                    </div>
-                    <div class="col-lg-3">
+                
+                        <div>
+                            <button class="btn btn-primary" routerLink="/admin/postcate">
+                                Thêm danh mục
+                            </button>
+                        </div>
+                
                     </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2 mt-3">
@@ -37,7 +38,9 @@
                                         </td>
                                         <td>
                                             <div class="btn--zoom avatar">
-                                                <img src="{{i.images}}">
+                                                <img src="{{i.images}}" *ngIf="i.images != null">
+                                                <img src="https://khanganbmt.com/img/chong-tham/membrane.jpg" *ngIf="i.images == null">
+
                                             </div>
                                         </td>
                                         <td>
@@ -47,7 +50,7 @@
                                             <div class="ms-auto">
                                                 <a class="btn btn-link text-dark px-3 mb-0" asp-area="Admin" [routerLink]="['/admin/putcate', i.id]" ><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"> </i> Edit </a>
 
-                                                <a class="btn btn-link text-danger text-gradient px-3 mb-0 delete-btn" (click)="showPopup(i.id)">
+                                                <a class="btn btn-link px-3 mb-0 delete-btn" (click)="showPopup(i.id)" style="color: red;">
                                                     <i class="far fa-trash-alt me-2"></i>Delete
                                                   </a>
                                                   <div *ngIf="popupVisible[i.id]" class="popup">
@@ -72,3 +75,4 @@
             </div>
         </div>
     </div>
+    <app-loading *ngIf="isLoading"></app-loading>

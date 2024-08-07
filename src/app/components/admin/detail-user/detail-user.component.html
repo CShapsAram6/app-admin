@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="card col-7">
+        <div class="row p-4">
+            <h4>Thông tin Khách hàng</h4>        
+            <div class="col-12 row">
+                <div class="col-4" style="
+                padding-left: 25px;">
+                    <img class="img-fluid col-9" src="https://cdn-icons-png.flaticon.com/512/9706/9706593.png" alt="" *ngIf="getuserid?.linkAvatar == null">
+                    <img class="img-fluid col-9" src="{{getuserid?.linkAvatar}}" alt="" *ngIf="getuserid?.linkAvatar != null">
+                    <div class="mt-3">
+                        <label for="defaultFormControlInput" class="form-label">Ngày tạo</label>
+                        <div>{{getuserid?.dateCreate}}</div>
+                    </div>
+                    <div class="mt-3">
+                        <label for="defaultFormControlInput" class="form-label">Trạng thái</label>
+                        <div class="form-check form-switch ">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" [checked]="getuserid?.status">
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <label for="defaultFormControlInput" class="form-label">Tổng tiền đã chi</label>
+                        <p><i class="fa-solid fa-money-bill"></i> {{((getuserid?.totalPrice || 0) * 1000).toLocaleString()}}₫
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="col-8">
+                    <div>
+                        <label for="defaultFormControlInput" class="form-label">Họ và tên</label>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                            aria-describedby="defaultFormControlHelp" disabled [value]="getuserid?.fullName">
+                    </div>
+                    <div class="mt-3">
+                        <label for="defaultFormControlInput" class="form-label">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                        aria-describedby="defaultFormControlHelp" disabled [value]="getuserid?.userName">
+                    </div>
+                    <div class="mt-3">
+                        <label for="defaultFormControlInput" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                            aria-describedby="defaultFormControlHelp" disabled [value]="getuserid?.email">
+                    </div>
+                    <div class="mt-3">
+                        <label for="defaultFormControlInput" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                            aria-describedby="defaultFormControlHelp" disabled [value]="getuserid?.phone">
+                    </div>
+                    <div class="mt-3">
+                        <label for="defaultFormControlInput" class="form-label">Địa chỉ</label>
+                        <input type="text" class="form-control" id="defaultFormControlInput" placeholder="John Doe"
+                            aria-describedby="defaultFormControlHelp" disabled [value]="getuserid?.address">
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="col-1"></div>
+    <div class="card col-4">
+   
+        <div class="row p-4">
+            <h4>Thông tin đơn hàng</h4>        
+            <div class="cart col-12">
+                <div class='d-flex flex-column gap-3'>
+                    <div class="position-relative border rounded shadow-sm">                
+                        <div class="d-flex align-items-center p-3">
+                            <img class="img-fluid rounded-lg" src="https://www.hangjapan.com/wp-content/uploads/2022/08/cart.png" alt="" style="width: 48px; height: 48px; object-fit: cover;">
+                
+                            <div class="ms-3 overflow-hidden">
+                                <p class="fw-medium text-dark mb-0 w-100">Tổng đơn hàng</p>
+                                <p class="text-truncate text-muted mb-0 w-100">
+                                   {{getuserid?.totalOrder}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-relative border rounded shadow-sm">                
+                        <div class="d-flex align-items-center p-3">
+                            <img class="img-fluid rounded-lg" src="https://png.pngtree.com/png-clipart/20190903/original/pngtree-waiting-icon-png-image_4419983.jpg" alt="" style="width: 48px; height: 48px; object-fit: cover;">
+                
+                            <div class="ms-3 overflow-hidden">
+                                <p class="fw-medium text-dark mb-0 w-100">Chờ xử lý</p>
+                                <p class="text-truncate text-muted mb-0 w-100">
+                                    {{getuserid?.totalOrderpay}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-relative border rounded shadow-sm">                
+                        <div class="d-flex align-items-center p-3">
+                            <img class="img-fluid rounded-lg" src="https://file.hstatic.net/1000191021/file/9-icon-shipper_874c5ac017894898a2661829cc2f8f87_grande.jpg" alt="" style="width: 48px; height: 48px; object-fit: cover;">
+                
+                            <div class="ms-3 overflow-hidden">
+                                <p class="fw-medium text-dark mb-0 w-100">Đang giao</p>
+                                <p class="text-truncate text-muted mb-0 w-100">
+                                    {{getuserid?.totalOrderShip}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-relative border rounded shadow-sm">                
+                        <div class="d-flex align-items-center p-3">
+                            <img class="img-fluid rounded-lg" src="https://bizweb.dktcdn.net/100/352/773/themes/724127/assets/policy_image_2.svg?1663350531778" alt="" style="width: 48px; height: 48px; object-fit: cover;">
+                
+                            <div class="ms-3 overflow-hidden">
+                                <p class="fw-medium text-dark mb-0 w-100">Hoàn tất</p>
+                                <p class="text-truncate text-muted mb-0 w-100">
+                                    {{getuserid?.totalOrderSuc}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-relative border rounded shadow-sm">                
+                        <div class="d-flex align-items-center p-3">
+                            <img class="img-fluid rounded-lg" src="https://tse1.mm.bing.net/th?id=OIP.YvNaIup5It1Q_iRIGsg09wAAAA&pid=Api&P=0&h=180" alt="" style="width: 48px; height: 48px; object-fit: cover;">
+                
+                            <div class="ms-3 overflow-hidden">
+                                <p class="fw-medium text-dark mb-0 w-100">Đã hủy</p>
+                                <p class="text-truncate text-muted mb-0 w-100">
+                                    {{getuserid?.totalOrderFail}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>
+

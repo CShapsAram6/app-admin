@@ -19,6 +19,7 @@ export class CreateBlogComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
+  isLoading: boolean = false;
   imageUrls: { url: string; index: number; file: File }[] = [];
   isLoadingSumbit: boolean = false;
   createBlogForm = this.form.group({
@@ -60,9 +61,11 @@ export class CreateBlogComponent implements OnInit {
   }
 
   CreateBlog() {
+    this.isLoading = true;
     console.log(this.imageUrls);
     if (this.createBlogForm.invalid || this.imageUrls.length < 0) {
       this.createBlogForm.markAllAsTouched();
+      this.isLoading = false;
       return;
     }
     this.isLoadingSumbit = true;
@@ -88,14 +91,17 @@ export class CreateBlogComponent implements OnInit {
           this.imageUrls = [];
           this.Router.navigate(['/admin/blogs/1']);
           this.toastr.success('Tạo bài viết mới thành công');
+          this.isLoading = false;
         } else {
+          this.isLoading = false;
           alert(response.message);
         }
       },
-      (error) => {
+      (error) => {        
         this.isLoadingSumbit = false;
         console.error('Error creating blog', error);
         this.toastr.error('Tạo bài viết thất bại');
+        this.isLoading = false;
       }
     );
   }

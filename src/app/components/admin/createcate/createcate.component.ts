@@ -17,6 +17,8 @@ export class CreatecateComponent implements OnInit {
   name:string = '';
   isNameTouched: boolean = false;
   isImagetouched: boolean = false;
+  isLoading: boolean = false;
+
 ngOnInit(): void {
   console.log(this.images.index);
 }
@@ -24,11 +26,14 @@ ngOnInit(): void {
 
 
   createcate() {
+    this.isLoading = true;
     // console.log(this.name + "name")
     // console.log(this.images.index +"img");
     if(this.name == '' || this.images.index == 0){
       this.isImagetouched = true;
       this.isNameTouched = true;
+      this.isLoading = false;
+
       // console.log("hihi");
       return;      
     }
@@ -41,12 +46,14 @@ ngOnInit(): void {
     console.log(this.name)
     this.cate.postCate(formData).subscribe({
       next:(res) => {
+        this.isLoading = false;
         console.log("Sao không vô dc ???");
         this.Router.navigate(['/admin/getcate']);
         this.toastr.success('Tạo danh mục mới thành công');
 
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('Error updating blog', err);
         this.toastr.error('Tạo danh mục thât bại');
 

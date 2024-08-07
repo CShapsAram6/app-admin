@@ -24,6 +24,7 @@ export class BlogsComponent implements OnInit{
   isActive: number = 0;
   deleteError: { [key: number]: string } = {};
   popupVisible: { [key: number]: boolean } = {};
+  isLoading: boolean = false;
 
 
 
@@ -43,14 +44,17 @@ export class BlogsComponent implements OnInit{
 
 
   LoadPage(){
+    this.isLoading = true;
 forkJoin([
   this.LoadBlogs(''),
   this.LoadNumberPages(''),
 ]).subscribe({
   next: (results) => {
     if (results.length > 0) {
+      this.isLoading = false;
       return;
     }
+    this.isLoading = false;
     alert('Error');
     console.log(results);
   },
@@ -61,6 +65,7 @@ forkJoin([
   }
 
   LoadBlogs(name: string) {
+    this.isLoading = true;
     const pagePrameter: number = this.route.snapshot.params['page'];
     this.isActive = pagePrameter;
     let request: pageBlogDtos = {
@@ -73,6 +78,7 @@ forkJoin([
       tap((resposen: ApiResponse<blogDto[]>) => {
         this.blogs = resposen.data;
         console.log(this.blogs);
+        this.isLoading = false;
       })
     );
   }
@@ -124,7 +130,10 @@ forkJoin([
         this.LoadNumberPages(value),
       ]).subscribe({
         next: (results) => {
-          console.log(results);
+          if(results.length > 0){
+            return;
+          }
+          console.log(results +"1");
         },
         error: (err) => {
           console.error(err);
@@ -145,7 +154,7 @@ forkJoin([
         (data) => {
           console.log(data);
           this.closePopup(id);
-
+          this.LoadPage();
         },
         (error) => console.error('Lỗi khi xóa bài viết', error)
       );

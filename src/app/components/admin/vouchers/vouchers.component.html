@@ -65,7 +65,7 @@
         <div class="col-4">
             <div class="group--search">
                 <input type="text" class="form-control" id="defaultFormControlInput" placeholder="Tìm kiếm...."
-                    aria-describedby="defaultFormControlHelp">
+                    aria-describedby="defaultFormControlHelp" (input)="onSearch($event)">
                 <button class="btn--search"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
@@ -92,13 +92,13 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0 mt-4">
-                <tr *ngFor="let i of ListVoucher">
-                    <td>{{i.id}}</td>
+                <tr *ngFor="let i of ListVoucher; let idx= index" >
+                    <td>{{idx+1}}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">{{i.name}}</button>
+                        <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark" >{{i.name}}</button>
                     </td>
                     <td>
-                        {{getStatus(i.status)}}
+                        <button [ngClass]="getButtonStatus(i.status)" data-mdb-ripple-init  data-mdb-ripple-color="dark">  {{getStatus(i.status)}}</button>
                     </td>
                     <td>
                         <span class="fw-bold text-primary">{{i.timeStart | date:'hh:mm - dd/MM/yyyy'}}</span>
@@ -107,7 +107,7 @@
                         <span class="fw-bold text-primary">{{i.timeEnd | date:'hh:mm - dd/MM/yyyy'}}</span>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">{{i.min_Order_Value}} VNĐ</button>
+                        <span class="text-secondary">{{i.min_Order_Value}} VNĐ</span>
                     </td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"

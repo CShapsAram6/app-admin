@@ -35,7 +35,7 @@ export class CreateVoucherDialogComponent implements OnInit {
         min_Order_Value: ['', [Validators.required, Validators.min(0)]],
         max_Discount: ['', [Validators.required, Validators.min(0)]],
         stock: ['', [Validators.required, Validators.min(0)]],
-        status: [1, Validators.required],
+        status: [0, Validators.required],
       },
       { validators: this.timeRangeValidator }
     );

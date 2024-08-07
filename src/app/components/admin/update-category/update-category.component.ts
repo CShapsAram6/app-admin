@@ -28,6 +28,7 @@ export class UpdateCategoryComponent implements OnInit {
     file: new File([], ''),
   };
   name: string = '';
+  isLoading: boolean = false;
   isNameTouched: boolean = false;
   isImagetouched: boolean = false;
 
@@ -38,17 +39,22 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   GetIdCate() {
+    this.isLoading = true;
+
     return this.cate.getcateid(this.id).subscribe((res: categoryDtos) => {
       console.log(res);
       (this.name = res.name), (this.images.url = res.images);
       this.images.index = 1;
+      this.isLoading = false;
     });
   }
 
   updatecate() {
+    this.isLoading = true;
     if (this.name == '' || this.images.index == 0) {
       this.isImagetouched = true;
       this.isNameTouched = true;
+      this.isLoading = false;
       // console.log("hihi");
       return;
     }
@@ -58,11 +64,13 @@ export class UpdateCategoryComponent implements OnInit {
     formData.append('images', this.images.file);
     this.cate.putCate(this.id, formData).subscribe({
       next: (res) => {
+        this.isLoading = false;
         console.log(formData.get('name'));
         this.Router.navigate(['/admin/getcate']);
         this.toastr.success('Sửa danh mục mới thành công');
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('Error updating blog', err);
         this.toastr.error('Sửa danh mục thất bại');
       },

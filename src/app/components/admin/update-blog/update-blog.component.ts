@@ -38,11 +38,13 @@ export class UpdateBlogComponent implements OnInit {
   }
 
   LoadBlog() {
+    this.isLoading = true;
     return this.blogsv.GetBlogid(this.IdBlog).pipe(
       tap((res) => {
         this.header = res.data.header;
         this.content = res.data.content;
-        this.arrImage = res.data.images ? res.data.images.map((image: any) => ({ ...image, isNew: false })) : [];
+        this.arrImage = res.data.images ? res.data.images .map((image: any) => ({ ...image, isNew: false })): [];
+        this.isLoading = false;
       })
     );
   }
@@ -74,8 +76,11 @@ export class UpdateBlogComponent implements OnInit {
   }
 
   UpdateBlog() {
+    this.isLoading = true;
 
-    if (this.header.length <= 0 || this.content.length <= 0 || (this.imageUrls.length <= 0 && this.arrImage.length <= 0)) {
+    if(this.header.length <= 0 || this.content.length <= 0 || (this.imageUrls.length <= 0 && this.arrImage.length <= 0) )
+    {
+      this.isLoading = false;
       return
     }
 
@@ -96,11 +101,13 @@ export class UpdateBlogComponent implements OnInit {
 
     this.blogsv.updateblog(this.IdBlog, formData).subscribe({
       next: (res) => {
+        this.isLoading = false;
         console.log('hoàn tất');
         this.Router.navigate(['/admin/blogs/1']);
         this.toastr.success('Sửa bài viết thành công');
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('Error updating blog', err);
         this.toastr.error('Sửa bài viết thất bại');
       }

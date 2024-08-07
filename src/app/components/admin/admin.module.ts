@@ -36,6 +36,7 @@ import { UpdateVoucherComponent } from './vouchers/update-voucher/update-voucher
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr, ToastrModule } from 'ngx-toastr';
 import { StatisticalComponent } from './statistical/statistical.component';
+import { DetailUserComponent } from './detail-user/detail-user.component';
 
 const _routes: Routes = [
   {
@@ -133,6 +134,11 @@ const _routes: Routes = [
         component: StatisticalComponent,
         title: 'Thống kê'
       },
+      {
+        path:'detailuser/:id',
+        component:DetailUserComponent,
+        title:'Chi tiết khách hàng'
+      },
     ],
   },
 ];
@@ -159,6 +165,7 @@ const _routes: Routes = [
     UpdateBlogComponent,
     UpdateVoucherComponent,
     StatisticalComponent,
+    DetailUserComponent,
   ],
   imports: [
     BrowserModule,

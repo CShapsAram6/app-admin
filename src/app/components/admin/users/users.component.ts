@@ -21,6 +21,8 @@ export class UsersComponent implements OnInit {
   isActive: number = 0;
   deleteError: { [key: number]: string } = {};
   popupVisible: { [key: number]: boolean } = {};
+  isLoading: boolean = false;
+
 
   ngOnInit(): void {
     this.LoadPage();
@@ -29,7 +31,6 @@ export class UsersComponent implements OnInit {
       if (envent instanceof NavigationEnd) {
         this.LoadUsers(this.inputControl.value || '').subscribe((res) => {
           this.users = res.data;
-          console.log(this.users);
         });
       }
     });
@@ -55,6 +56,7 @@ export class UsersComponent implements OnInit {
 
 
   LoadUsers(name:string){
+    this.isLoading = true;
     const pagePrameter:number = this.route.snapshot.params['page'];
     this.isActive = pagePrameter;
     let request:pagesDtos = {
@@ -66,6 +68,7 @@ export class UsersComponent implements OnInit {
       tap((resposen: ApiResponse<QLUser[]>) => {
         this.users = resposen.data
         console.log(this.users);
+        this.isLoading = false;
       })
     )
   }
@@ -116,7 +119,6 @@ export class UsersComponent implements OnInit {
     return this.usersv.SearchUser(request).pipe(
       tap((resposen: ApiResponse<QLUser[]>) => {
         this.users = resposen.data;
-        console.log(this.users);
       })
     );
   }

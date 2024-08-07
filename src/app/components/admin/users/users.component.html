@@ -36,7 +36,7 @@
                         </td>
                         <td>
                             <div class="btn--zoom avatar">
-                                <img src="https://assets.website-files.com/6371f9c50ce0bd588f4fa954/6385974f39e0d684a66a812a_003-man-1.png"
+                                <img src="https://cdn-icons-png.flaticon.com/512/9706/9706593.png"
                                 *ngIf="i.linkAvatar == null" alt="">
                                 <img src="{{i.linkAvatar}}" *ngIf="i.linkAvatar != null">
                             </div>
@@ -79,7 +79,7 @@
                               </div>
                         </td>  
                         <td>
-                            <button class="btn btn-sm btn-outline-primary" [routerLink]="['/admin/updateblog', i.id]">
+                            <button class="btn btn-sm btn-outline-primary" [routerLink]="['/admin/detailuser/'+i.id]">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </button>
                         </td>                      
@@ -92,7 +92,7 @@
     <div class="d-flex justify-content-center mt-5">
         <h2>
             <i class="fa-solid fa-filter-circle-xmark"></i>
-            Không tìm thấy bài viết
+            Không tìm thấy người dùng
         </h2>
     </div>
  }
@@ -107,3 +107,4 @@
         </ul>
     </div>
 </div>
+<app-loading *ngIf="isLoading"></app-loading>

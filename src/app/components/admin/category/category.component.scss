@@ -1,21 +1,22 @@
-.btn {
-    display: inline-block;
-    font-weight: 700;
-    line-height: 1.4;
-    color: #67748e;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    transition: all 0.15s ease-in;
-  }
-.bgr-them{
-    background-image: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%);
+.group--search {
+    position: relative;
+    & .btn--search {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        font-size: 20px;
+        & i {
+            color: #d9dee3;
+        }
+    }
+}
+.content-item {
+    height: 20px !important;
+    width: 10rem !important;
+    overflow: hidden;
 }
 
 .popup {

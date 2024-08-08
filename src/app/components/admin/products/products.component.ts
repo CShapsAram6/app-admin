@@ -29,11 +29,8 @@ export class ProductsComponent implements OnInit {
     private variantService: VariantService,
     private toastrServices: ToastrService
   ) { }
-  isShow: boolean = false;
-  create: boolean = true;
-  isVariant: boolean = false;
-  //search input
   inputControl = new FormControl();
+
   arrCategory: categoryDtos[] = [];
   // variable array products
   products: productsDtos[] = [];

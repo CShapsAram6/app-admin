@@ -1,9 +1,33 @@
-.scroll--list {
-    overflow-y: auto;
-    height: 23rem;
-}
-.grid--item {
-    display: grid;
-    grid-template-columns: 100% 100% 100%;
-    transition: all 0.25s linear;
+.main {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: #697a8d8c;
+    z-index: 999;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    &-modal {
+        height: 100%;
+        width: 30%;
+        background: white;
+        border-radius: 5px 0px 0px 5px;
+    }
+
+    & .model-header {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        padding: 20px;
+
+        & button {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+        }
+    }
 }

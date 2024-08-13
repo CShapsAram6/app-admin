@@ -50,9 +50,21 @@ export class UpdateBlogComponent implements OnInit {
   }
 
   onFilesSelected(event: any) {
+    const input = event.target as HTMLInputElement;
+
     const files: FileList = event.target.files;
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      if (input.files && input.files[0]) {
+        const filecheck = input.files[0];
+    
+        // đoạn if này là để kiểm tra các file đc đẩy lên 
+        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+        if (!allowedTypes.includes(filecheck.type)) {
+          this.toastr.error('Chỉ cho phép tải lên file PNG, JPG, JPEG, GIF ');
+          return;
+        }
+      }
       const reader = new FileReader();
       reader.onload = () => {
         this.imageUrls.push({

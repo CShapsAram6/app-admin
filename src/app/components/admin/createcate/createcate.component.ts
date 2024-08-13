@@ -65,9 +65,24 @@ export class CreatecateComponent implements OnInit {
 
 
   onFilesSelected(event: any) {
-    const files = event.target.files as FileList;
+
+    const input = event.target as HTMLInputElement;
+
+    const files = event.target.files as FileList;  
+
+
     if (files.length > 0) {
       const file = files[0]; // Chỉ lấy tệp đầu tiên
+      if (input.files && input.files[0]) {
+        const filecheck = input.files[0];
+    
+        // đoạn if này là để kiểm tra các file đc đẩy lên 
+        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+        if (!allowedTypes.includes(filecheck.type)) {
+          this.toastr.error('Chỉ cho phép tải lên file PNG, JPG, JPEG, GIF ');
+          return;
+        }
+      }
       const reader = new FileReader();
       reader.onload = () => {
         this.images = {

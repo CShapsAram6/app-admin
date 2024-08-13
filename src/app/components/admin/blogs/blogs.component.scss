@@ -147,3 +147,13 @@
         .popup  button:last-child {
             float: right; /* Đặt nút cuối cùng về phía phải */
         }
+
+.text-conten{
+    display: block; /* Hoặc inline-block nếu cần */
+    max-width: 200px; /* Hoặc đặt chiều rộng phù hợp với table */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1.5em; /* Tùy chỉnh chiều cao để phù hợp với một dòng văn bản */
+    line-height: 1em;
+}

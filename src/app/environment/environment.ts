@@ -1,3 +1,3 @@
 export const environment = {
-  api: 'https://apiservercs6.tryasp.net/api',
+  api: 'https://localhost:7133/api',
 };

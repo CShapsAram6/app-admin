@@ -18,13 +18,13 @@ export class UpdateBlogComponent implements OnInit {
   imageUrls: { url: string; index: number; file: File, isNew: boolean }[] = [];
   arrImage: { link: string; id: number; isNew: boolean }[] = [];
   ImageDelete: number[] = [];
-  IdBlog:number = this.route.snapshot.params['id'];
+  IdBlog: number = this.route.snapshot.params['id'];
   tinyConfig = {
     base_url: '/tinymce',
     suffix: '.min',
     plugins: 'lists link image table wordcount media',
   };
-  constructor(private blogsv: BlogService, private form: FormBuilder, private route: ActivatedRoute , private Router:Router , private toastr: ToastrService) {}
+  constructor(private blogsv: BlogService, private form: FormBuilder, private route: ActivatedRoute, private Router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     forkJoin([this.LoadBlog()]).subscribe({
@@ -78,14 +78,14 @@ export class UpdateBlogComponent implements OnInit {
     }
   }
 
-    RemoveItem(index: number, isNew: boolean) {
-      if (isNew) {
-        this.imageUrls = this.imageUrls.filter((item) => item.index !== index);
-      } else {
-        this.ImageDelete.push(this.arrImage[index].id);
-        this.arrImage = this.arrImage.filter((_, i) => i !== index);
-      }
+  RemoveItem(index: number, isNew: boolean) {
+    if (isNew) {
+      this.imageUrls = this.imageUrls.filter((item) => item.index !== index);
+    } else {
+      this.ImageDelete.push(this.arrImage[index].id);
+      this.arrImage = this.arrImage.filter((_, i) => i !== index);
     }
+  }
 
   UpdateBlog() {
     this.isLoading = true;
@@ -111,7 +111,7 @@ export class UpdateBlogComponent implements OnInit {
       }
     });
 
-    this.blogsv.updateblog(this.IdBlog,formData).subscribe({
+    this.blogsv.updateblog(this.IdBlog, formData).subscribe({
       next: (res) => {
         this.isLoading = false;
         console.log('hoàn tất');

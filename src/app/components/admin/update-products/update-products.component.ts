@@ -39,7 +39,7 @@ export class UpdateProductsComponent implements OnInit {
     private colorsServices: ColorsService,
     private variantServices: VariantService,
     private toastr: ToastrService
-  ) {}
+  ) { }
   prompt: string = 'Mô tả về cây thông trồng trong nhà ngắn gọn';
   aiResponse: string = '';
   // describe products
@@ -193,7 +193,6 @@ export class UpdateProductsComponent implements OnInit {
         fileReader.readAsArrayBuffer(file);
       }
     }
-    console.log(this.arrFile);
   }
   RemoveFile(index: number) {
     this.arrFile = this.arrFile.splice(index, 1);
@@ -272,14 +271,16 @@ export class UpdateProductsComponent implements OnInit {
     let vartiant: variantResponse = productsModel.MapToVariant(
       this.formSize.value as variant
     );
-    // this.productsService.updateVariant(vartiant).subscribe((response) => {
-    //   if (response.success) {
-    //     this.isButtonUpdate = false;
-    //     this.ngOnInit();
-    //     this.resetForm();
-    //     return;
-    //   }
-    // });
+    console.log(vartiant);
+
+    this.variantServices.updateVariant(vartiant).subscribe((response) => {
+      if (response.success) {
+        this.isButtonUpdate = false;
+        this.toastr.success('Cập nhật thành công', 'thông báo');
+        this.ngOnInit();
+        return;
+      }
+    });
   }
 
   CreateColor() {

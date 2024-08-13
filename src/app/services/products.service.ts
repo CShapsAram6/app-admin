@@ -16,7 +16,7 @@ import { variant } from '../model/category.model';
   providedIn: 'root',
 })
 export class ProductsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // create product
   create(form: FormData): Observable<ApiResponse<productCreateRequest>> {
@@ -45,47 +45,6 @@ export class ProductsService {
       form
     );
   }
-
-  updateVariant(
-    request: variantResponse
-  ): Observable<ApiResponse<productsUpdateDtos>> {
-    return this.http.put<ApiResponse<productsUpdateDtos>>(
-      `${environment.api}/Product/update-variant`,
-      request
-    );
-  }
-
-  getVariantByIdProduct(
-    id: number
-  ): Observable<ApiResponse<variantResponse[]>> {
-    return this.http.get<ApiResponse<variantResponse[]>>(
-      `${environment.api}/Product/get-variant-${id}`
-    );
-  }
-
-  // create variant by id prodcut
-  createVariant(request: variant): Observable<ApiResponse<variantResponse>> {
-    return this.http.post<ApiResponse<variantResponse>>(
-      `${environment.api}/Product/create-variant`,
-      request
-    );
-  }
-
-  // update status variant by id
-  updateStatusVariant(id: number): Observable<ApiResponse<variantResponse>> {
-    return this.http.put<ApiResponse<variantResponse>>(
-      `${environment.api}/Product/update-status-${id}`,
-      id
-    );
-  }
-
-  // Delete variant by id
-  DeleteVariant(id: number): Observable<ApiResponse<variantResponse>> {
-    return this.http.delete<ApiResponse<variantResponse>>(
-      `${environment.api}/Product/delete-variant-${id}`
-    );
-  }
-
   countLength(name: FormData): Observable<ApiResponse<number>> {
     return this.http.post<ApiResponse<number>>(
       `${environment.api}/Product/get-number`,

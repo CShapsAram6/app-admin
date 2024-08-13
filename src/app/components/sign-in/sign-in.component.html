@@ -10,7 +10,7 @@
                     <h4 class="mb-2">Welcome to app tree</h4>
                     <p class="mb-4">Đăng nhập bằng tài khoản admin của bạn</p>
 
-                    <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+                    <form id="formAuthentication" class="mb-3">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email hoặc Tên đăng nhập</label>
                             <input type="text" class="form-control" id="email" name="email-username"
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <button class="btn btn-primary d-grid w-100" type="submit" (click)="Login()">Đăng
+                            <button class="btn btn-primary d-grid w-100" (click)="Login()">Đăng
                                 nhập</button>
                         </div>
                     </form>

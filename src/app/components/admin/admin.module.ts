@@ -43,7 +43,7 @@ const _routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     children: [
-      { path: '', component: HomeComponent, title: 'Trang chủ' },
+      { path: '', component: StatisticalComponent, title: 'Trang chủ' },
       {
         path: 'products/:page',
         component: ProductsComponent,
@@ -110,29 +110,29 @@ const _routes: Routes = [
       {
         path: 'blogs/:page',
         component: BlogsComponent,
-        children:[
-          {path:':page',component:BlogsComponent,title:'Bài Viết'}
+        children: [
+          { path: ':page', component: BlogsComponent, title: 'Bài Viết' }
         ]
       },
       {
-        path:'createblog',
-        component:CreateBlogComponent,
-        title:'Thêm bài viết'
+        path: 'createblog',
+        component: CreateBlogComponent,
+        title: 'Thêm bài viết'
       },
       {
-        path:'updateblog/:id',
-        component:UpdateBlogComponent,
-        title:'Sửa bài viết'
+        path: 'updateblog/:id',
+        component: UpdateBlogComponent,
+        title: 'Sửa bài viết'
       },
       {
-        path:'updatevoucher/:id',
-        component:UpdateVoucherComponent,
-        title:'Sửa voucher'
+        path: 'updatevoucher/:id',
+        component: UpdateVoucherComponent,
+        title: 'Sửa voucher'
       },
       {
-        path:'statistical',
-        component:StatisticalComponent,
-        title:'Thống kê'
+        path: 'statistical',
+        component: StatisticalComponent,
+        title: 'Thống kê'
       },
       {
         path:'detailuser/:id',
@@ -186,4 +186,4 @@ const _routes: Routes = [
     provideToastr(), // Toastr providers
   ],
 })
-export class AdminModule {}
+export class AdminModule { }

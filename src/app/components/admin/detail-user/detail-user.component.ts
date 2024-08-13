@@ -42,4 +42,15 @@ export class DetailUserComponent implements OnInit {
     this.isLoading = false;
   });
   }
+
+  updateStatus(id: number, event: any) {
+    const status = event.target.checked;
+    this.usersv.UpdateStatus(id, status).subscribe(response => {
+      if (response.success) {
+        console.log('Cập nhật thành công');
+      } else {
+        console.error('Cập nhật thất bại');
+      }
+    });
+  }
 }

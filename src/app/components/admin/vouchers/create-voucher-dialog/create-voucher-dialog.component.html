@@ -4,8 +4,8 @@
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="form-outline">
+                  <label class="form-label fs-6" for="firstName">Tên khuyến mãi</label>
                   <input formControlName="name" type="text" id="firstName" class="form-control" />
-                  <label class="form-label" for="firstName">Tên khuyến mãi</label>
                   <div *ngIf="myForm.get('name')?.invalid && myForm.get('name')?.touched" class="text-danger">
                     Tên khuyến mãi là bắt buộc.
                   </div>
@@ -15,8 +15,8 @@
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="form-outline datepicker">
+                  <label for="startDate" class="form-label fs-6">Thời gian bắt đầu</label>
                   <input formControlName="timeStart" type="datetime-local" name="date" class="form-control" id="startDate" [min]="minDate"/>
-                  <label for="startDate" class="form-label">Thời gian bắt đầu</label>
                   <div *ngIf="myForm.get('timeStart')?.invalid && myForm.get('timeStart')?.touched" class="text-danger">
                     Thời gian bắt đầu là bắt buộc.
                   </div>
@@ -28,8 +28,8 @@
               </div>
               <div class="col-md-6 mb-4">
                 <div class="form-outline datepicker">
+                  <label for="endDate" class="form-label fs-6">Thời gian kết thúc</label>
                   <input formControlName="timeEnd" type="datetime-local" name="date" class="form-control" id="endDate" [min]="minDate" />
-                  <label for="endDate" class="form-label">Thời gian kết thúc</label>
                   <div *ngIf="myForm.get('timeEnd')?.invalid && myForm.get('timeEnd')?.touched" class="text-danger">
                     Thời gian kết thúc là bắt buộc.
                   </div>
@@ -46,14 +46,14 @@
               <div class="col-md-6 mb-4">
                 <h6 class="mb-2 pb-1">Loại giảm giá </h6>
                 <div class="form-check form-check-inline">
+                  <label class="form-check-label" for="percentDiscount">Phần trăm</label>
                   <input formControlName="discountType" class="form-check-input" type="radio" name="discountType"
                     id="percentDiscount" value="percent" />
-                  <label class="form-check-label" for="percentDiscount">Phần trăm</label>
                 </div>
                 <div class="form-check form-check-inline">
+                  <label class="form-check-label" for="directDiscount">Trực tiếp</label>
                   <input formControlName="discountType" class="form-check-input" type="radio" name="discountType"
                     id="directDiscount" value="direct" />
-                  <label class="form-check-label" for="directDiscount">Trực tiếp</label>
                 </div>
                 <div *ngIf="myForm.get('discountType')?.invalid && myForm.get('discountType')?.touched"
                   class="text-danger">
@@ -64,8 +64,8 @@
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="form-outline">
+                  <label class="form-label fs-6" for="discount">Giảm giá</label>
                   <input formControlName="discount" type="number" id="discount" class="form-control" />
-                  <label class="form-label" for="discount">Giảm giá</label>
                   <div *ngIf="myForm.get('discount')?.invalid && myForm.get('discount')?.touched" class="text-danger">
                     Giảm giá là bắt buộc và phải là số dương.
                   </div>
@@ -73,8 +73,8 @@
               </div>
               <div class="col-md-6 mb-4">
                 <div class="form-outline">
+                  <label class="form-label fs-6" for="stock">Số lượng</label>
                   <input formControlName="stock" type="number" id="stock" class="form-control" />
-                  <label class="form-label" for="stock">Số lượng</label>
                   <div *ngIf="myForm.get('stock')?.invalid && myForm.get('stock')?.touched" class="text-danger">
                     Số lượng là bắt buộc và phải là số dương.
                   </div>
@@ -84,8 +84,8 @@
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="form-outline">
+                  <label class="form-label fs-6" for="minOrderValue">Giá trị tối thiểu</label>
                   <input formControlName="min_Order_Value" type="number" id="minOrderValue" class="form-control" />
-                  <label class="form-label" for="minOrderValue">Giá trị tối thiểu</label>
                   <div *ngIf="myForm.get('min_Order_Value')?.invalid && myForm.get('min_Order_Value')?.touched"
                     class="text-danger">
                     Giá trị tối thiểu là bắt buộc và phải là số dương.
@@ -94,8 +94,8 @@
               </div>
               <div class="col-md-6 mb-4">
                 <div class="form-outline">
+                  <label class="form-label fs-6" for="max_Discount">Giảm giá tối đa</label>
                   <input formControlName="max_Discount" type="number" id="max_Discount" class="form-control" />
-                  <label class="form-label" for="max_Discount">Giảm giá tối đa</label>
                   <div *ngIf="myForm.get('max_Discount')?.invalid && myForm.get('max_Discount')?.touched"
                     class="text-danger">
                     Giảm giá tối đa là bắt buộc và phải là số dương.
@@ -118,5 +118,5 @@
               </div>
             </div>
           </form>
-        
+
 

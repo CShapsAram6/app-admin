@@ -2,22 +2,22 @@
 <section class="card p-4 mt-4">
     <div class="list-tab">
         <div>
-            <button class="btn--tab" [ngClass]="{'btn--active': isActive(-1)}" (click)="GetListVoucherByStatus(-1)">
+            <button class="btn--tab" style="font-size: 16px;" [ngClass]="{'btn--active': isActive(-1)}" (click)="GetListVoucherByStatus(-1)">
                 Tất cả
             </button>
-            <button class="btn--tab" [ngClass]="{'btn--active': isActive(0)}" (click)="GetListVoucherByStatus(0)">
+            <button class="btn--tab" style="font-size: 16px;" [ngClass]="{'btn--active': isActive(0)}" (click)="GetListVoucherByStatus(0)">
                 Sắp diễn ra
             </button>
-            <button class="btn--tab" [ngClass]="{'btn--active': isActive(1)}" (click)="GetListVoucherByStatus(1)">
+            <button class="btn--tab" style="font-size: 16px;" [ngClass]="{'btn--active': isActive(1)}" (click)="GetListVoucherByStatus(1)">
                 Đang diễn ra
             </button>
-            <button class="btn--tab" [ngClass]="{'btn--active': isActive(2)}" (click)="GetListVoucherByStatus(2)">
+            <button class="btn--tab" style="font-size: 16px;" [ngClass]="{'btn--active': isActive(2)}" (click)="GetListVoucherByStatus(2)">
                 Tạm ngưng
             </button>
-            <button class="btn--tab" [ngClass]="{'btn--active': isActive(3)}" (click)="GetListVoucherByStatus(3)">
+            <button class="btn--tab" style="font-size: 16px;" [ngClass]="{'btn--active': isActive(3)}" (click)="GetListVoucherByStatus(3)">
                 Đã kết thúc
             </button>
-            <button class="btn--tab" [ngClass]="{'btn--active': isActive(4)}" (click)="GetListVoucherByStatus(4)">
+            <button class="btn--tab" style="font-size: 16px;" [ngClass]="{'btn--active': isActive(4)}" (click)="GetListVoucherByStatus(4)">
                 Đã hủy
             </button>
         </div>
@@ -68,7 +68,7 @@
                         <span class="fw-bold text-primary">{{i.timeEnd | date:'hh:mm - dd/MM/yyyy'}}</span>
                     </td>
                     <td>
-                        <span class="text-secondary">{{i.min_Order_Value}} VNĐ</span>
+                        <span class="text-secondary">{{(i.min_Order_Value*1000).toLocaleString()}}₫</span>
                     </td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
@@ -99,7 +99,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ modalTitle }}</h1>
+                <h1 class="modal-title fw-bold fs-5" id="staticBackdropLabel">{{ modalTitle }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

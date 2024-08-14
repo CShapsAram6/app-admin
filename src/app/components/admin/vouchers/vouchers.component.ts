@@ -27,12 +27,12 @@ export class VouchersComponent implements OnInit {
 
   openCreateMode() {
     this.isCreateMode = true;
-    this.modalTitle = 'Thêm khuyến mãi';
+    this.modalTitle = 'Tạo khuyến mãi mới';
   }
   openUpdateMode(voucherId: number) {
     this.isCreateMode = false;
     this.seclectedVoucherId = voucherId;
-    this.modalTitle = 'Cập Nhật khuyến mãi';
+    this.modalTitle = 'Cập nhật khuyến mãi';
     this.updateVoucherComponent.saveSuccess.subscribe(() => this.onVoucherSaved());
   }
 
@@ -136,7 +136,7 @@ export class VouchersComponent implements OnInit {
         return 'btn btn-secondary btn-rounded'
       case 3:
         return 'btn btn-success btn-rounded'
-      case 4: 
+      case 4:
       return 'btn btn-danger btn-rounded'
       default:
       return 'btn btn-info btn-rounded'

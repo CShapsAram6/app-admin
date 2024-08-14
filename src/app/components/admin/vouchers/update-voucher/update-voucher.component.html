@@ -3,46 +3,46 @@
     <div class="row">
       <div class="col-md-6 mb-4">
         <div class="form-outline">
+          <label class="form-label fs-6" for="name">Tên khuyến mãi</label>
           <input formControlName="name" type="text" id="name" class="form-control" />
-          <label class="form-label" for="name">Tên khuyến mãi</label>
         </div>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-md-6 mb-4">
         <div class="form-outline datepicker">
+          <label for="startDate" class="form-label fs-6">Ngày bắt đầu</label>
           <input formControlName="timeStart" type="datetime-local" id="startDate" class="form-control" />
-          <label for="startDate" class="form-label">Ngày bắt đầu</label>
         </div>
       </div>
       <div class="col-md-6 mb-4">
         <div class="form-outline datepicker">
+          <label for="endDate" class="form-label fs-6">Ngày kết thúc</label>
           <input formControlName="timeEnd" type="datetime-local" id="endDate" class="form-control" />
-          <label for="endDate" class="form-label">Ngày kết thúc</label>
         </div>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-md-6 mb-4">
         <h6 class="mb-2 pb-1">Loại giảm giá</h6>
         <div class="form-check form-check-inline">
-          <input formControlName="discountType" class="form-check-input" type="radio" id="percentDiscount" value="percent" />
           <label class="form-check-label" for="percentDiscount">Phần trăm</label>
+          <input formControlName="discountType" class="form-check-input" type="radio" id="percentDiscount" value="percent" />
         </div>
         <div class="form-check form-check-inline">
-          <input formControlName="discountType" class="form-check-input" type="radio" id="directDiscount" value="direct" />
           <label class="form-check-label" for="directDiscount">Trực tiếp</label>
+          <input formControlName="discountType" class="form-check-input" type="radio" id="directDiscount" value="direct" />
         </div>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-md-6 mb-4">
         <div class="form-outline">
-          <input formControlName="discount" type="number" id="discount" class="form-control" /> 
-          <label class="form-label" for="discount">Giảm giá</label>
+          <label class="form-label fs-6" for="discount">Giảm giá</label>
+          <input formControlName="discount" type="number" id="discount" class="form-control" />
           <div *ngIf="voucherForm.hasError('invalidPercentDiscount') && voucherForm.get('discount')?.touched">
             Giảm giá phải lớn hơn 0 và nhỏ hơn hoặc bằng 100 khi loại giảm giá là phần trăm.
           </div>
@@ -51,30 +51,30 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-md-6 mb-4">
         <div class="form-outline">
+          <label class="form-label fs-6" for="stock">Số lượng</label>
           <input formControlName="stock" type="number" id="stock" class="form-control"/>
-          <label class="form-label" for="stock">Số lượng</label>
         </div>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-md-6 mb-4">
         <div class="form-outline">
+          <label class="form-label fs-6" for="minOrderValue">Giá trị tối thiểu</label>
           <input formControlName="min_Order_Value" type="number" id="minOrderValue" class="form-control" />
-          <label class="form-label" for="minOrderValue">Giá trị tối thiểu</label>
         </div>
       </div>
       <div class="col-md-6 mb-4">
         <div class="form-outline">
+          <label class="form-label fs-6" for="max_Discount">Giảm giá tối đa</label>
           <input formControlName="max_Discount" type="number" id="max_Discount" class="form-control" />
-          <label class="form-label" for="max_Discount">Giảm giá tối đa</label>
         </div>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-12 d-flex justify-content-end">
         <div class="mt-4">
@@ -86,4 +86,3 @@
       </div>
     </div>
   </form>
-  

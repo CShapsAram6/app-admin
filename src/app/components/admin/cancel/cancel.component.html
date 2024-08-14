@@ -14,9 +14,9 @@
             Số đơn hàng: {{ countOrder }}
         </div>
         <div class="header--bottom--button">
-            <button class="btn btn-primary">Xuất dữ liệu
+            <!-- <button class="btn btn-primary">Xuất dữ liệu
                 <i class="fa-solid fa-arrow-up-right-from-square ms-3"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
@@ -37,12 +37,12 @@
             </tr>
           </thead>
           <tbody
-            class="table-border-bottom-0 mt-4"
+            class="table-border-bottom-0 mt-4 fs-6"
             *ngFor="let order of filteredOrderCancel; let i = index"
           >
             <tr>
               <td>{{ i + 1 }}</td>
-              <td>{{ "#00" + order.id }}</td>
+              <td><button class="btn btn-sm btn-outline-primary fs-6">{{ "#00" + order.id }}</button></td>
               <td>
                 <p
                   class="m-0 overflow-hidden"
@@ -52,7 +52,7 @@
                 </p>
               </td>
               <td>
-                <button class="btn btn-sm btn-outline-primary">
+                <button class="btn btn-sm btn-outline-primary fs-6">
                   {{ order.customerName }}
                 </button>
               </td>
@@ -67,7 +67,7 @@
               <td>{{ ((order.total + 20) * 1000).toLocaleString() }}₫</td>
               <td>
                 <button
-                  class="btn btn-sm btn-outline-primary cho-xu-ly"
+                  class="btn btn-sm btn-warning fs-6"
                   data-bs-toggle="modal"
                   data-bs-target="#myModal"
                   *ngIf="order.statusOrder === 2"
@@ -76,7 +76,7 @@
                   Chờ xử lý
                 </button>
                 <button
-                  class="btn btn-sm btn-outline-primary"
+                  class="btn btn-sm btn-danger fs-6"
                   data-bs-toggle="modal"
                   data-bs-target="#myModal"
                   *ngIf="order.statusOrder === 3"
@@ -94,7 +94,7 @@
           </tbody>
         </table>
     </div>
-    
+
     <!-- The Modal -->
     <div class="modal" id="myModal">
       <div class="modal-dialog modal-xl">
@@ -103,10 +103,10 @@
           <div class="modal-header">
             <h4 class="modal-title">
               Mã đơn hàng: #{{ "00" + oderCanelDetail.id }} |
-              <button class="btn btn-sm btn-outline-danger fs-6 mb-1 w-100 cho-xu-ly" *ngIf="oderCanelDetail.statusOrder === 2">
+              <button class="btn btn-sm btn-outline-danger fs-6 mb-1 cho-xu-ly" *ngIf="oderCanelDetail.statusOrder === 2">
                 Chờ xử lý
               </button>
-              <button class="btn btn-sm btn-outline-primary fs-6 mb-1 w-100" *ngIf="oderCanelDetail.statusOrder === 3">
+              <button class="btn btn-sm btn-outline-primary fs-6 mb-1" *ngIf="oderCanelDetail.statusOrder === 3">
                 Đã huỷ
               </button>
             </h4>
@@ -116,7 +116,7 @@
               data-bs-dismiss="modal"
             ></button>
           </div>
-    
+
           <!-- Modal body -->
           <div class="modal-body">
             <div class="row">
@@ -175,7 +175,7 @@
                   </div>
                 </div>
               </div>
-    
+
               <!-- Info Customer -->
               <div class="col-lg-4 bg-card">
                 <p class="fw-bold text-uppercase fs-5 mt-2">Khách hàng</p>
@@ -239,20 +239,17 @@
                   </div>
                 </div>
               </div>
-    
+
               <!-- Action Order -->
               <div class="col-lg-4">
                 <div class="btn-group mt-1 mb-3">
-                  <span style="font-weight: bold;">
-                    Lý do hủy đơn : {{ oderCanelDetail?.reasonCancel?.title }}
+                  <span style="font-weight: bold;" class="">
+                    Lý do khách hủy đơn:
+                      <span *ngIf="oderCanelDetail?.reasonCancel?.content !== null" style="color: red;">{{ oderCanelDetail?.reasonCancel?.content }}</span>
+                      <span *ngIf="oderCanelDetail?.reasonCancel?.content === null" style="color: red;">Không có lý do chi tiết!</span>
                   </span>
                 </div>
-                <div *ngIf="oderCanelDetail?.reasonCancel?.content !== null" style="color: red;">
-                  <span>{{ oderCanelDetail?.reasonCancel?.content }}</span>
-                </div>
-                <div *ngIf="oderCanelDetail?.reasonCancel?.content === null" style="color: red;">
-                    <span>Không có lý do chi tiết!</span>
-                  </div>
+
                 <div class="row mt-5" *ngIf="oderCanelDetail.statusOrder === 2">
                   <div class="col-lg-6">
                     <button class="btn btn-outline-primary w-100" (click)="ResetOrderCancel(oderCanelDetail.id)">Đặt lại</button>
@@ -262,7 +259,7 @@
                   </div>
                 </div>
               </div>
-    
+
               <!-- Action Delivery -->
               <!-- <div class="col-lg-4" *ngIf="ordersDetail?.statusOrder === 1 && ordersDetail?.statusDelivery === 1">
                   <div class="btn-group mt-1 mb-3">

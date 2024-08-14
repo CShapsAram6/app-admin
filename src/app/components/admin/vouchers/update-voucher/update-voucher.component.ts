@@ -5,6 +5,7 @@ import { VoucherService } from '../../../../services/voucher.service';
 import { ApiResponse } from '../../../../model/ApiResponse.model';
 import { voucherDto } from '../../../../model/voucher.model';
 import { map, Observable } from 'rxjs';
+import { discountValidator } from './custome';
 declare var bootstrap: any;
 @Component({
   selector: 'app-update-voucher',
@@ -13,15 +14,14 @@ declare var bootstrap: any;
 })
 export class UpdateVoucherComponent implements OnInit, OnChanges {
 
-  @Output() saveSuccess = new EventEmitter< void>();
+  @Output() saveSuccess = new EventEmitter<void>();
   @Input() voucherId?: number;
   voucherForm: FormGroup;
   currentStatus: number = 0;
   constructor(private service: VoucherService, private fb: FormBuilder) {
     this.voucherForm = this.fb.group({
       id: this.voucherId,
-      status:  ['', [Validators.required, Validators.min(0)]],
-
+      status: ['', [Validators.required, Validators.min(0)]],
       name: ['', Validators.required],
       timeStart: ['', Validators.required],
       timeEnd: ['', Validators.required],
@@ -30,9 +30,9 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
       stock: ['', [Validators.required, Validators.min(0)]],
       min_Order_Value: ['', [Validators.required, Validators.min(0)]],
       max_Discount: ['', [Validators.required, Validators.min(0)]],
-    });
-    
+    }, { validators: discountValidator() });
   }
+  
   ngOnChanges(changes: SimpleChanges) {
     if (changes['voucherId'] && this.voucherId) {
       this.loadVoucher(this.voucherId);
@@ -40,13 +40,14 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-   
+
   }
 
   loadVoucher(id: number) {
     this.service.getVoucherById(id).subscribe((response: ApiResponse<voucherDto>) => {
       const voucher = response.data;
       if (voucher) {
+       
         this.voucherForm.patchValue({
           id: this.voucherId,
           status: voucher.status,
@@ -60,6 +61,7 @@ export class UpdateVoucherComponent implements OnInit, OnChanges {
           max_Discount: voucher.max_Discount
         });
       }
+      
     });
   }
 

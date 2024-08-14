@@ -41,15 +41,20 @@
     <div class="row">
       <div class="col-md-6 mb-4">
         <div class="form-outline">
-          <input formControlName="discount" type="number" id="discount" class="form-control" />
-          <input formControlName="status" type="number" id="status" class="form-control" hidden/>
-
+          <input formControlName="discount" type="number" id="discount" class="form-control" /> 
           <label class="form-label" for="discount">Giảm giá</label>
+          <div *ngIf="voucherForm.hasError('invalidPercentDiscount') && voucherForm.get('discount')?.touched">
+            Giảm giá phải lớn hơn 0 và nhỏ hơn hoặc bằng 100 khi loại giảm giá là phần trăm.
+          </div>
+          <div *ngIf="voucherForm.hasError('invalidDirectDiscount') && voucherForm.get('discount')?.touched">
+            Giảm giá phải bằng giá trị giảm giá tối đa khi loại giảm giá là trực tiếp.
+          </div>
         </div>
       </div>
+      
       <div class="col-md-6 mb-4">
         <div class="form-outline">
-          <input formControlName="stock" type="number" id="stock" class="form-control" />
+          <input formControlName="stock" type="number" id="stock" class="form-control"/>
           <label class="form-label" for="stock">Số lượng</label>
         </div>
       </div>
